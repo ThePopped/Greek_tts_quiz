@@ -70,7 +70,8 @@ Status key: `[not started]` · `[in progress]` · `[done]`. The status is update
     - Otherwise, Damerau-Levenshtein ≤1 (answer ≤5 chars) or ≤2 (longer) → `typo`.
     - Otherwise → `wrong`.
     *Result:* `grade(input, answers)` returns the verdict plus the matched (or closest) answer, for the feedback panel. One change from the above: answers of 3 letters or fewer and answers with digits must match exactly, because one edit turns `bad` into `sad` or `5` into `6` (101 of the 656 answers). Apostrophes are dropped (`don't` → `dont`) and other punctuation becomes a space.
-15. `[not started]` `storage.ts`: per-word `{seen, correct, lastSeen}` and user-added accepted answers in localStorage, wrapped in try/catch.
+15. `[done]` `storage.ts`: per-word `{seen, correct, lastSeen}` and user-added accepted answers in localStorage, wrapped in try/catch.
+    *Result:* `store.record(id, wasCorrect)`, `store.addAnswer(id, answer)` and `store.acceptedAnswers(word)` (vocab answers plus added ones, to pass to `grade`). Data is read once and kept in memory, so if localStorage is blocked or full the quiz still works for the session and just forgets afterwards. Corrupt or malformed saved entries are skipped.
 16. `[not started]` Start screen: load `vocab.json`, choose categories and the number of questions (10/20/all), then start.
 17. `[not started]` Quiz screen: a large ▶ button (the first tap unlocks audio on iOS, after which each new word plays automatically). Replay with Ctrl+Space / ↑ or a tap. Text input where Enter submits.
 18. `[not started]` Feedback panel: correct / typo (shows the correct spelling) / wrong. Shows the Greek text and all accepted answers, an "I was right" button (which saves the answer as accepted), and Enter to go to the next word.
