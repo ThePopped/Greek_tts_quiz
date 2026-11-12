@@ -1,5 +1,6 @@
 import './style.css'
 import { renderQuiz } from './quiz'
+import { scoreText, tally, type WordResult } from './session'
 import { renderStart } from './start'
 import { store } from './storage'
 import { loadVocab, type Vocab, type Word } from './vocab'
@@ -20,17 +21,15 @@ function showStart(vocab: Vocab): void {
 
 function showQuiz(vocab: Vocab, words: Word[]): void {
   show(() =>
-    renderQuiz(app, words, {
-      // No feedback yet (plan step 18): move straight on to the next word.
-      onSubmit: (_word, _typed, next) => next(),
-      onFinish: () => showDone(vocab, words.length),
+    renderQuiz(app, words, store, {
+      onFinish: (results) => showDone(vocab, results),
       onQuit: () => showStart(vocab),
     }),
   )
 }
 
 // Placeholder until the end-of-session summary is built (plan step 19).
-function showDone(vocab: Vocab, count: number): void {
+function showDone(vocab: Vocab, results: WordResult[]): void {
   show(() => {
     app.innerHTML = `
       <main>
@@ -38,7 +37,8 @@ function showDone(vocab: Vocab, count: number): void {
         <p class="summary"></p>
         <button type="button" class="back">Back to start</button>
       </main>`
-    app.querySelector('.summary')!.textContent = `You went through ${count} word${count === 1 ? '' : 's'}.`
+    const { right } = tally(results)
+    app.querySelector('.summary')!.textContent = `${right} of ${results.length} right (${scoreText(tally(results))}).`
     app.querySelector('.back')!.addEventListener('click', () => showStart(vocab))
   })
 }
