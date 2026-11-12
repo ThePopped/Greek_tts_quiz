@@ -56,7 +56,7 @@ Status key: `[not started]` · `[in progress]` · `[done]`. The status is update
 
 ### Phase 3: Vocab list
 9. `[done]` Claude drafts `data/vocab.csv` (about 300 rows, the categories above) with accepted answers, following the beginner conventions. *Result:* 374 rows over the 11 categories (numbers also cover 0 and the tens to 100). Column meanings and conventions are in `data/README.md`; `pipeline/tests/test_vocab_csv.py` checks the structure (cell count, unique ids and Greek, clean answers, valid pos/voice/strategy).
-10. `[not started]` **Checkpoint:** the user reviews and edits the CSV.
+10. `[done]` **Checkpoint:** the user reviews and edits the CSV. *Result:* approved as drafted (374 rows, no changes).
 
 ### Phase 4: Full audio generation + QA
 11. `[not started]` `generate.py`: read the CSV, apply each row's overrides or the defaults, synthesise, clip and normalise, then write `web/public/audio/<id>.mp3` and `web/public/vocab.json`. Cache keyed on a hash of (text, voice, strategy), with light throttling and retry.
