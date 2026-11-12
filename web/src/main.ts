@@ -1,9 +1,10 @@
 import './style.css'
 import { renderQuiz } from './quiz'
-import { scoreText, tally, type WordResult } from './session'
+import type { WordResult } from './session'
 import { renderStart } from './start'
 import { store } from './storage'
-import { loadVocab, type Vocab, type Word } from './vocab'
+import { renderSummary } from './summary'
+import { loadVocab, shuffle, type Vocab, type Word } from './vocab'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
@@ -28,19 +29,13 @@ function showQuiz(vocab: Vocab, words: Word[]): void {
   )
 }
 
-// Placeholder until the end-of-session summary is built (plan step 19).
 function showDone(vocab: Vocab, results: WordResult[]): void {
-  show(() => {
-    app.innerHTML = `
-      <main>
-        <h1>Session done</h1>
-        <p class="summary"></p>
-        <button type="button" class="back">Back to start</button>
-      </main>`
-    const { right } = tally(results)
-    app.querySelector('.summary')!.textContent = `${right} of ${results.length} right (${scoreText(tally(results))}).`
-    app.querySelector('.back')!.addEventListener('click', () => showStart(vocab))
-  })
+  show(() =>
+    renderSummary(app, results, store, {
+      onRetry: (words) => showQuiz(vocab, shuffle(words)),
+      onNewSession: () => showStart(vocab),
+    }),
+  )
 }
 
 async function init(): Promise<void> {

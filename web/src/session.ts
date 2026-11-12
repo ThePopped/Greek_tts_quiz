@@ -46,3 +46,15 @@ export function tally(results: readonly Pick<WordResult, 'outcome'>[]): Score {
 export function scoreText({ right, wrong }: Score): string {
   return `${right} ✓ ${wrong} ✗`
 }
+
+/** The words answered wrong or given up on, in the order they were asked. */
+export function missed(results: readonly WordResult[]): WordResult[] {
+  return results.filter((r) => !isRight(r.outcome))
+}
+
+/** The end-of-session headline, e.g. "7 of 10 right (70%)". */
+export function summaryText({ right, wrong }: Score): string {
+  const total = right + wrong
+  if (total === 0) return 'No words answered.'
+  return `${right} of ${total} right (${Math.round((right / total) * 100)}%)`
+}

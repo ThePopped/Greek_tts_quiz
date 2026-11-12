@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import realVocab from '../public/vocab.json'
-import { countByCategory, parseVocab, pickWords, type Word } from './vocab'
+import { countByCategory, parseVocab, pickWords, shuffle, type Word } from './vocab'
 
 function word(id: string, category: string): Word {
   return { id, greek: id, answers: [id], category, pos: 'noun', notes: '', audio: `audio/${id}.mp3` }
@@ -83,5 +83,16 @@ describe('pickWords', () => {
     )
     expect(orders.size).toBeGreaterThan(1)
     expect(WORDS.map((w) => w.id)).toEqual(before)
+  })
+})
+
+describe('shuffle', () => {
+  it('returns a reordered copy with the same items', () => {
+    const items = [1, 2, 3, 4, 5, 6]
+    const orders = new Set(Array.from({ length: 20 }, (_, i) => shuffle(items, seeded(i)).join()))
+    expect(orders.size).toBeGreaterThan(1)
+    expect([...shuffle(items)].sort()).toEqual(items)
+    expect(items).toEqual([1, 2, 3, 4, 5, 6])
+    expect(shuffle([])).toEqual([])
   })
 })

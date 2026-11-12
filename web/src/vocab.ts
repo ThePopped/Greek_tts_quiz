@@ -60,6 +60,16 @@ export function countByCategory(words: readonly Word[]): Map<string, number> {
   return counts
 }
 
+/** A shuffled copy of `items` (Fisher–Yates). */
+export function shuffle<T>(items: readonly T[], random: () => number = Math.random): T[] {
+  const out = [...items]
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    ;[out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
+
 /**
  * Words for one session: a random selection of `count` words (or all of them)
  * from the chosen categories, in random order.
@@ -71,11 +81,9 @@ export function pickWords(
   random: () => number = Math.random,
 ): Word[] {
   const chosen = new Set(categories)
-  const pool = words.filter((w) => chosen.has(w.category))
-  // Fisher–Yates shuffle
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1))
-    ;[pool[i], pool[j]] = [pool[j], pool[i]]
-  }
+  const pool = shuffle(
+    words.filter((w) => chosen.has(w.category)),
+    random,
+  )
   return count === 'all' ? pool : pool.slice(0, count)
 }

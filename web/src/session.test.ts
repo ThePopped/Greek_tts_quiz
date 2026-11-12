@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { check, isRight, scoreText, tally, type Outcome } from './session'
+import { check, isRight, missed, scoreText, summaryText, tally, type Outcome, type WordResult } from './session'
+import type { Word } from './vocab'
 
 const HOUSE = ['house', 'home']
 
@@ -37,5 +38,38 @@ describe('tally and scoreText', () => {
     const score = tally(outcomes.map((outcome) => ({ outcome })))
     expect(score).toEqual({ right: 4, wrong: 2 })
     expect(scoreText(score)).toBe('4 ✓ 2 ✗')
+  })
+})
+
+describe('missed', () => {
+  const word = (id: string): Word => ({
+    id,
+    greek: id,
+    answers: [id],
+    category: 'test',
+    pos: 'noun',
+    notes: '',
+    audio: `audio/${id}.mp3`,
+  })
+  const result = (id: string, outcome: Outcome): WordResult => ({ word: word(id), typed: '', outcome })
+
+  it('keeps wrong and given-up words, in the order asked', () => {
+    const results = [
+      result('a', 'correct'),
+      result('b', 'dont-know'),
+      result('c', 'typo'),
+      result('d', 'wrong'),
+      result('e', 'overruled'),
+    ]
+    expect(missed(results).map((r) => r.word.id)).toEqual(['b', 'd'])
+    expect(missed([])).toEqual([])
+  })
+})
+
+describe('summaryText', () => {
+  it('gives right out of total with a rounded percentage', () => {
+    expect(summaryText({ right: 7, wrong: 3 })).toBe('7 of 10 right (70%)')
+    expect(summaryText({ right: 2, wrong: 1 })).toBe('2 of 3 right (67%)')
+    expect(summaryText({ right: 0, wrong: 0 })).toBe('No words answered.')
   })
 })
