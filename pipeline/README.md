@@ -12,3 +12,14 @@ uv sync
 ```
 
 Modules are run with `uv run python -m greek_tts.<module>` (added as they are built).
+
+| Module | What it does |
+|---|---|
+| `tts` | TTS backend interface + edge-tts implementation. Returns MP3 bytes and per-word timings in seconds. Try it: `uv run python -m greek_tts.tts "Το σπίτι." --voice athina --out sample.mp3` |
+| `clip` | ffmpeg post-processing: optional cut at a timestamp (with 40 ms lead-in + click-free fade), trailing-silence trim (keeps 150 ms), two-pass loudness normalisation to -18 LUFS. Try it: `uv run python -m greek_tts.clip in.mp3 out.mp3 --start 1.1` |
+
+## Tests
+
+```sh
+uv run pytest
+```
