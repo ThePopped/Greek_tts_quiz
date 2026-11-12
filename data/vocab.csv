@@ -315,7 +315,7 @@ adj-32,άδειος,empty,Adjectives,adj,,,,
 adj-33,καθαρός,clean|clear,Adjectives,adj,,,,
 adj-34,βρώμικος,dirty,Adjectives,adj,,,,
 adj-35,ανοιχτός,open|light,Adjectives,adj,,,,'light' for colours
-adj-36,κλειστός,closed|shut,Adjectives,adj,,,,
+adj-36,κλειστός,closed|shut,Adjectives,adj,,,carrier,
 adj-37,σωστός,right|correct,Adjectives,adj,,,,
 adj-38,νόστιμος,tasty|delicious,Adjectives,adj,,,,
 adj-39,ήσυχος,quiet|calm,Adjectives,adj,,,,
