@@ -64,11 +64,12 @@ Status key: `[not started]` · `[in progress]` · `[done]`. The status is update
 13. `[done]` **Checkpoint:** the user listens to the flagged clips and fixes them through the CSV overrides. Re-run `generate.py` (only changed rows regenerate). *Result:* of the 72 flagged clips only adj-36 (κλειστός) was actually mispronounced; the other 71 were Whisper mishearing. Re-rendering it with the same settings gave the same bad audio, so it now uses the `carrier` strategy (still Nestoras), which Whisper hears correctly.
 
 ### Phase 5: Quiz web app
-14. `[not started]` `grading.ts` + `grading.test.ts`:
+14. `[done]` `grading.ts` + `grading.test.ts`:
     - Cleanup: NFKD + strip diacritics, lowercase, strip punctuation, collapse spaces, drop leading `the|a|an|to|i`.
     - Exact match against the cleaned accepted answers → `correct`.
     - Otherwise, Damerau-Levenshtein ≤1 (answer ≤5 chars) or ≤2 (longer) → `typo`.
     - Otherwise → `wrong`.
+    *Result:* `grade(input, answers)` returns the verdict plus the matched (or closest) answer, for the feedback panel. One change from the above: answers of 3 letters or fewer and answers with digits must match exactly, because one edit turns `bad` into `sad` or `5` into `6` (101 of the 656 answers). Apostrophes are dropped (`don't` → `dont`) and other punctuation becomes a space.
 15. `[not started]` `storage.ts`: per-word `{seen, correct, lastSeen}` and user-added accepted answers in localStorage, wrapped in try/catch.
 16. `[not started]` Start screen: load `vocab.json`, choose categories and the number of questions (10/20/all), then start.
 17. `[not started]` Quiz screen: a large ▶ button (the first tap unlocks audio on iOS, after which each new word plays automatically). Replay with Ctrl+Space / ↑ or a tap. Text input where Enter submits.
