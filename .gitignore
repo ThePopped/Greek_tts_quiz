@@ -11,6 +11,7 @@ dist/
 
 # Pipeline scratch output (regenerable)
 pipeline/bakeoff_out/
+pipeline/qa_out/
 pipeline/.cache/
 
 # Secrets (e.g. Azure keys if we switch backends)

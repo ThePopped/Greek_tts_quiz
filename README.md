@@ -15,4 +15,4 @@ All audio is generated ahead of time by a Python pipeline and served as static f
 
 ## Status
 
-Audio for the full 374-word list is generated (`web/public/audio/`, `web/public/vocab.json`). Next: the Whisper QA check, then the quiz app. See `PLAN.md`.
+Audio for the full 374-word list is generated (`web/public/audio/`, `web/public/vocab.json`). The Whisper QA check has run (72 clips flagged for a listen, `pipeline/qa_out/index.html`). Next: review the flagged clips, then the quiz app. See `PLAN.md`.
