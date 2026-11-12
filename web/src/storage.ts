@@ -4,6 +4,7 @@
 // quota, hand-edited JSON) only means nothing is remembered next time.
 
 import { clean } from './grading'
+import { QUESTION_COUNTS, type QuestionCount } from './vocab'
 
 export interface WordStats {
   seen: number
@@ -12,15 +13,32 @@ export interface WordStats {
   lastSeen: number
 }
 
+/** What was picked on the start screen last time. */
+export interface StartChoice {
+  categories: string[]
+  count: QuestionCount
+}
+
 type StorageLike = Pick<Storage, 'getItem' | 'setItem'>
 
 const STATS_KEY = 'greek-quiz:v1:stats'
 const ANSWERS_KEY = 'greek-quiz:v1:answers'
+const START_KEY = 'greek-quiz:v1:start'
 
 function isStats(value: unknown): value is WordStats {
   if (typeof value !== 'object' || value === null) return false
   const { seen, correct, lastSeen } = value as Record<string, unknown>
   return [seen, correct, lastSeen].every((n) => typeof n === 'number' && Number.isFinite(n))
+}
+
+function isStartChoice(value: unknown): value is StartChoice {
+  if (typeof value !== 'object' || value === null) return false
+  const { categories, count } = value as Record<string, unknown>
+  return (
+    Array.isArray(categories) &&
+    categories.every((c) => typeof c === 'string') &&
+    QUESTION_COUNTS.includes(count as QuestionCount)
+  )
 }
 
 function isAnswerList(value: unknown): value is string[] {
@@ -106,6 +124,20 @@ export function createStore(getStorage: () => StorageLike | undefined = () => gl
     /** A word's answers from vocab.json plus the ones the user added. */
     acceptedAnswers(word: { id: string; answers: readonly string[] }): string[] {
       return [...word.answers, ...(allAnswers()[word.id] ?? [])]
+    },
+
+    /** The start screen's last choice, or undefined if none was saved (or it's unreadable). */
+    startChoice(): StartChoice | undefined {
+      try {
+        const parsed: unknown = JSON.parse(storage()?.getItem(START_KEY) ?? 'null')
+        return isStartChoice(parsed) ? { categories: [...parsed.categories], count: parsed.count } : undefined
+      } catch {
+        return undefined
+      }
+    },
+
+    saveStartChoice(choice: StartChoice): void {
+      save(START_KEY, { categories: [...choice.categories], count: choice.count })
     },
   }
 }

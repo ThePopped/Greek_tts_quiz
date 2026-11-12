@@ -88,6 +88,29 @@ describe('added answers', () => {
   })
 })
 
+describe('start screen choice', () => {
+  it('is undefined until saved, then persists across page loads', () => {
+    const storage = new FakeStorage()
+    expect(createStore(() => storage).startChoice()).toBeUndefined()
+    createStore(() => storage).saveStartChoice({ categories: ['Family', 'Colours'], count: 20 })
+    expect(createStore(() => storage).startChoice()).toEqual({ categories: ['Family', 'Colours'], count: 20 })
+  })
+
+  it('ignores corrupt or malformed saved choices', () => {
+    const storage = new FakeStorage()
+    for (const raw of ['{not json', '[]', '{"categories":["Family"],"count":15}', '{"categories":"Family","count":10}']) {
+      storage.setItem('greek-quiz:v1:start', raw)
+      expect(createStore(() => storage).startChoice()).toBeUndefined()
+    }
+  })
+
+  it('is undefined (and saving is a no-op) when storage throws', () => {
+    const store = createStore(() => broken)
+    store.saveStartChoice({ categories: ['Family'], count: 'all' })
+    expect(store.startChoice()).toBeUndefined()
+  })
+})
+
 describe('when storage misbehaves', () => {
   it('works for the session if localStorage throws', () => {
     const store = createStore(() => broken)
