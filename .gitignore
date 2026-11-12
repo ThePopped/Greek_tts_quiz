@@ -21,3 +21,4 @@ pipeline/.cache/
 Thumbs.db
 .vscode/
 *.log
+.playwright-mcp/
