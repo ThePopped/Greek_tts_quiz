@@ -55,7 +55,7 @@ Status key: `[not started]` · `[in progress]` · `[done]`. The status is update
 8. `[done]` **Checkpoint:** the user listens and picks the default way and voice. Record the choice in the pipeline config. *Decision:* voice **Nestoras**, strategy **punctuated** (`pipeline/src/greek_tts/config.py`). All 22 items sounded right in both voices and both strategies, and the user couldn't hear a difference between punctuated and carrier, so the simpler one (no cut) won. Carrier stays available as a per-word override.
 
 ### Phase 3: Vocab list
-9. `[not started]` Claude drafts `data/vocab.csv` (about 300 rows, the categories above) with accepted answers, following the beginner conventions.
+9. `[done]` Claude drafts `data/vocab.csv` (about 300 rows, the categories above) with accepted answers, following the beginner conventions. *Result:* 374 rows over the 11 categories (numbers also cover 0 and the tens to 100). Column meanings and conventions are in `data/README.md`; `pipeline/tests/test_vocab_csv.py` checks the structure (cell count, unique ids and Greek, clean answers, valid pos/voice/strategy).
 10. `[not started]` **Checkpoint:** the user reviews and edits the CSV.
 
 ### Phase 4: Full audio generation + QA
