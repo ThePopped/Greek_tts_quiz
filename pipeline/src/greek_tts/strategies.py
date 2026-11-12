@@ -29,6 +29,7 @@ from pathlib import Path
 from typing import Literal, get_args
 
 from greek_tts.clip import process_clip
+from greek_tts.config import DEFAULT_STRATEGY, DEFAULT_VOICE
 from greek_tts.tts import VOICES, EdgeTTSBackend, TTSBackend, WordBoundary
 
 Strategy = Literal["plain", "punctuated", "carrier"]
@@ -120,8 +121,8 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description="Render one vocab item with a strategy.")
     parser.add_argument("text")
-    parser.add_argument("--strategy", default="carrier", choices=STRATEGIES)
-    parser.add_argument("--voice", default="athina", choices=sorted(VOICES))
+    parser.add_argument("--strategy", default=DEFAULT_STRATEGY, choices=STRATEGIES)
+    parser.add_argument("--voice", default=DEFAULT_VOICE, choices=sorted(VOICES))
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
 

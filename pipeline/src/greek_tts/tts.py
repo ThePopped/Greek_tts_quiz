@@ -21,6 +21,8 @@ import aiohttp
 import edge_tts
 from edge_tts.exceptions import EdgeTTSException
 
+from greek_tts.config import DEFAULT_VOICE
+
 # Short names used throughout the pipeline (CSV overrides, bake-off labels).
 VOICES: dict[str, str] = {
     "athina": "el-GR-AthinaNeural",  # female
@@ -114,7 +116,7 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(description="Synthesise Greek text and show word timings.")
     parser.add_argument("text")
-    parser.add_argument("--voice", default="athina", help=f"one of {sorted(VOICES)}")
+    parser.add_argument("--voice", default=DEFAULT_VOICE, help=f"one of {sorted(VOICES)}")
     parser.add_argument("--out", type=Path, help="write the MP3 here")
     args = parser.parse_args()
 
