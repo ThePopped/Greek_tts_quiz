@@ -1,0 +1,4413 @@
+{
+  "categories": [
+    "Greetings & phrases",
+    "Numbers",
+    "Family",
+    "Food & drink",
+    "Home",
+    "Colours",
+    "Days & time",
+    "Verbs",
+    "Adjectives",
+    "Places & transport",
+    "Question words"
+  ],
+  "words": [
+    {
+      "id": "phr-01",
+      "greek": "γεια σου",
+      "answers": [
+        "hello",
+        "hi",
+        "bye",
+        "goodbye"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "informal (to one person)",
+      "audio": "audio/phr-01.mp3"
+    },
+    {
+      "id": "phr-02",
+      "greek": "γεια σας",
+      "answers": [
+        "hello",
+        "hi",
+        "bye",
+        "goodbye"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "formal or to several people",
+      "audio": "audio/phr-02.mp3"
+    },
+    {
+      "id": "phr-03",
+      "greek": "καλημέρα",
+      "answers": [
+        "good morning"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-03.mp3"
+    },
+    {
+      "id": "phr-04",
+      "greek": "καλησπέρα",
+      "answers": [
+        "good evening",
+        "good afternoon"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "used from late afternoon on",
+      "audio": "audio/phr-04.mp3"
+    },
+    {
+      "id": "phr-05",
+      "greek": "καληνύχτα",
+      "answers": [
+        "good night",
+        "goodnight"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-05.mp3"
+    },
+    {
+      "id": "phr-06",
+      "greek": "χαίρετε",
+      "answers": [
+        "hello",
+        "greetings"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "formal",
+      "audio": "audio/phr-06.mp3"
+    },
+    {
+      "id": "phr-07",
+      "greek": "αντίο",
+      "answers": [
+        "goodbye",
+        "bye"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-07.mp3"
+    },
+    {
+      "id": "phr-08",
+      "greek": "τα λέμε",
+      "answers": [
+        "see you",
+        "see you later",
+        "talk soon"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "literally 'we say them'",
+      "audio": "audio/phr-08.mp3"
+    },
+    {
+      "id": "phr-09",
+      "greek": "ευχαριστώ",
+      "answers": [
+        "thank you",
+        "thanks"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-09.mp3"
+    },
+    {
+      "id": "phr-10",
+      "greek": "ευχαριστώ πολύ",
+      "answers": [
+        "thank you very much",
+        "thanks a lot",
+        "thank you so much",
+        "many thanks"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-10.mp3"
+    },
+    {
+      "id": "phr-11",
+      "greek": "παρακαλώ",
+      "answers": [
+        "please",
+        "you're welcome",
+        "you are welcome"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-11.mp3"
+    },
+    {
+      "id": "phr-12",
+      "greek": "συγγνώμη",
+      "answers": [
+        "sorry",
+        "excuse me",
+        "pardon"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-12.mp3"
+    },
+    {
+      "id": "phr-13",
+      "greek": "με συγχωρείτε",
+      "answers": [
+        "excuse me",
+        "pardon me",
+        "sorry"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "formal",
+      "audio": "audio/phr-13.mp3"
+    },
+    {
+      "id": "phr-14",
+      "greek": "ναι",
+      "answers": [
+        "yes"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-14.mp3"
+    },
+    {
+      "id": "phr-15",
+      "greek": "όχι",
+      "answers": [
+        "no"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-15.mp3"
+    },
+    {
+      "id": "phr-16",
+      "greek": "εντάξει",
+      "answers": [
+        "okay",
+        "ok",
+        "alright",
+        "all right",
+        "fine"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-16.mp3"
+    },
+    {
+      "id": "phr-17",
+      "greek": "τι κάνεις;",
+      "answers": [
+        "how are you",
+        "how are you doing"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "informal",
+      "audio": "audio/phr-17.mp3"
+    },
+    {
+      "id": "phr-18",
+      "greek": "τι κάνετε;",
+      "answers": [
+        "how are you",
+        "how are you doing"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "formal or to several people",
+      "audio": "audio/phr-18.mp3"
+    },
+    {
+      "id": "phr-19",
+      "greek": "καλά",
+      "answers": [
+        "well",
+        "good",
+        "fine",
+        "ok"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "adv",
+      "notes": "the usual answer to 'how are you'",
+      "audio": "audio/phr-19.mp3"
+    },
+    {
+      "id": "phr-20",
+      "greek": "πώς σε λένε;",
+      "answers": [
+        "what is your name",
+        "what's your name",
+        "what are you called"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "literally 'how do they call you'",
+      "audio": "audio/phr-20.mp3"
+    },
+    {
+      "id": "phr-21",
+      "greek": "με λένε",
+      "answers": [
+        "my name is",
+        "I am called",
+        "I'm called"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-21.mp3"
+    },
+    {
+      "id": "phr-22",
+      "greek": "χάρηκα",
+      "answers": [
+        "nice to meet you",
+        "pleased to meet you",
+        "glad to meet you"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "literally 'I was glad'",
+      "audio": "audio/phr-22.mp3"
+    },
+    {
+      "id": "phr-23",
+      "greek": "καλώς ήρθες",
+      "answers": [
+        "welcome"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "to one person (informal)",
+      "audio": "audio/phr-23.mp3"
+    },
+    {
+      "id": "phr-24",
+      "greek": "μιλάς αγγλικά;",
+      "answers": [
+        "do you speak english"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-24.mp3"
+    },
+    {
+      "id": "phr-25",
+      "greek": "δεν καταλαβαίνω",
+      "answers": [
+        "I don't understand",
+        "I do not understand"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-25.mp3"
+    },
+    {
+      "id": "phr-26",
+      "greek": "δεν ξέρω",
+      "answers": [
+        "I don't know",
+        "I do not know"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-26.mp3"
+    },
+    {
+      "id": "phr-27",
+      "greek": "καλή όρεξη",
+      "answers": [
+        "enjoy your meal",
+        "bon appetit",
+        "enjoy"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-27.mp3"
+    },
+    {
+      "id": "phr-28",
+      "greek": "στην υγειά μας",
+      "answers": [
+        "cheers",
+        "to our health"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-28.mp3"
+    },
+    {
+      "id": "phr-29",
+      "greek": "μπράβο",
+      "answers": [
+        "well done",
+        "bravo"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-29.mp3"
+    },
+    {
+      "id": "phr-30",
+      "greek": "ορίστε",
+      "answers": [
+        "here you are",
+        "here you go",
+        "pardon"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "also said when answering the phone or a call",
+      "audio": "audio/phr-30.mp3"
+    },
+    {
+      "id": "phr-31",
+      "greek": "πόσο κάνει;",
+      "answers": [
+        "how much is it",
+        "how much does it cost",
+        "how much"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-31.mp3"
+    },
+    {
+      "id": "phr-32",
+      "greek": "ένα λεπτό",
+      "answers": [
+        "one minute",
+        "just a minute",
+        "wait a minute",
+        "a minute",
+        "one moment"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-32.mp3"
+    },
+    {
+      "id": "phr-33",
+      "greek": "καλή τύχη",
+      "answers": [
+        "good luck"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-33.mp3"
+    },
+    {
+      "id": "phr-34",
+      "greek": "καλό ταξίδι",
+      "answers": [
+        "have a good trip",
+        "have a nice trip",
+        "bon voyage",
+        "safe travels"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-34.mp3"
+    },
+    {
+      "id": "phr-35",
+      "greek": "περαστικά",
+      "answers": [
+        "get well soon"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-35.mp3"
+    },
+    {
+      "id": "phr-36",
+      "greek": "χρόνια πολλά",
+      "answers": [
+        "happy birthday",
+        "many happy returns",
+        "happy holidays",
+        "best wishes"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "for birthdays / name days / holidays",
+      "audio": "audio/phr-36.mp3"
+    },
+    {
+      "id": "phr-37",
+      "greek": "δεν πειράζει",
+      "answers": [
+        "never mind",
+        "it doesn't matter",
+        "no problem",
+        "no worries",
+        "it's ok"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-37.mp3"
+    },
+    {
+      "id": "phr-38",
+      "greek": "φυσικά",
+      "answers": [
+        "of course",
+        "naturally",
+        "sure"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/phr-38.mp3"
+    },
+    {
+      "id": "phr-39",
+      "greek": "ίσως",
+      "answers": [
+        "maybe",
+        "perhaps"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/phr-39.mp3"
+    },
+    {
+      "id": "phr-40",
+      "greek": "πού είναι η τουαλέτα;",
+      "answers": [
+        "where is the toilet",
+        "where's the toilet",
+        "where is the bathroom",
+        "where is the restroom"
+      ],
+      "category": "Greetings & phrases",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/phr-40.mp3"
+    },
+    {
+      "id": "num-00",
+      "greek": "μηδέν",
+      "answers": [
+        "zero",
+        "0",
+        "nought"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-00.mp3"
+    },
+    {
+      "id": "num-01",
+      "greek": "ένα",
+      "answers": [
+        "one",
+        "1"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "also the neuter indefinite article",
+      "audio": "audio/num-01.mp3"
+    },
+    {
+      "id": "num-02",
+      "greek": "δύο",
+      "answers": [
+        "two",
+        "2"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-02.mp3"
+    },
+    {
+      "id": "num-03",
+      "greek": "τρία",
+      "answers": [
+        "three",
+        "3"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-03.mp3"
+    },
+    {
+      "id": "num-04",
+      "greek": "τέσσερα",
+      "answers": [
+        "four",
+        "4"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-04.mp3"
+    },
+    {
+      "id": "num-05",
+      "greek": "πέντε",
+      "answers": [
+        "five",
+        "5"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-05.mp3"
+    },
+    {
+      "id": "num-06",
+      "greek": "έξι",
+      "answers": [
+        "six",
+        "6"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-06.mp3"
+    },
+    {
+      "id": "num-07",
+      "greek": "επτά",
+      "answers": [
+        "seven",
+        "7"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "also εφτά",
+      "audio": "audio/num-07.mp3"
+    },
+    {
+      "id": "num-08",
+      "greek": "οκτώ",
+      "answers": [
+        "eight",
+        "8"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "also οχτώ",
+      "audio": "audio/num-08.mp3"
+    },
+    {
+      "id": "num-09",
+      "greek": "εννέα",
+      "answers": [
+        "nine",
+        "9"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "also εννιά",
+      "audio": "audio/num-09.mp3"
+    },
+    {
+      "id": "num-10",
+      "greek": "δέκα",
+      "answers": [
+        "ten",
+        "10"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-10.mp3"
+    },
+    {
+      "id": "num-11",
+      "greek": "έντεκα",
+      "answers": [
+        "eleven",
+        "11"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-11.mp3"
+    },
+    {
+      "id": "num-12",
+      "greek": "δώδεκα",
+      "answers": [
+        "twelve",
+        "12"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-12.mp3"
+    },
+    {
+      "id": "num-13",
+      "greek": "δεκατρία",
+      "answers": [
+        "thirteen",
+        "13"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-13.mp3"
+    },
+    {
+      "id": "num-14",
+      "greek": "δεκατέσσερα",
+      "answers": [
+        "fourteen",
+        "14"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-14.mp3"
+    },
+    {
+      "id": "num-15",
+      "greek": "δεκαπέντε",
+      "answers": [
+        "fifteen",
+        "15"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-15.mp3"
+    },
+    {
+      "id": "num-16",
+      "greek": "δεκαέξι",
+      "answers": [
+        "sixteen",
+        "16"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-16.mp3"
+    },
+    {
+      "id": "num-17",
+      "greek": "δεκαεπτά",
+      "answers": [
+        "seventeen",
+        "17"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "also δεκαεφτά",
+      "audio": "audio/num-17.mp3"
+    },
+    {
+      "id": "num-18",
+      "greek": "δεκαοκτώ",
+      "answers": [
+        "eighteen",
+        "18"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "also δεκαοχτώ",
+      "audio": "audio/num-18.mp3"
+    },
+    {
+      "id": "num-19",
+      "greek": "δεκαεννέα",
+      "answers": [
+        "nineteen",
+        "19"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "also δεκαεννιά",
+      "audio": "audio/num-19.mp3"
+    },
+    {
+      "id": "num-20",
+      "greek": "είκοσι",
+      "answers": [
+        "twenty",
+        "20"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-20.mp3"
+    },
+    {
+      "id": "num-30",
+      "greek": "τριάντα",
+      "answers": [
+        "thirty",
+        "30"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-30.mp3"
+    },
+    {
+      "id": "num-40",
+      "greek": "σαράντα",
+      "answers": [
+        "forty",
+        "40"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-40.mp3"
+    },
+    {
+      "id": "num-50",
+      "greek": "πενήντα",
+      "answers": [
+        "fifty",
+        "50"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-50.mp3"
+    },
+    {
+      "id": "num-60",
+      "greek": "εξήντα",
+      "answers": [
+        "sixty",
+        "60"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-60.mp3"
+    },
+    {
+      "id": "num-70",
+      "greek": "εβδομήντα",
+      "answers": [
+        "seventy",
+        "70"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-70.mp3"
+    },
+    {
+      "id": "num-80",
+      "greek": "ογδόντα",
+      "answers": [
+        "eighty",
+        "80"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-80.mp3"
+    },
+    {
+      "id": "num-90",
+      "greek": "ενενήντα",
+      "answers": [
+        "ninety",
+        "90"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-90.mp3"
+    },
+    {
+      "id": "num-100",
+      "greek": "εκατό",
+      "answers": [
+        "hundred",
+        "one hundred",
+        "a hundred",
+        "100"
+      ],
+      "category": "Numbers",
+      "pos": "num",
+      "notes": "",
+      "audio": "audio/num-100.mp3"
+    },
+    {
+      "id": "fam-01",
+      "greek": "η οικογένεια",
+      "answers": [
+        "family"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-01.mp3"
+    },
+    {
+      "id": "fam-02",
+      "greek": "ο πατέρας",
+      "answers": [
+        "father",
+        "dad"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-02.mp3"
+    },
+    {
+      "id": "fam-03",
+      "greek": "η μητέρα",
+      "answers": [
+        "mother",
+        "mum",
+        "mom"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-03.mp3"
+    },
+    {
+      "id": "fam-04",
+      "greek": "ο μπαμπάς",
+      "answers": [
+        "dad",
+        "daddy",
+        "father"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-04.mp3"
+    },
+    {
+      "id": "fam-05",
+      "greek": "η μαμά",
+      "answers": [
+        "mum",
+        "mom",
+        "mummy",
+        "mommy",
+        "mother"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-05.mp3"
+    },
+    {
+      "id": "fam-06",
+      "greek": "οι γονείς",
+      "answers": [
+        "parents"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "plural",
+      "audio": "audio/fam-06.mp3"
+    },
+    {
+      "id": "fam-07",
+      "greek": "ο γιος",
+      "answers": [
+        "son"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-07.mp3"
+    },
+    {
+      "id": "fam-08",
+      "greek": "η κόρη",
+      "answers": [
+        "daughter"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-08.mp3"
+    },
+    {
+      "id": "fam-09",
+      "greek": "ο αδερφός",
+      "answers": [
+        "brother"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "also αδελφός",
+      "audio": "audio/fam-09.mp3"
+    },
+    {
+      "id": "fam-10",
+      "greek": "η αδερφή",
+      "answers": [
+        "sister"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "also αδελφή",
+      "audio": "audio/fam-10.mp3"
+    },
+    {
+      "id": "fam-11",
+      "greek": "ο παππούς",
+      "answers": [
+        "grandfather",
+        "grandpa",
+        "granddad"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-11.mp3"
+    },
+    {
+      "id": "fam-12",
+      "greek": "η γιαγιά",
+      "answers": [
+        "grandmother",
+        "grandma",
+        "granny",
+        "nan"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-12.mp3"
+    },
+    {
+      "id": "fam-13",
+      "greek": "ο θείος",
+      "answers": [
+        "uncle"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-13.mp3"
+    },
+    {
+      "id": "fam-14",
+      "greek": "η θεία",
+      "answers": [
+        "aunt",
+        "auntie"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-14.mp3"
+    },
+    {
+      "id": "fam-15",
+      "greek": "ο ξάδερφος",
+      "answers": [
+        "cousin"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "male cousin",
+      "audio": "audio/fam-15.mp3"
+    },
+    {
+      "id": "fam-16",
+      "greek": "η ξαδέρφη",
+      "answers": [
+        "cousin"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "female cousin",
+      "audio": "audio/fam-16.mp3"
+    },
+    {
+      "id": "fam-17",
+      "greek": "ο άντρας",
+      "answers": [
+        "man",
+        "husband"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-17.mp3"
+    },
+    {
+      "id": "fam-18",
+      "greek": "η γυναίκα",
+      "answers": [
+        "woman",
+        "wife"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-18.mp3"
+    },
+    {
+      "id": "fam-19",
+      "greek": "το παιδί",
+      "answers": [
+        "child",
+        "kid"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-19.mp3"
+    },
+    {
+      "id": "fam-20",
+      "greek": "τα παιδιά",
+      "answers": [
+        "children",
+        "kids"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "plural",
+      "audio": "audio/fam-20.mp3"
+    },
+    {
+      "id": "fam-21",
+      "greek": "το μωρό",
+      "answers": [
+        "baby"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-21.mp3"
+    },
+    {
+      "id": "fam-22",
+      "greek": "το αγόρι",
+      "answers": [
+        "boy",
+        "boyfriend"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-22.mp3"
+    },
+    {
+      "id": "fam-23",
+      "greek": "το κορίτσι",
+      "answers": [
+        "girl",
+        "girlfriend"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-23.mp3"
+    },
+    {
+      "id": "fam-24",
+      "greek": "ο φίλος",
+      "answers": [
+        "friend",
+        "boyfriend"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "male friend",
+      "audio": "audio/fam-24.mp3"
+    },
+    {
+      "id": "fam-25",
+      "greek": "η φίλη",
+      "answers": [
+        "friend",
+        "girlfriend"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "female friend",
+      "audio": "audio/fam-25.mp3"
+    },
+    {
+      "id": "fam-26",
+      "greek": "ο εγγονός",
+      "answers": [
+        "grandson",
+        "grandchild"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-26.mp3"
+    },
+    {
+      "id": "fam-27",
+      "greek": "η εγγονή",
+      "answers": [
+        "granddaughter",
+        "grandchild"
+      ],
+      "category": "Family",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/fam-27.mp3"
+    },
+    {
+      "id": "food-01",
+      "greek": "το φαγητό",
+      "answers": [
+        "food",
+        "meal"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-01.mp3"
+    },
+    {
+      "id": "food-02",
+      "greek": "το νερό",
+      "answers": [
+        "water"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-02.mp3"
+    },
+    {
+      "id": "food-03",
+      "greek": "ο καφές",
+      "answers": [
+        "coffee"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-03.mp3"
+    },
+    {
+      "id": "food-04",
+      "greek": "το τσάι",
+      "answers": [
+        "tea"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-04.mp3"
+    },
+    {
+      "id": "food-05",
+      "greek": "το γάλα",
+      "answers": [
+        "milk"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-05.mp3"
+    },
+    {
+      "id": "food-06",
+      "greek": "ο χυμός",
+      "answers": [
+        "juice"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-06.mp3"
+    },
+    {
+      "id": "food-07",
+      "greek": "το κρασί",
+      "answers": [
+        "wine"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-07.mp3"
+    },
+    {
+      "id": "food-08",
+      "greek": "η μπίρα",
+      "answers": [
+        "beer"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-08.mp3"
+    },
+    {
+      "id": "food-09",
+      "greek": "το ψωμί",
+      "answers": [
+        "bread"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-09.mp3"
+    },
+    {
+      "id": "food-10",
+      "greek": "το τυρί",
+      "answers": [
+        "cheese"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-10.mp3"
+    },
+    {
+      "id": "food-11",
+      "greek": "το βούτυρο",
+      "answers": [
+        "butter"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-11.mp3"
+    },
+    {
+      "id": "food-12",
+      "greek": "το αυγό",
+      "answers": [
+        "egg"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-12.mp3"
+    },
+    {
+      "id": "food-13",
+      "greek": "το γιαούρτι",
+      "answers": [
+        "yoghurt",
+        "yogurt"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-13.mp3"
+    },
+    {
+      "id": "food-14",
+      "greek": "το μέλι",
+      "answers": [
+        "honey"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-14.mp3"
+    },
+    {
+      "id": "food-15",
+      "greek": "το κρέας",
+      "answers": [
+        "meat"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-15.mp3"
+    },
+    {
+      "id": "food-16",
+      "greek": "το κοτόπουλο",
+      "answers": [
+        "chicken"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-16.mp3"
+    },
+    {
+      "id": "food-17",
+      "greek": "το ψάρι",
+      "answers": [
+        "fish"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-17.mp3"
+    },
+    {
+      "id": "food-18",
+      "greek": "το χοιρινό",
+      "answers": [
+        "pork"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-18.mp3"
+    },
+    {
+      "id": "food-19",
+      "greek": "το μοσχάρι",
+      "answers": [
+        "beef",
+        "veal"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "also 'calf'",
+      "audio": "audio/food-19.mp3"
+    },
+    {
+      "id": "food-20",
+      "greek": "το αρνί",
+      "answers": [
+        "lamb"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-20.mp3"
+    },
+    {
+      "id": "food-21",
+      "greek": "το ρύζι",
+      "answers": [
+        "rice"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-21.mp3"
+    },
+    {
+      "id": "food-22",
+      "greek": "τα μακαρόνια",
+      "answers": [
+        "pasta",
+        "macaroni",
+        "spaghetti"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "plural",
+      "audio": "audio/food-22.mp3"
+    },
+    {
+      "id": "food-23",
+      "greek": "η πατάτα",
+      "answers": [
+        "potato"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-23.mp3"
+    },
+    {
+      "id": "food-24",
+      "greek": "η ντομάτα",
+      "answers": [
+        "tomato"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-24.mp3"
+    },
+    {
+      "id": "food-25",
+      "greek": "το αγγούρι",
+      "answers": [
+        "cucumber"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-25.mp3"
+    },
+    {
+      "id": "food-26",
+      "greek": "το κρεμμύδι",
+      "answers": [
+        "onion"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-26.mp3"
+    },
+    {
+      "id": "food-27",
+      "greek": "το σκόρδο",
+      "answers": [
+        "garlic"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-27.mp3"
+    },
+    {
+      "id": "food-28",
+      "greek": "τα λαχανικά",
+      "answers": [
+        "vegetables",
+        "veg"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "plural",
+      "audio": "audio/food-28.mp3"
+    },
+    {
+      "id": "food-29",
+      "greek": "η σαλάτα",
+      "answers": [
+        "salad"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-29.mp3"
+    },
+    {
+      "id": "food-30",
+      "greek": "η σούπα",
+      "answers": [
+        "soup"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-30.mp3"
+    },
+    {
+      "id": "food-31",
+      "greek": "το λάδι",
+      "answers": [
+        "oil",
+        "olive oil"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-31.mp3"
+    },
+    {
+      "id": "food-32",
+      "greek": "η ελιά",
+      "answers": [
+        "olive",
+        "olive tree"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-32.mp3"
+    },
+    {
+      "id": "food-33",
+      "greek": "το αλάτι",
+      "answers": [
+        "salt"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-33.mp3"
+    },
+    {
+      "id": "food-34",
+      "greek": "το πιπέρι",
+      "answers": [
+        "pepper"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-34.mp3"
+    },
+    {
+      "id": "food-35",
+      "greek": "η ζάχαρη",
+      "answers": [
+        "sugar"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-35.mp3"
+    },
+    {
+      "id": "food-36",
+      "greek": "το φρούτο",
+      "answers": [
+        "fruit"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-36.mp3"
+    },
+    {
+      "id": "food-37",
+      "greek": "το μήλο",
+      "answers": [
+        "apple"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-37.mp3"
+    },
+    {
+      "id": "food-38",
+      "greek": "η μπανάνα",
+      "answers": [
+        "banana"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-38.mp3"
+    },
+    {
+      "id": "food-39",
+      "greek": "το πορτοκάλι",
+      "answers": [
+        "orange"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "the fruit (the colour is πορτοκαλί)",
+      "audio": "audio/food-39.mp3"
+    },
+    {
+      "id": "food-40",
+      "greek": "το λεμόνι",
+      "answers": [
+        "lemon"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-40.mp3"
+    },
+    {
+      "id": "food-41",
+      "greek": "το σταφύλι",
+      "answers": [
+        "grapes",
+        "grape"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-41.mp3"
+    },
+    {
+      "id": "food-42",
+      "greek": "η φράουλα",
+      "answers": [
+        "strawberry"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-42.mp3"
+    },
+    {
+      "id": "food-43",
+      "greek": "το καρπούζι",
+      "answers": [
+        "watermelon"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-43.mp3"
+    },
+    {
+      "id": "food-44",
+      "greek": "το παγωτό",
+      "answers": [
+        "ice cream"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-44.mp3"
+    },
+    {
+      "id": "food-45",
+      "greek": "το γλυκό",
+      "answers": [
+        "dessert",
+        "sweet",
+        "cake"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-45.mp3"
+    },
+    {
+      "id": "food-46",
+      "greek": "το πρωινό",
+      "answers": [
+        "breakfast"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "also 'the morning' as an adjective",
+      "audio": "audio/food-46.mp3"
+    },
+    {
+      "id": "food-47",
+      "greek": "το μεσημεριανό",
+      "answers": [
+        "lunch"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-47.mp3"
+    },
+    {
+      "id": "food-48",
+      "greek": "το βραδινό",
+      "answers": [
+        "dinner",
+        "supper"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-48.mp3"
+    },
+    {
+      "id": "food-49",
+      "greek": "ο λογαριασμός",
+      "answers": [
+        "bill",
+        "check",
+        "account"
+      ],
+      "category": "Food & drink",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/food-49.mp3"
+    },
+    {
+      "id": "home-01",
+      "greek": "το σπίτι",
+      "answers": [
+        "house",
+        "home"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-01.mp3"
+    },
+    {
+      "id": "home-02",
+      "greek": "το διαμέρισμα",
+      "answers": [
+        "flat",
+        "apartment"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-02.mp3"
+    },
+    {
+      "id": "home-03",
+      "greek": "το δωμάτιο",
+      "answers": [
+        "room"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-03.mp3"
+    },
+    {
+      "id": "home-04",
+      "greek": "η κουζίνα",
+      "answers": [
+        "kitchen",
+        "cooker",
+        "stove"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-04.mp3"
+    },
+    {
+      "id": "home-05",
+      "greek": "το μπάνιο",
+      "answers": [
+        "bathroom",
+        "bath"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-05.mp3"
+    },
+    {
+      "id": "home-06",
+      "greek": "η κρεβατοκάμαρα",
+      "answers": [
+        "bedroom"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-06.mp3"
+    },
+    {
+      "id": "home-07",
+      "greek": "το σαλόνι",
+      "answers": [
+        "living room",
+        "lounge",
+        "sitting room"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-07.mp3"
+    },
+    {
+      "id": "home-08",
+      "greek": "η τουαλέτα",
+      "answers": [
+        "toilet",
+        "loo",
+        "bathroom",
+        "restroom"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-08.mp3"
+    },
+    {
+      "id": "home-09",
+      "greek": "η πόρτα",
+      "answers": [
+        "door"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-09.mp3"
+    },
+    {
+      "id": "home-10",
+      "greek": "το παράθυρο",
+      "answers": [
+        "window"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-10.mp3"
+    },
+    {
+      "id": "home-11",
+      "greek": "ο τοίχος",
+      "answers": [
+        "wall"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-11.mp3"
+    },
+    {
+      "id": "home-12",
+      "greek": "το πάτωμα",
+      "answers": [
+        "floor"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-12.mp3"
+    },
+    {
+      "id": "home-13",
+      "greek": "η σκάλα",
+      "answers": [
+        "stairs",
+        "staircase",
+        "ladder"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-13.mp3"
+    },
+    {
+      "id": "home-14",
+      "greek": "ο κήπος",
+      "answers": [
+        "garden",
+        "yard"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-14.mp3"
+    },
+    {
+      "id": "home-15",
+      "greek": "το μπαλκόνι",
+      "answers": [
+        "balcony"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-15.mp3"
+    },
+    {
+      "id": "home-16",
+      "greek": "το κρεβάτι",
+      "answers": [
+        "bed"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-16.mp3"
+    },
+    {
+      "id": "home-17",
+      "greek": "το τραπέζι",
+      "answers": [
+        "table"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-17.mp3"
+    },
+    {
+      "id": "home-18",
+      "greek": "η καρέκλα",
+      "answers": [
+        "chair"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-18.mp3"
+    },
+    {
+      "id": "home-19",
+      "greek": "ο καναπές",
+      "answers": [
+        "sofa",
+        "couch"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-19.mp3"
+    },
+    {
+      "id": "home-20",
+      "greek": "η ντουλάπα",
+      "answers": [
+        "wardrobe",
+        "closet",
+        "cupboard"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-20.mp3"
+    },
+    {
+      "id": "home-21",
+      "greek": "το ψυγείο",
+      "answers": [
+        "fridge",
+        "refrigerator"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-21.mp3"
+    },
+    {
+      "id": "home-22",
+      "greek": "η τηλεόραση",
+      "answers": [
+        "television",
+        "tv",
+        "telly"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-22.mp3"
+    },
+    {
+      "id": "home-23",
+      "greek": "το τηλέφωνο",
+      "answers": [
+        "phone",
+        "telephone"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-23.mp3"
+    },
+    {
+      "id": "home-24",
+      "greek": "ο υπολογιστής",
+      "answers": [
+        "computer"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-24.mp3"
+    },
+    {
+      "id": "home-25",
+      "greek": "το κλειδί",
+      "answers": [
+        "key"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-25.mp3"
+    },
+    {
+      "id": "home-26",
+      "greek": "το φως",
+      "answers": [
+        "light"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-26.mp3"
+    },
+    {
+      "id": "home-27",
+      "greek": "ο καθρέφτης",
+      "answers": [
+        "mirror"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-27.mp3"
+    },
+    {
+      "id": "home-28",
+      "greek": "η πετσέτα",
+      "answers": [
+        "towel"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-28.mp3"
+    },
+    {
+      "id": "home-29",
+      "greek": "το βιβλίο",
+      "answers": [
+        "book"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-29.mp3"
+    },
+    {
+      "id": "home-30",
+      "greek": "το ρολόι",
+      "answers": [
+        "clock",
+        "watch"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-30.mp3"
+    },
+    {
+      "id": "home-31",
+      "greek": "το ποτήρι",
+      "answers": [
+        "glass"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "drinking glass",
+      "audio": "audio/home-31.mp3"
+    },
+    {
+      "id": "home-32",
+      "greek": "το πιάτο",
+      "answers": [
+        "plate",
+        "dish"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-32.mp3"
+    },
+    {
+      "id": "home-33",
+      "greek": "το μαχαίρι",
+      "answers": [
+        "knife"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-33.mp3"
+    },
+    {
+      "id": "home-34",
+      "greek": "το πιρούνι",
+      "answers": [
+        "fork"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-34.mp3"
+    },
+    {
+      "id": "home-35",
+      "greek": "το κουτάλι",
+      "answers": [
+        "spoon"
+      ],
+      "category": "Home",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/home-35.mp3"
+    },
+    {
+      "id": "col-01",
+      "greek": "το χρώμα",
+      "answers": [
+        "colour",
+        "color"
+      ],
+      "category": "Colours",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/col-01.mp3"
+    },
+    {
+      "id": "col-02",
+      "greek": "κόκκινος",
+      "answers": [
+        "red"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/col-02.mp3"
+    },
+    {
+      "id": "col-03",
+      "greek": "μπλε",
+      "answers": [
+        "blue"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "does not change form",
+      "audio": "audio/col-03.mp3"
+    },
+    {
+      "id": "col-04",
+      "greek": "γαλάζιος",
+      "answers": [
+        "light blue",
+        "sky blue",
+        "blue"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/col-04.mp3"
+    },
+    {
+      "id": "col-05",
+      "greek": "πράσινος",
+      "answers": [
+        "green"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/col-05.mp3"
+    },
+    {
+      "id": "col-06",
+      "greek": "κίτρινος",
+      "answers": [
+        "yellow"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/col-06.mp3"
+    },
+    {
+      "id": "col-07",
+      "greek": "άσπρος",
+      "answers": [
+        "white"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "also λευκός",
+      "audio": "audio/col-07.mp3"
+    },
+    {
+      "id": "col-08",
+      "greek": "μαύρος",
+      "answers": [
+        "black"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/col-08.mp3"
+    },
+    {
+      "id": "col-09",
+      "greek": "γκρι",
+      "answers": [
+        "grey",
+        "gray"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "does not change form",
+      "audio": "audio/col-09.mp3"
+    },
+    {
+      "id": "col-10",
+      "greek": "καφέ",
+      "answers": [
+        "brown"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "does not change form; also 'coffee-coloured'",
+      "audio": "audio/col-10.mp3"
+    },
+    {
+      "id": "col-11",
+      "greek": "πορτοκαλί",
+      "answers": [
+        "orange"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "does not change form (the fruit is πορτοκάλι)",
+      "audio": "audio/col-11.mp3"
+    },
+    {
+      "id": "col-12",
+      "greek": "ροζ",
+      "answers": [
+        "pink"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "does not change form",
+      "audio": "audio/col-12.mp3"
+    },
+    {
+      "id": "col-13",
+      "greek": "μωβ",
+      "answers": [
+        "purple",
+        "violet"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "does not change form",
+      "audio": "audio/col-13.mp3"
+    },
+    {
+      "id": "col-14",
+      "greek": "χρυσός",
+      "answers": [
+        "gold",
+        "golden"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/col-14.mp3"
+    },
+    {
+      "id": "col-15",
+      "greek": "ασημένιος",
+      "answers": [
+        "silver"
+      ],
+      "category": "Colours",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/col-15.mp3"
+    },
+    {
+      "id": "time-01",
+      "greek": "η Δευτέρα",
+      "answers": [
+        "Monday"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-01.mp3"
+    },
+    {
+      "id": "time-02",
+      "greek": "η Τρίτη",
+      "answers": [
+        "Tuesday"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-02.mp3"
+    },
+    {
+      "id": "time-03",
+      "greek": "η Τετάρτη",
+      "answers": [
+        "Wednesday"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-03.mp3"
+    },
+    {
+      "id": "time-04",
+      "greek": "η Πέμπτη",
+      "answers": [
+        "Thursday"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-04.mp3"
+    },
+    {
+      "id": "time-05",
+      "greek": "η Παρασκευή",
+      "answers": [
+        "Friday"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-05.mp3"
+    },
+    {
+      "id": "time-06",
+      "greek": "το Σάββατο",
+      "answers": [
+        "Saturday"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-06.mp3"
+    },
+    {
+      "id": "time-07",
+      "greek": "η Κυριακή",
+      "answers": [
+        "Sunday"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-07.mp3"
+    },
+    {
+      "id": "time-08",
+      "greek": "το Σαββατοκύριακο",
+      "answers": [
+        "weekend"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-08.mp3"
+    },
+    {
+      "id": "time-09",
+      "greek": "η μέρα",
+      "answers": [
+        "day"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "also ημέρα",
+      "audio": "audio/time-09.mp3"
+    },
+    {
+      "id": "time-10",
+      "greek": "η εβδομάδα",
+      "answers": [
+        "week"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-10.mp3"
+    },
+    {
+      "id": "time-11",
+      "greek": "ο μήνας",
+      "answers": [
+        "month"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-11.mp3"
+    },
+    {
+      "id": "time-12",
+      "greek": "ο χρόνος",
+      "answers": [
+        "year",
+        "time"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-12.mp3"
+    },
+    {
+      "id": "time-13",
+      "greek": "η ώρα",
+      "answers": [
+        "hour",
+        "time"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-13.mp3"
+    },
+    {
+      "id": "time-14",
+      "greek": "το λεπτό",
+      "answers": [
+        "minute"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-14.mp3"
+    },
+    {
+      "id": "time-15",
+      "greek": "το δευτερόλεπτο",
+      "answers": [
+        "second"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-15.mp3"
+    },
+    {
+      "id": "time-16",
+      "greek": "το πρωί",
+      "answers": [
+        "morning",
+        "in the morning"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-16.mp3"
+    },
+    {
+      "id": "time-17",
+      "greek": "το μεσημέρι",
+      "answers": [
+        "noon",
+        "midday",
+        "lunchtime"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-17.mp3"
+    },
+    {
+      "id": "time-18",
+      "greek": "το απόγευμα",
+      "answers": [
+        "afternoon"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-18.mp3"
+    },
+    {
+      "id": "time-19",
+      "greek": "το βράδυ",
+      "answers": [
+        "evening",
+        "night"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-19.mp3"
+    },
+    {
+      "id": "time-20",
+      "greek": "η νύχτα",
+      "answers": [
+        "night"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-20.mp3"
+    },
+    {
+      "id": "time-21",
+      "greek": "ο χειμώνας",
+      "answers": [
+        "winter"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-21.mp3"
+    },
+    {
+      "id": "time-22",
+      "greek": "η άνοιξη",
+      "answers": [
+        "spring"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-22.mp3"
+    },
+    {
+      "id": "time-23",
+      "greek": "το καλοκαίρι",
+      "answers": [
+        "summer"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-23.mp3"
+    },
+    {
+      "id": "time-24",
+      "greek": "το φθινόπωρο",
+      "answers": [
+        "autumn",
+        "fall"
+      ],
+      "category": "Days & time",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/time-24.mp3"
+    },
+    {
+      "id": "time-25",
+      "greek": "σήμερα",
+      "answers": [
+        "today"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-25.mp3"
+    },
+    {
+      "id": "time-26",
+      "greek": "αύριο",
+      "answers": [
+        "tomorrow"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-26.mp3"
+    },
+    {
+      "id": "time-27",
+      "greek": "χθες",
+      "answers": [
+        "yesterday"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "also χτες",
+      "audio": "audio/time-27.mp3"
+    },
+    {
+      "id": "time-28",
+      "greek": "τώρα",
+      "answers": [
+        "now"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-28.mp3"
+    },
+    {
+      "id": "time-29",
+      "greek": "μετά",
+      "answers": [
+        "after",
+        "later",
+        "afterwards",
+        "then"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-29.mp3"
+    },
+    {
+      "id": "time-30",
+      "greek": "πριν",
+      "answers": [
+        "before",
+        "ago"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-30.mp3"
+    },
+    {
+      "id": "time-31",
+      "greek": "νωρίς",
+      "answers": [
+        "early"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-31.mp3"
+    },
+    {
+      "id": "time-32",
+      "greek": "αργά",
+      "answers": [
+        "late",
+        "slowly"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-32.mp3"
+    },
+    {
+      "id": "time-33",
+      "greek": "πάντα",
+      "answers": [
+        "always"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-33.mp3"
+    },
+    {
+      "id": "time-34",
+      "greek": "συχνά",
+      "answers": [
+        "often"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-34.mp3"
+    },
+    {
+      "id": "time-35",
+      "greek": "μερικές φορές",
+      "answers": [
+        "sometimes"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/time-35.mp3"
+    },
+    {
+      "id": "time-36",
+      "greek": "ποτέ",
+      "answers": [
+        "never"
+      ],
+      "category": "Days & time",
+      "pos": "adv",
+      "notes": "compare πότε (when)",
+      "audio": "audio/time-36.mp3"
+    },
+    {
+      "id": "time-37",
+      "greek": "τι ώρα είναι;",
+      "answers": [
+        "what time is it",
+        "what's the time"
+      ],
+      "category": "Days & time",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/time-37.mp3"
+    },
+    {
+      "id": "verb-01",
+      "greek": "είμαι",
+      "answers": [
+        "be",
+        "I am"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-01.mp3"
+    },
+    {
+      "id": "verb-02",
+      "greek": "έχω",
+      "answers": [
+        "have"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-02.mp3"
+    },
+    {
+      "id": "verb-03",
+      "greek": "θέλω",
+      "answers": [
+        "want"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-03.mp3"
+    },
+    {
+      "id": "verb-04",
+      "greek": "μπορώ",
+      "answers": [
+        "can",
+        "be able"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-04.mp3"
+    },
+    {
+      "id": "verb-05",
+      "greek": "ξέρω",
+      "answers": [
+        "know"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-05.mp3"
+    },
+    {
+      "id": "verb-06",
+      "greek": "κάνω",
+      "answers": [
+        "do",
+        "make"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-06.mp3"
+    },
+    {
+      "id": "verb-07",
+      "greek": "πάω",
+      "answers": [
+        "go"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "also πηγαίνω",
+      "audio": "audio/verb-07.mp3"
+    },
+    {
+      "id": "verb-08",
+      "greek": "έρχομαι",
+      "answers": [
+        "come"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-08.mp3"
+    },
+    {
+      "id": "verb-09",
+      "greek": "φεύγω",
+      "answers": [
+        "leave",
+        "go away"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-09.mp3"
+    },
+    {
+      "id": "verb-10",
+      "greek": "τρώω",
+      "answers": [
+        "eat"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-10.mp3"
+    },
+    {
+      "id": "verb-11",
+      "greek": "πίνω",
+      "answers": [
+        "drink"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-11.mp3"
+    },
+    {
+      "id": "verb-12",
+      "greek": "μιλάω",
+      "answers": [
+        "speak",
+        "talk"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-12.mp3"
+    },
+    {
+      "id": "verb-13",
+      "greek": "λέω",
+      "answers": [
+        "say",
+        "tell"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-13.mp3"
+    },
+    {
+      "id": "verb-14",
+      "greek": "βλέπω",
+      "answers": [
+        "see",
+        "watch"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-14.mp3"
+    },
+    {
+      "id": "verb-15",
+      "greek": "ακούω",
+      "answers": [
+        "hear",
+        "listen"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-15.mp3"
+    },
+    {
+      "id": "verb-16",
+      "greek": "διαβάζω",
+      "answers": [
+        "read",
+        "study"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-16.mp3"
+    },
+    {
+      "id": "verb-17",
+      "greek": "γράφω",
+      "answers": [
+        "write"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-17.mp3"
+    },
+    {
+      "id": "verb-18",
+      "greek": "μαθαίνω",
+      "answers": [
+        "learn"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-18.mp3"
+    },
+    {
+      "id": "verb-19",
+      "greek": "καταλαβαίνω",
+      "answers": [
+        "understand"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-19.mp3"
+    },
+    {
+      "id": "verb-20",
+      "greek": "δουλεύω",
+      "answers": [
+        "work"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-20.mp3"
+    },
+    {
+      "id": "verb-21",
+      "greek": "μένω",
+      "answers": [
+        "live",
+        "stay"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "live in a place",
+      "audio": "audio/verb-21.mp3"
+    },
+    {
+      "id": "verb-22",
+      "greek": "ζω",
+      "answers": [
+        "live"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "be alive",
+      "audio": "audio/verb-22.mp3"
+    },
+    {
+      "id": "verb-23",
+      "greek": "αγαπάω",
+      "answers": [
+        "love"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-23.mp3"
+    },
+    {
+      "id": "verb-24",
+      "greek": "μου αρέσει",
+      "answers": [
+        "I like it",
+        "like",
+        "like it"
+      ],
+      "category": "Verbs",
+      "pos": "phrase",
+      "notes": "literally 'it pleases me'",
+      "audio": "audio/verb-24.mp3"
+    },
+    {
+      "id": "verb-25",
+      "greek": "παίρνω",
+      "answers": [
+        "take",
+        "get"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-25.mp3"
+    },
+    {
+      "id": "verb-26",
+      "greek": "δίνω",
+      "answers": [
+        "give"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-26.mp3"
+    },
+    {
+      "id": "verb-27",
+      "greek": "αγοράζω",
+      "answers": [
+        "buy"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-27.mp3"
+    },
+    {
+      "id": "verb-28",
+      "greek": "πληρώνω",
+      "answers": [
+        "pay"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-28.mp3"
+    },
+    {
+      "id": "verb-29",
+      "greek": "ανοίγω",
+      "answers": [
+        "open"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-29.mp3"
+    },
+    {
+      "id": "verb-30",
+      "greek": "κλείνω",
+      "answers": [
+        "close",
+        "shut"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-30.mp3"
+    },
+    {
+      "id": "verb-31",
+      "greek": "αρχίζω",
+      "answers": [
+        "start",
+        "begin"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-31.mp3"
+    },
+    {
+      "id": "verb-32",
+      "greek": "τελειώνω",
+      "answers": [
+        "finish",
+        "end"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-32.mp3"
+    },
+    {
+      "id": "verb-33",
+      "greek": "περιμένω",
+      "answers": [
+        "wait",
+        "wait for",
+        "expect"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-33.mp3"
+    },
+    {
+      "id": "verb-34",
+      "greek": "ψάχνω",
+      "answers": [
+        "look for",
+        "search",
+        "search for"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-34.mp3"
+    },
+    {
+      "id": "verb-35",
+      "greek": "βρίσκω",
+      "answers": [
+        "find"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-35.mp3"
+    },
+    {
+      "id": "verb-36",
+      "greek": "χρειάζομαι",
+      "answers": [
+        "need"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-36.mp3"
+    },
+    {
+      "id": "verb-37",
+      "greek": "βοηθάω",
+      "answers": [
+        "help"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-37.mp3"
+    },
+    {
+      "id": "verb-38",
+      "greek": "ρωτάω",
+      "answers": [
+        "ask"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-38.mp3"
+    },
+    {
+      "id": "verb-39",
+      "greek": "απαντάω",
+      "answers": [
+        "answer",
+        "reply"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-39.mp3"
+    },
+    {
+      "id": "verb-40",
+      "greek": "σκέφτομαι",
+      "answers": [
+        "think"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-40.mp3"
+    },
+    {
+      "id": "verb-41",
+      "greek": "κοιμάμαι",
+      "answers": [
+        "sleep"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-41.mp3"
+    },
+    {
+      "id": "verb-42",
+      "greek": "ξυπνάω",
+      "answers": [
+        "wake up",
+        "wake"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-42.mp3"
+    },
+    {
+      "id": "verb-43",
+      "greek": "μαγειρεύω",
+      "answers": [
+        "cook"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-43.mp3"
+    },
+    {
+      "id": "verb-44",
+      "greek": "παίζω",
+      "answers": [
+        "play"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-44.mp3"
+    },
+    {
+      "id": "verb-45",
+      "greek": "περπατάω",
+      "answers": [
+        "walk"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-45.mp3"
+    },
+    {
+      "id": "verb-46",
+      "greek": "τρέχω",
+      "answers": [
+        "run"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-46.mp3"
+    },
+    {
+      "id": "verb-47",
+      "greek": "οδηγώ",
+      "answers": [
+        "drive"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-47.mp3"
+    },
+    {
+      "id": "verb-48",
+      "greek": "ταξιδεύω",
+      "answers": [
+        "travel"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-48.mp3"
+    },
+    {
+      "id": "verb-49",
+      "greek": "κάθομαι",
+      "answers": [
+        "sit",
+        "sit down"
+      ],
+      "category": "Verbs",
+      "pos": "verb",
+      "notes": "",
+      "audio": "audio/verb-49.mp3"
+    },
+    {
+      "id": "adj-01",
+      "greek": "καλός",
+      "answers": [
+        "good",
+        "kind",
+        "nice"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-01.mp3"
+    },
+    {
+      "id": "adj-02",
+      "greek": "κακός",
+      "answers": [
+        "bad",
+        "evil"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-02.mp3"
+    },
+    {
+      "id": "adj-03",
+      "greek": "μεγάλος",
+      "answers": [
+        "big",
+        "large",
+        "great",
+        "old"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "'old' for people (older)",
+      "audio": "audio/adj-03.mp3"
+    },
+    {
+      "id": "adj-04",
+      "greek": "μικρός",
+      "answers": [
+        "small",
+        "little",
+        "young"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-04.mp3"
+    },
+    {
+      "id": "adj-05",
+      "greek": "ωραίος",
+      "answers": [
+        "nice",
+        "beautiful",
+        "lovely",
+        "handsome",
+        "fine"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-05.mp3"
+    },
+    {
+      "id": "adj-06",
+      "greek": "όμορφος",
+      "answers": [
+        "beautiful",
+        "pretty",
+        "handsome",
+        "good-looking"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-06.mp3"
+    },
+    {
+      "id": "adj-07",
+      "greek": "άσχημος",
+      "answers": [
+        "ugly",
+        "bad"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-07.mp3"
+    },
+    {
+      "id": "adj-08",
+      "greek": "καινούριος",
+      "answers": [
+        "new"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "also καινούργιος",
+      "audio": "audio/adj-08.mp3"
+    },
+    {
+      "id": "adj-09",
+      "greek": "νέος",
+      "answers": [
+        "young",
+        "new"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-09.mp3"
+    },
+    {
+      "id": "adj-10",
+      "greek": "παλιός",
+      "answers": [
+        "old"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "for things",
+      "audio": "audio/adj-10.mp3"
+    },
+    {
+      "id": "adj-11",
+      "greek": "ζεστός",
+      "answers": [
+        "hot",
+        "warm"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-11.mp3"
+    },
+    {
+      "id": "adj-12",
+      "greek": "κρύος",
+      "answers": [
+        "cold"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-12.mp3"
+    },
+    {
+      "id": "adj-13",
+      "greek": "ψηλός",
+      "answers": [
+        "tall",
+        "high"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-13.mp3"
+    },
+    {
+      "id": "adj-14",
+      "greek": "κοντός",
+      "answers": [
+        "short"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-14.mp3"
+    },
+    {
+      "id": "adj-15",
+      "greek": "χοντρός",
+      "answers": [
+        "fat",
+        "thick"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-15.mp3"
+    },
+    {
+      "id": "adj-16",
+      "greek": "αδύνατος",
+      "answers": [
+        "thin",
+        "slim",
+        "weak"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "also 'impossible'",
+      "audio": "audio/adj-16.mp3"
+    },
+    {
+      "id": "adj-17",
+      "greek": "γρήγορος",
+      "answers": [
+        "fast",
+        "quick"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-17.mp3"
+    },
+    {
+      "id": "adj-18",
+      "greek": "αργός",
+      "answers": [
+        "slow"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-18.mp3"
+    },
+    {
+      "id": "adj-19",
+      "greek": "εύκολος",
+      "answers": [
+        "easy"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-19.mp3"
+    },
+    {
+      "id": "adj-20",
+      "greek": "δύσκολος",
+      "answers": [
+        "difficult",
+        "hard"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-20.mp3"
+    },
+    {
+      "id": "adj-21",
+      "greek": "ακριβός",
+      "answers": [
+        "expensive",
+        "dear"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-21.mp3"
+    },
+    {
+      "id": "adj-22",
+      "greek": "φτηνός",
+      "answers": [
+        "cheap",
+        "inexpensive"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-22.mp3"
+    },
+    {
+      "id": "adj-23",
+      "greek": "χαρούμενος",
+      "answers": [
+        "happy",
+        "cheerful",
+        "glad"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-23.mp3"
+    },
+    {
+      "id": "adj-24",
+      "greek": "λυπημένος",
+      "answers": [
+        "sad"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-24.mp3"
+    },
+    {
+      "id": "adj-25",
+      "greek": "κουρασμένος",
+      "answers": [
+        "tired"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-25.mp3"
+    },
+    {
+      "id": "adj-26",
+      "greek": "άρρωστος",
+      "answers": [
+        "ill",
+        "sick"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-26.mp3"
+    },
+    {
+      "id": "adj-27",
+      "greek": "πεινασμένος",
+      "answers": [
+        "hungry"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-27.mp3"
+    },
+    {
+      "id": "adj-28",
+      "greek": "διψασμένος",
+      "answers": [
+        "thirsty"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-28.mp3"
+    },
+    {
+      "id": "adj-29",
+      "greek": "πλούσιος",
+      "answers": [
+        "rich",
+        "wealthy"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-29.mp3"
+    },
+    {
+      "id": "adj-30",
+      "greek": "φτωχός",
+      "answers": [
+        "poor"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-30.mp3"
+    },
+    {
+      "id": "adj-31",
+      "greek": "γεμάτος",
+      "answers": [
+        "full"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-31.mp3"
+    },
+    {
+      "id": "adj-32",
+      "greek": "άδειος",
+      "answers": [
+        "empty"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-32.mp3"
+    },
+    {
+      "id": "adj-33",
+      "greek": "καθαρός",
+      "answers": [
+        "clean",
+        "clear"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-33.mp3"
+    },
+    {
+      "id": "adj-34",
+      "greek": "βρώμικος",
+      "answers": [
+        "dirty"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-34.mp3"
+    },
+    {
+      "id": "adj-35",
+      "greek": "ανοιχτός",
+      "answers": [
+        "open",
+        "light"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "'light' for colours",
+      "audio": "audio/adj-35.mp3"
+    },
+    {
+      "id": "adj-36",
+      "greek": "κλειστός",
+      "answers": [
+        "closed",
+        "shut"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-36.mp3"
+    },
+    {
+      "id": "adj-37",
+      "greek": "σωστός",
+      "answers": [
+        "right",
+        "correct"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-37.mp3"
+    },
+    {
+      "id": "adj-38",
+      "greek": "νόστιμος",
+      "answers": [
+        "tasty",
+        "delicious"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-38.mp3"
+    },
+    {
+      "id": "adj-39",
+      "greek": "ήσυχος",
+      "answers": [
+        "quiet",
+        "calm"
+      ],
+      "category": "Adjectives",
+      "pos": "adj",
+      "notes": "",
+      "audio": "audio/adj-39.mp3"
+    },
+    {
+      "id": "adj-40",
+      "greek": "πολύ",
+      "answers": [
+        "very",
+        "much",
+        "a lot",
+        "lots",
+        "many"
+      ],
+      "category": "Adjectives",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/adj-40.mp3"
+    },
+    {
+      "id": "adj-41",
+      "greek": "λίγο",
+      "answers": [
+        "a little",
+        "a bit",
+        "little",
+        "few"
+      ],
+      "category": "Adjectives",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/adj-41.mp3"
+    },
+    {
+      "id": "place-01",
+      "greek": "η πόλη",
+      "answers": [
+        "city",
+        "town"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-01.mp3"
+    },
+    {
+      "id": "place-02",
+      "greek": "το χωριό",
+      "answers": [
+        "village"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-02.mp3"
+    },
+    {
+      "id": "place-03",
+      "greek": "ο δρόμος",
+      "answers": [
+        "road",
+        "street",
+        "way"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-03.mp3"
+    },
+    {
+      "id": "place-04",
+      "greek": "η θάλασσα",
+      "answers": [
+        "sea"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-04.mp3"
+    },
+    {
+      "id": "place-05",
+      "greek": "η παραλία",
+      "answers": [
+        "beach"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-05.mp3"
+    },
+    {
+      "id": "place-06",
+      "greek": "το βουνό",
+      "answers": [
+        "mountain"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-06.mp3"
+    },
+    {
+      "id": "place-07",
+      "greek": "το νησί",
+      "answers": [
+        "island"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-07.mp3"
+    },
+    {
+      "id": "place-08",
+      "greek": "το σχολείο",
+      "answers": [
+        "school"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-08.mp3"
+    },
+    {
+      "id": "place-09",
+      "greek": "το νοσοκομείο",
+      "answers": [
+        "hospital"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-09.mp3"
+    },
+    {
+      "id": "place-10",
+      "greek": "το φαρμακείο",
+      "answers": [
+        "pharmacy",
+        "chemist",
+        "chemist's",
+        "drugstore"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-10.mp3"
+    },
+    {
+      "id": "place-11",
+      "greek": "η τράπεζα",
+      "answers": [
+        "bank"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "compare το τραπέζι (table)",
+      "audio": "audio/place-11.mp3"
+    },
+    {
+      "id": "place-12",
+      "greek": "το εστιατόριο",
+      "answers": [
+        "restaurant"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-12.mp3"
+    },
+    {
+      "id": "place-13",
+      "greek": "η ταβέρνα",
+      "answers": [
+        "taverna",
+        "tavern",
+        "restaurant"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-13.mp3"
+    },
+    {
+      "id": "place-14",
+      "greek": "το καφενείο",
+      "answers": [
+        "cafe",
+        "coffee shop",
+        "coffee house"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "traditional Greek coffee house",
+      "audio": "audio/place-14.mp3"
+    },
+    {
+      "id": "place-15",
+      "greek": "το ξενοδοχείο",
+      "answers": [
+        "hotel"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-15.mp3"
+    },
+    {
+      "id": "place-16",
+      "greek": "το μαγαζί",
+      "answers": [
+        "shop",
+        "store"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-16.mp3"
+    },
+    {
+      "id": "place-17",
+      "greek": "το σούπερ μάρκετ",
+      "answers": [
+        "supermarket"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-17.mp3"
+    },
+    {
+      "id": "place-18",
+      "greek": "η αγορά",
+      "answers": [
+        "market",
+        "shopping"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-18.mp3"
+    },
+    {
+      "id": "place-19",
+      "greek": "η εκκλησία",
+      "answers": [
+        "church"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-19.mp3"
+    },
+    {
+      "id": "place-20",
+      "greek": "το μουσείο",
+      "answers": [
+        "museum"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-20.mp3"
+    },
+    {
+      "id": "place-21",
+      "greek": "το πάρκο",
+      "answers": [
+        "park"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-21.mp3"
+    },
+    {
+      "id": "place-22",
+      "greek": "η δουλειά",
+      "answers": [
+        "work",
+        "job"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-22.mp3"
+    },
+    {
+      "id": "place-23",
+      "greek": "το γραφείο",
+      "answers": [
+        "office",
+        "desk"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-23.mp3"
+    },
+    {
+      "id": "place-24",
+      "greek": "ο σταθμός",
+      "answers": [
+        "station"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-24.mp3"
+    },
+    {
+      "id": "place-25",
+      "greek": "το αεροδρόμιο",
+      "answers": [
+        "airport"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-25.mp3"
+    },
+    {
+      "id": "place-26",
+      "greek": "το λιμάνι",
+      "answers": [
+        "port",
+        "harbour",
+        "harbor"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-26.mp3"
+    },
+    {
+      "id": "place-27",
+      "greek": "το αυτοκίνητο",
+      "answers": [
+        "car"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-27.mp3"
+    },
+    {
+      "id": "place-28",
+      "greek": "το λεωφορείο",
+      "answers": [
+        "bus"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-28.mp3"
+    },
+    {
+      "id": "place-29",
+      "greek": "το ταξί",
+      "answers": [
+        "taxi",
+        "cab"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-29.mp3"
+    },
+    {
+      "id": "place-30",
+      "greek": "το τρένο",
+      "answers": [
+        "train"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-30.mp3"
+    },
+    {
+      "id": "place-31",
+      "greek": "το μετρό",
+      "answers": [
+        "metro",
+        "underground",
+        "subway",
+        "tube"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-31.mp3"
+    },
+    {
+      "id": "place-32",
+      "greek": "το αεροπλάνο",
+      "answers": [
+        "plane",
+        "aeroplane",
+        "airplane"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-32.mp3"
+    },
+    {
+      "id": "place-33",
+      "greek": "το πλοίο",
+      "answers": [
+        "ship",
+        "boat",
+        "ferry"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-33.mp3"
+    },
+    {
+      "id": "place-34",
+      "greek": "το ποδήλατο",
+      "answers": [
+        "bicycle",
+        "bike"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-34.mp3"
+    },
+    {
+      "id": "place-35",
+      "greek": "το εισιτήριο",
+      "answers": [
+        "ticket"
+      ],
+      "category": "Places & transport",
+      "pos": "noun",
+      "notes": "",
+      "audio": "audio/place-35.mp3"
+    },
+    {
+      "id": "place-36",
+      "greek": "εδώ",
+      "answers": [
+        "here"
+      ],
+      "category": "Places & transport",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/place-36.mp3"
+    },
+    {
+      "id": "place-37",
+      "greek": "εκεί",
+      "answers": [
+        "there"
+      ],
+      "category": "Places & transport",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/place-37.mp3"
+    },
+    {
+      "id": "place-38",
+      "greek": "αριστερά",
+      "answers": [
+        "left",
+        "on the left"
+      ],
+      "category": "Places & transport",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/place-38.mp3"
+    },
+    {
+      "id": "place-39",
+      "greek": "δεξιά",
+      "answers": [
+        "right",
+        "on the right"
+      ],
+      "category": "Places & transport",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/place-39.mp3"
+    },
+    {
+      "id": "place-40",
+      "greek": "ευθεία",
+      "answers": [
+        "straight on",
+        "straight ahead",
+        "straight"
+      ],
+      "category": "Places & transport",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/place-40.mp3"
+    },
+    {
+      "id": "place-41",
+      "greek": "κοντά",
+      "answers": [
+        "near",
+        "close",
+        "nearby"
+      ],
+      "category": "Places & transport",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/place-41.mp3"
+    },
+    {
+      "id": "place-42",
+      "greek": "μακριά",
+      "answers": [
+        "far",
+        "far away"
+      ],
+      "category": "Places & transport",
+      "pos": "adv",
+      "notes": "",
+      "audio": "audio/place-42.mp3"
+    },
+    {
+      "id": "q-01",
+      "greek": "τι",
+      "answers": [
+        "what"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "",
+      "audio": "audio/q-01.mp3"
+    },
+    {
+      "id": "q-02",
+      "greek": "ποιος",
+      "answers": [
+        "who",
+        "which"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "masculine (ποια / ποιο for feminine / neuter)",
+      "audio": "audio/q-02.mp3"
+    },
+    {
+      "id": "q-03",
+      "greek": "πού",
+      "answers": [
+        "where"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "compare που (that / which) without the accent",
+      "audio": "audio/q-03.mp3"
+    },
+    {
+      "id": "q-04",
+      "greek": "πότε",
+      "answers": [
+        "when"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "compare ποτέ (never)",
+      "audio": "audio/q-04.mp3"
+    },
+    {
+      "id": "q-05",
+      "greek": "πώς",
+      "answers": [
+        "how"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "",
+      "audio": "audio/q-05.mp3"
+    },
+    {
+      "id": "q-06",
+      "greek": "γιατί",
+      "answers": [
+        "why",
+        "because"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "",
+      "audio": "audio/q-06.mp3"
+    },
+    {
+      "id": "q-07",
+      "greek": "πόσο",
+      "answers": [
+        "how much"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "",
+      "audio": "audio/q-07.mp3"
+    },
+    {
+      "id": "q-08",
+      "greek": "πόσα",
+      "answers": [
+        "how many"
+      ],
+      "category": "Question words",
+      "pos": "question",
+      "notes": "neuter plural form",
+      "audio": "audio/q-08.mp3"
+    },
+    {
+      "id": "q-09",
+      "greek": "από πού είσαι;",
+      "answers": [
+        "where are you from"
+      ],
+      "category": "Question words",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/q-09.mp3"
+    },
+    {
+      "id": "q-10",
+      "greek": "τι είναι αυτό;",
+      "answers": [
+        "what is this",
+        "what's this",
+        "what is that",
+        "what is it"
+      ],
+      "category": "Question words",
+      "pos": "phrase",
+      "notes": "",
+      "audio": "audio/q-10.mp3"
+    }
+  ]
+}

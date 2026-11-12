@@ -59,7 +59,7 @@ Status key: `[not started]` · `[in progress]` · `[done]`. The status is update
 10. `[done]` **Checkpoint:** the user reviews and edits the CSV. *Result:* approved as drafted (374 rows, no changes).
 
 ### Phase 4: Full audio generation + QA
-11. `[not started]` `generate.py`: read the CSV, apply each row's overrides or the defaults, synthesise, clip and normalise, then write `web/public/audio/<id>.mp3` and `web/public/vocab.json`. Cache keyed on a hash of (text, voice, strategy), with light throttling and retry.
+11. `[done]` `generate.py`: read the CSV, apply each row's overrides or the defaults, synthesise, clip and normalise, then write `web/public/audio/<id>.mp3` and `web/public/vocab.json`. Cache keyed on a hash of (text, voice, strategy), with light throttling and retry. *Result:* all 374 clips generated in about 4 min with no failures (4 MB in total). A re-run synthesises nothing and takes 3 s. `vocab.json` lists the categories in CSV order, then the words (`id, greek, answers[], category, pos, notes, audio`). The audio is committed because the deploy workflow doesn't run the pipeline.
 12. `[not started]` `qa.py`: run faster-whisper (`small`, CPU, `language="el"`) on every clip. Compare after stripping accents and lowercasing, and print the words that don't match.
 13. `[not started]` **Checkpoint:** the user listens to the flagged clips and fixes them through the CSV overrides. Re-run `generate.py` (only changed rows regenerate).
 
