@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node / Vite
+node_modules/
+dist/
+*.local
+
+# Pipeline scratch output (regenerable)
+pipeline/bakeoff_out/
+pipeline/.cache/
+
+# Secrets (e.g. Azure keys if we switch backends)
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+*.log

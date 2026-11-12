@@ -1,0 +1,17 @@
+# Greek TTS Quiz
+
+A personal listening quiz for Greek vocabulary: the app plays a Greek word aloud and you type the English meaning.
+
+All audio is generated ahead of time by a Python pipeline and served as static files, so the app has no backend.
+
+## Layout
+
+| Path | What it is |
+|---|---|
+| `data/vocab.csv` | The word list: Greek, accepted English answers, category, optional TTS overrides |
+| `pipeline/` | Python (uv) build step: TTS → clipped/normalised MP3s + `vocab.json`, plus a Whisper QA check |
+| `web/` | Vite + TypeScript static quiz app, deployed to GitHub Pages |
+
+## Status
+
+Early setup. Pipeline and web app are not built yet.
