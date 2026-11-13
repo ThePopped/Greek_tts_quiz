@@ -66,8 +66,10 @@ export function renderStart(
           <legend>Questions</legend>
           <div class="counts">${countRadios}</div>
         </fieldset>
-        <p class="summary" aria-live="polite"></p>
-        <button type="submit" class="start-button">Start</button>
+        <div class="start-footer">
+          <p class="summary" aria-live="polite"></p>
+          <button type="submit" class="start-button primary">Start</button>
+        </div>
       </form>
     </main>`
 

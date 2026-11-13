@@ -27,7 +27,7 @@ export function renderSummary(
       <p class="headline"></p>
       <p class="all-right" hidden>Nothing missed. Well done!</p>
       <div class="summary-actions">
-        <button type="button" class="retry" hidden></button>
+        <button type="button" class="retry primary" hidden></button>
         <button type="button" class="new-session">New session</button>
       </div>
       <section class="missed" hidden>

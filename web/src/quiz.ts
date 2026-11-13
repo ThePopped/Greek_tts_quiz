@@ -83,7 +83,7 @@ export function renderQuiz(
         <input class="answer" type="text" name="answer" aria-label="English meaning"
           placeholder="Type the English meaning" autocapitalize="off" autocorrect="off"
           spellcheck="false" enterkeyhint="go" />
-        <button type="submit" class="check">Check</button>
+        <button type="submit" class="check primary">Check</button>
       </form>
       <button type="button" class="dont-know">Don’t know</button>
       <section class="feedback" aria-live="polite" hidden>
@@ -98,6 +98,7 @@ export function renderQuiz(
     </main>`
 
   const $ = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)!
+  const screen = $('.quiz')
   const progress = $('.progress')
   const score = $('.score')
   const playButton = $<HTMLButtonElement>('.play')
@@ -146,6 +147,7 @@ export function renderQuiz(
 
   function showWord(): void {
     phase = 'asking'
+    screen.dataset.phase = phase // the CSS shrinks ▶ during feedback on small screens
     const word = words[index]
     progress.textContent = `Word ${index + 1} of ${words.length}`
     input.value = ''
@@ -182,6 +184,7 @@ export function renderQuiz(
     current = { word, typed: typed.trim(), outcome: result.outcome }
     matched = result.answer
     phase = 'feedback'
+    screen.dataset.phase = phase
     input.value = current.typed
     input.readOnly = true // keeps focus (and the phone keyboard), so Enter moves on
     checkButton.textContent = index === words.length - 1 ? 'Finish' : 'Next'
