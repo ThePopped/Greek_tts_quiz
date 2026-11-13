@@ -450,10 +450,6 @@ legend {
   color: var(--muted);
 }
 
-.overrule {
-  margin-top: 0.5rem;
-}
-
 .keys {
   margin: 0;
   font-size: 0.85rem;

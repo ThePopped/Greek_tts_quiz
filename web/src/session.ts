@@ -3,14 +3,11 @@
 import { clean, grade } from './grading'
 import type { Word } from './vocab'
 
-/**
- * How an answer went. `dont-know`: gave up (button, or Enter on an empty box).
- * `overruled`: graded wrong, but the user pressed "I was right".
- */
-export type Outcome = 'correct' | 'typo' | 'wrong' | 'dont-know' | 'overruled'
+/** How an answer went. `dont-know`: gave up (button, or Enter on an empty box). */
+export type Outcome = 'correct' | 'typo' | 'wrong' | 'dont-know'
 
 export interface Checked {
-  outcome: Exclude<Outcome, 'overruled'>
+  outcome: Outcome
   /** The accepted answer that matched (the closest one for a typo). */
   answer?: string
 }
@@ -33,9 +30,9 @@ export function check(typed: string, accepted: readonly string[]): Checked {
   return answer === undefined ? { outcome: verdict } : { outcome: verdict, answer }
 }
 
-/** Typos and "I was right" count as right. */
+/** Typos count as right. */
 export function isRight(outcome: Outcome): boolean {
-  return outcome === 'correct' || outcome === 'typo' || outcome === 'overruled'
+  return outcome === 'correct' || outcome === 'typo'
 }
 
 export function tally(results: readonly Pick<WordResult, 'outcome'>[]): Score {

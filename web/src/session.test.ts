@@ -19,8 +19,8 @@ describe('check', () => {
 })
 
 describe('isRight', () => {
-  it('counts typos and "I was right" as right', () => {
-    const right: Outcome[] = ['correct', 'typo', 'overruled']
+  it('counts typos as right', () => {
+    const right: Outcome[] = ['correct', 'typo']
     const wrong: Outcome[] = ['wrong', 'dont-know']
     expect(right.every(isRight)).toBe(true)
     expect(wrong.some(isRight)).toBe(false)
@@ -34,10 +34,10 @@ describe('tally and scoreText', () => {
   })
 
   it('counts right and wrong answers', () => {
-    const outcomes: Outcome[] = ['correct', 'typo', 'wrong', 'overruled', 'dont-know', 'correct']
+    const outcomes: Outcome[] = ['correct', 'typo', 'wrong', 'dont-know', 'correct']
     const score = tally(outcomes.map((outcome) => ({ outcome })))
-    expect(score).toEqual({ right: 4, wrong: 2 })
-    expect(scoreText(score)).toBe('4 ✓ 2 ✗')
+    expect(score).toEqual({ right: 3, wrong: 2 })
+    expect(scoreText(score)).toBe('3 ✓ 2 ✗')
   })
 })
 
@@ -59,7 +59,6 @@ describe('missed', () => {
       result('b', 'dont-know'),
       result('c', 'typo'),
       result('d', 'wrong'),
-      result('e', 'overruled'),
     ]
     expect(missed(results).map((r) => r.word.id)).toEqual(['b', 'd'])
     expect(missed([])).toEqual([])

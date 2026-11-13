@@ -31,7 +31,7 @@ function showQuiz(vocab: Vocab, words: Word[]): void {
 
 function showDone(vocab: Vocab, results: WordResult[]): void {
   show(() =>
-    renderSummary(app, results, store, {
+    renderSummary(app, results, {
       onRetry: (words) => showQuiz(vocab, shuffle(words)),
       onNewSession: () => showStart(vocab),
     }),

@@ -5,8 +5,7 @@
 // been allowed (the Start tap usually counts; if not, the ▶ tap does), the
 // following words can play automatically.
 //
-// A word's result is final only when you move on from its feedback, so
-// "I was right" can still change it; that's when it's saved and scored.
+// A word's result is saved and scored when you move on from its feedback.
 
 import { check, isRight, scoreText, tally, type Outcome, type WordResult } from './session'
 import type { Store } from './storage'
@@ -32,7 +31,6 @@ export const VERDICTS: Record<Outcome, string> = {
   typo: '✓ Almost: check the spelling',
   wrong: '✗ Not quite',
   'dont-know': '✗ The answer was',
-  overruled: '✓ Counted as right',
 }
 
 /** The line under the heading, about what was typed. */
@@ -42,14 +40,12 @@ export function feedbackDetail(outcome: Outcome, typed: string, matched?: string
       return `You typed “${typed}”. It's spelt “${matched}”.`
     case 'wrong':
       return `You typed “${typed}”.`
-    case 'overruled':
-      return `“${typed}” will be accepted from now on.`
     default:
       return ''
   }
 }
 
-export type QuizStore = Pick<Store, 'acceptedAnswers' | 'addAnswer' | 'record'>
+export type QuizStore = Pick<Store, 'record'>
 
 export interface QuizHandlers {
   /** The last word's result is final. `results` has one entry per word, in order. */
@@ -92,7 +88,6 @@ export function renderQuiz(
         <p class="greek" lang="el"></p>
         <p class="meaning"></p>
         <p class="notes"></p>
-        <button type="button" class="overrule">I was right</button>
       </section>
       <p class="keys"></p>
     </main>`
@@ -108,7 +103,6 @@ export function renderQuiz(
   const checkButton = $<HTMLButtonElement>('.check')
   const dontKnow = $<HTMLButtonElement>('.dont-know')
   const feedback = $('.feedback')
-  const overrule = $<HTMLButtonElement>('.overrule')
   const keys = $('.keys')
 
   const audio = new Audio()
@@ -118,7 +112,7 @@ export function renderQuiz(
 
   let index = 0
   let phase: 'asking' | 'feedback' | 'done' = 'asking'
-  /** The word being given feedback on; its outcome can still change. */
+  /** The word being given feedback on. */
   let current: WordResult | undefined
   let matched: string | undefined
   const results: WordResult[] = []
@@ -171,16 +165,15 @@ export function renderQuiz(
     $('.detail').textContent = detail
     $('.detail').hidden = detail === ''
     $('.greek').textContent = word.greek
-    $('.meaning').textContent = store.acceptedAnswers(word).join(', ')
+    $('.meaning').textContent = word.answers.join(', ')
     $('.notes').textContent = word.notes
     $('.notes').hidden = word.notes === ''
-    overrule.hidden = outcome !== 'wrong'
     feedback.scrollIntoView?.({ block: 'nearest' })
   }
 
   function answer(typed: string): void {
     const word = words[index]
-    const result = check(typed, store.acceptedAnswers(word))
+    const result = check(typed, word.answers)
     current = { word, typed: typed.trim(), outcome: result.outcome }
     matched = result.answer
     phase = 'feedback'
@@ -252,18 +245,6 @@ export function renderQuiz(
     'click',
     () => {
       if (phase === 'asking') answer('')
-    },
-    { signal },
-  )
-
-  overrule.addEventListener(
-    'click',
-    () => {
-      if (phase !== 'feedback' || current?.outcome !== 'wrong') return
-      store.addAnswer(current.word.id, current.typed)
-      current.outcome = 'overruled'
-      showFeedback()
-      input.focus()
     },
     { signal },
   )

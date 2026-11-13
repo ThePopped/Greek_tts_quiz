@@ -2,7 +2,6 @@
 
 import { audioUrl } from './quiz'
 import { missed, summaryText, tally, type WordResult } from './session'
-import type { Store } from './storage'
 import type { Word } from './vocab'
 
 export interface SummaryHandlers {
@@ -16,7 +15,6 @@ export interface SummaryHandlers {
 export function renderSummary(
   root: HTMLElement,
   results: readonly WordResult[],
-  store: Pick<Store, 'acceptedAnswers'>,
   handlers: SummaryHandlers,
 ): () => void {
   const misses = missed(results)
@@ -70,7 +68,7 @@ export function renderSummary(
         { signal },
       )
       item.querySelector('.missed-greek')!.textContent = word.greek
-      item.querySelector('.missed-answers')!.textContent = store.acceptedAnswers(word).join(', ')
+      item.querySelector('.missed-answers')!.textContent = word.answers.join(', ')
       item.querySelector('.missed-typed')!.textContent =
         outcome === 'dont-know' ? 'You didn’t know' : `You typed “${typed}”`
       list.append(item)

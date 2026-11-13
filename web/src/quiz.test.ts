@@ -39,7 +39,6 @@ describe('feedbackDetail', () => {
   it('says what was typed, and the spelling for a typo', () => {
     expect(feedbackDetail('typo', 'hous', 'house')).toBe('You typed “hous”. It\'s spelt “house”.')
     expect(feedbackDetail('wrong', 'car')).toBe('You typed “car”.')
-    expect(feedbackDetail('overruled', 'dwelling')).toBe('“dwelling” will be accepted from now on.')
   })
 
   it('says nothing more when right or when nothing was typed', () => {

@@ -1,9 +1,7 @@
-// What the quiz remembers between visits: per-word results and the answers
-// the user has added with "I was right". Kept in localStorage, but every read
-// and write is guarded, so a blocked or broken storage (private windows, full
+// What the quiz remembers between visits: per-word results and the start
+// screen's last choice. Kept in localStorage, but every read and write is guarded, so a blocked or broken storage (private windows, full
 // quota, hand-edited JSON) only means nothing is remembered next time.
 
-import { clean } from './grading'
 import { QUESTION_COUNTS, type QuestionCount } from './vocab'
 
 export interface WordStats {
@@ -22,7 +20,6 @@ export interface StartChoice {
 type StorageLike = Pick<Storage, 'getItem' | 'setItem'>
 
 const STATS_KEY = 'greek-quiz:v1:stats'
-const ANSWERS_KEY = 'greek-quiz:v1:answers'
 const START_KEY = 'greek-quiz:v1:start'
 
 function isStats(value: unknown): value is WordStats {
@@ -39,10 +36,6 @@ function isStartChoice(value: unknown): value is StartChoice {
     categories.every((c) => typeof c === 'string') &&
     QUESTION_COUNTS.includes(count as QuestionCount)
   )
-}
-
-function isAnswerList(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every((a) => typeof a === 'string')
 }
 
 export function createStore(getStorage: () => StorageLike | undefined = () => globalThis.localStorage) {
@@ -78,9 +71,7 @@ export function createStore(getStorage: () => StorageLike | undefined = () => gl
 
   // Loaded once; writes go to memory first so the session works even if saving fails.
   let stats: Record<string, WordStats> | undefined
-  let answers: Record<string, string[]> | undefined
   const allStats = () => (stats ??= load(STATS_KEY, isStats))
-  const allAnswers = () => (answers ??= load(ANSWERS_KEY, isAnswerList))
 
   return {
     /** Results for one word, or undefined if it has never been answered. */
@@ -102,28 +93,6 @@ export function createStore(getStorage: () => StorageLike | undefined = () => gl
       all[id] = next
       save(STATS_KEY, all)
       return { ...next }
-    },
-
-    /** Answers the user has added for a word. */
-    addedAnswers(id: string): string[] {
-      return [...(allAnswers()[id] ?? [])]
-    },
-
-    /** Accept `answer` for this word from now on. Blank answers and repeats are ignored. */
-    addAnswer(id: string, answer: string): void {
-      const trimmed = answer.trim()
-      const key = clean(trimmed)
-      if (key === '') return
-      const all = allAnswers()
-      const list = all[id] ?? []
-      if (list.some((a) => clean(a) === key)) return
-      all[id] = [...list, trimmed]
-      save(ANSWERS_KEY, all)
-    },
-
-    /** A word's answers from vocab.json plus the ones the user added. */
-    acceptedAnswers(word: { id: string; answers: readonly string[] }): string[] {
-      return [...word.answers, ...(allAnswers()[word.id] ?? [])]
     },
 
     /** The start screen's last choice, or undefined if none was saved (or it's unreadable). */
