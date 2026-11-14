@@ -245,6 +245,40 @@ legend {
   font-weight: 600;
 }
 
+/* "Other": the pill's text is a small number box; the pill shows the focus ring instead of the box. */
+.count-other {
+  padding: 0 0.5rem;
+}
+
+.count-other:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.count-input {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1rem; /* 16px or more, so iOS doesn't zoom in on tap */
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.count-input:focus,
+.count-input:focus-visible {
+  outline: none;
+}
+
+.count-input::placeholder {
+  color: var(--muted);
+  font-weight: 400;
+  opacity: 1;
+}
+
 /* Start stays in reach at the bottom of the screen, however long the category list. */
 .start-footer {
   position: sticky;

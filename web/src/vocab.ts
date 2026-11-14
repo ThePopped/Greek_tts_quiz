@@ -18,9 +18,22 @@ export interface Vocab {
   words: Word[]
 }
 
-/** How many questions a session has: a fixed number, or every chosen word. */
-export type QuestionCount = 10 | 20 | 'all'
-export const QUESTION_COUNTS: readonly QuestionCount[] = [10, 20, 'all']
+/** How many questions a session has: a whole number (at least 1), or every chosen word. */
+export type QuestionCount = number | 'all'
+/** The counts offered as one-tap choices on the start screen. */
+export const PRESET_COUNTS: readonly QuestionCount[] = [10, 20, 'all']
+
+export function isQuestionCount(value: unknown): value is QuestionCount {
+  return value === 'all' || (Number.isSafeInteger(value) && (value as number) >= 1)
+}
+
+/** A typed question count ("15", " 7 "), or undefined unless it's a whole number of at least 1. */
+export function parseQuestionCount(text: string): number | undefined {
+  const trimmed = text.trim()
+  if (!/^\d+$/.test(trimmed)) return undefined
+  const n = Number(trimmed)
+  return isQuestionCount(n) ? n : undefined
+}
 
 function isWord(value: unknown): value is Word {
   if (typeof value !== 'object' || value === null) return false

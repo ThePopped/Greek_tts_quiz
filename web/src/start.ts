@@ -1,7 +1,15 @@
 // Start screen: choose categories and how many questions, then start a session.
 
 import type { StartChoice, Store } from './storage'
-import { countByCategory, pickWords, QUESTION_COUNTS, type QuestionCount, type Vocab, type Word } from './vocab'
+import {
+  countByCategory,
+  parseQuestionCount,
+  pickWords,
+  PRESET_COUNTS,
+  type QuestionCount,
+  type Vocab,
+  type Word,
+} from './vocab'
 
 const DEFAULT_COUNT: QuestionCount = 10
 
@@ -40,7 +48,8 @@ export function renderStart(
     })
     .join('')
 
-  const countRadios = QUESTION_COUNTS.map((n) => {
+  const isPreset = PRESET_COUNTS.includes(initial.count)
+  const presetRadios = PRESET_COUNTS.map((n) => {
     const checked = n === initial.count ? ' checked' : ''
     return `
       <label class="count">
@@ -48,6 +57,14 @@ export function renderStart(
         <span>${n === 'all' ? 'All' : n}</span>
       </label>`
   }).join('')
+  // Any other number: a fourth pill holding a small number box.
+  const otherRadio = `
+      <label class="count count-other">
+        <input type="radio" name="count" value="other"${isPreset ? '' : ' checked'} />
+        <input type="text" class="count-input" inputmode="numeric" pattern="[0-9]*" maxlength="4"
+          autocomplete="off" placeholder="Other" aria-label="Other number of questions"
+          value="${isPreset ? '' : initial.count}" />
+      </label>`
 
   root.innerHTML = `
     <main class="start">
@@ -64,7 +81,7 @@ export function renderStart(
         </fieldset>
         <fieldset>
           <legend>Questions</legend>
-          <div class="counts">${countRadios}</div>
+          <div class="counts">${presetRadios}${otherRadio}</div>
         </fieldset>
         <div class="start-footer">
           <p class="summary" aria-live="polite"></p>
@@ -77,26 +94,44 @@ export function renderStart(
   const boxes = [...form.querySelectorAll<HTMLInputElement>('input[name="category"]')]
   const summary = form.querySelector<HTMLParagraphElement>('.summary')!
   const startButton = form.querySelector<HTMLButtonElement>('.start-button')!
+  const otherButton = form.querySelector<HTMLInputElement>('input[name="count"][value="other"]')!
+  const otherInput = form.querySelector<HTMLInputElement>('.count-input')!
 
-  function currentChoice(): StartChoice {
+  /** The current choice; `count` is undefined when "Other" is picked but its box isn't a valid number. */
+  function currentChoice(): { categories: string[]; count: QuestionCount | undefined } {
     const categories = boxes.filter((b) => b.checked).map((b) => vocab.categories[Number(b.value)])
     const raw = form.querySelector<HTMLInputElement>('input[name="count"]:checked')?.value
-    const count: QuestionCount = raw === 'all' ? 'all' : raw === '20' ? 20 : 10
+    const count: QuestionCount | undefined =
+      raw === 'other' ? parseQuestionCount(otherInput.value) : raw === 'all' ? 'all' : Number(raw)
     return { categories, count }
   }
 
   function update(): void {
     const { categories, count } = currentChoice()
     const available = categories.reduce((sum, c) => sum + (counts.get(c) ?? 0), 0)
+    if (available === 0 || count === undefined) {
+      startButton.disabled = true
+      summary.textContent = available === 0 ? 'Choose at least one category.' : 'Type how many questions.'
+      return
+    }
     const questions = count === 'all' ? available : Math.min(count, available)
-    startButton.disabled = questions === 0
-    summary.textContent =
-      questions === 0
-        ? 'Choose at least one category.'
-        : `${questions} question${questions === 1 ? '' : 's'} from ${available} word${available === 1 ? '' : 's'}.`
+    startButton.disabled = false
+    summary.textContent = `${questions} question${questions === 1 ? '' : 's'} from ${available} word${available === 1 ? '' : 's'}.`
   }
 
-  form.addEventListener('change', update)
+  form.addEventListener('change', (e) => {
+    if (e.target === otherButton) otherInput.focus() // picked "Other": ready to type
+    update()
+  })
+  form.addEventListener('input', update) // the number box, as each digit is typed
+
+  // Tapping or typing in the number box selects "Other".
+  otherInput.addEventListener('focus', () => {
+    if (!otherButton.checked) {
+      otherButton.checked = true
+      update()
+    }
+  })
 
   form.querySelector('.category-actions')!.addEventListener('click', (e) => {
     const which = (e.target as HTMLElement).closest<HTMLButtonElement>('button')?.dataset.select
@@ -107,10 +142,11 @@ export function renderStart(
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-    const choice = currentChoice()
-    const words = pickWords(vocab.words, choice.categories, choice.count)
+    const { categories, count } = currentChoice()
+    if (count === undefined) return
+    const words = pickWords(vocab.words, categories, count)
     if (words.length === 0) return
-    store.saveStartChoice(choice)
+    store.saveStartChoice({ categories, count })
     onStart(words)
   })
 

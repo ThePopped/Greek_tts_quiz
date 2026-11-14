@@ -64,9 +64,24 @@ describe('start screen choice', () => {
     expect(createStore(() => storage).startChoice()).toEqual({ categories: ['Family', 'Colours'], count: 20 })
   })
 
+  it('keeps any whole-number count, not just the presets', () => {
+    const storage = new FakeStorage()
+    createStore(() => storage).saveStartChoice({ categories: ['Family'], count: 15 })
+    expect(createStore(() => storage).startChoice()).toEqual({ categories: ['Family'], count: 15 })
+  })
+
   it('ignores corrupt or malformed saved choices', () => {
     const storage = new FakeStorage()
-    for (const raw of ['{not json', '[]', '{"categories":["Family"],"count":15}', '{"categories":"Family","count":10}']) {
+    for (const raw of [
+      '{not json',
+      '[]',
+      '{"categories":"Family","count":10}',
+      '{"categories":["Family"],"count":0}',
+      '{"categories":["Family"],"count":-3}',
+      '{"categories":["Family"],"count":2.5}',
+      '{"categories":["Family"],"count":"15"}',
+      '{"categories":["Family"]}',
+    ]) {
       storage.setItem('greek-quiz:v1:start', raw)
       expect(createStore(() => storage).startChoice()).toBeUndefined()
     }

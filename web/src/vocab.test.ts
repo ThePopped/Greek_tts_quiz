@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import realVocab from '../public/vocab.json'
-import { countByCategory, parseVocab, pickWords, shuffle, type Word } from './vocab'
+import { countByCategory, isQuestionCount, parseQuestionCount, parseVocab, pickWords, shuffle, type Word } from './vocab'
 
 function word(id: string, category: string): Word {
   return { id, greek: id, answers: [id], category, pos: 'noun', notes: '', audio: `audio/${id}.mp3` }
@@ -83,6 +83,26 @@ describe('pickWords', () => {
     )
     expect(orders.size).toBeGreaterThan(1)
     expect(WORDS.map((w) => w.id)).toEqual(before)
+  })
+})
+
+describe('question counts', () => {
+  it('accepts whole numbers of at least 1, and "all"', () => {
+    for (const ok of [1, 7, 10, 15, 374, 'all']) expect(isQuestionCount(ok)).toBe(true)
+    for (const bad of [0, -1, 2.5, NaN, Infinity, '10', 'All', null, undefined]) expect(isQuestionCount(bad)).toBe(false)
+  })
+
+  it('parses what was typed in the "Other" box', () => {
+    expect(parseQuestionCount('15')).toBe(15)
+    expect(parseQuestionCount(' 7 ')).toBe(7)
+    expect(parseQuestionCount('007')).toBe(7)
+    for (const bad of ['', ' ', '0', '-3', '2.5', '1e2', '12abc', 'ten']) expect(parseQuestionCount(bad)).toBeUndefined()
+  })
+
+  it('a custom count picks that many words', () => {
+    const many = Array.from({ length: 30 }, (_, i) => word(`w${i}`, 'A'))
+    expect(pickWords(many, ['A'], 15)).toHaveLength(15)
+    expect(pickWords(many, ['A'], 1)).toHaveLength(1)
   })
 })
 

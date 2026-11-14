@@ -2,7 +2,7 @@
 // screen's last choice. Kept in localStorage, but every read and write is guarded, so a blocked or broken storage (private windows, full
 // quota, hand-edited JSON) only means nothing is remembered next time.
 
-import { QUESTION_COUNTS, type QuestionCount } from './vocab'
+import { isQuestionCount, type QuestionCount } from './vocab'
 
 export interface WordStats {
   seen: number
@@ -34,7 +34,7 @@ function isStartChoice(value: unknown): value is StartChoice {
   return (
     Array.isArray(categories) &&
     categories.every((c) => typeof c === 'string') &&
-    QUESTION_COUNTS.includes(count as QuestionCount)
+    isQuestionCount(count)
   )
 }
 
