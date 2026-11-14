@@ -1,10 +1,13 @@
-// Start screen: choose categories and how many questions, then start a session.
+// Start screen: choose the words (by category, or a hand-picked custom list)
+// and how many questions, then start a session.
 
-import type { StartChoice, Store } from './storage'
+import { cleanListName, listLink, matchesSearch, MAX_LIST_NAME, sameIds, searchKey, type LinkedList } from './lists'
+import type { StartChoice, StartMode, Store } from './storage'
 import {
   countByCategory,
   parseQuestionCount,
   pickWords,
+  pickWordsById,
   PRESET_COUNTS,
   type QuestionCount,
   type Vocab,
@@ -17,14 +20,32 @@ function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
 }
 
-/** The saved choice, with any categories no longer in the vocab dropped. Falls back to everything. */
-function initialChoice(vocab: Vocab, store: Store): StartChoice {
+const plural = (n: number, noun: string) => `${n} ${noun}${n === 1 ? '' : 's'}`
+
+/**
+ * The saved choice, with categories and words no longer in the vocab dropped
+ * (no categories left falls back to all of them). A link's list, if it has
+ * any known words, replaces the saved custom list.
+ */
+function initialChoice(vocab: Vocab, store: Store, linked: LinkedList | undefined): StartChoice {
   const saved = store.startChoice()
+  const known = new Set(vocab.words.map((w) => w.id))
   const categories = saved?.categories.filter((c) => vocab.categories.includes(c)) ?? []
-  return {
+  const choice: StartChoice = {
+    mode: saved?.mode ?? 'categories',
     categories: categories.length > 0 ? categories : [...vocab.categories],
+    words: saved?.words.filter((id) => known.has(id)) ?? [],
     count: saved?.count ?? DEFAULT_COUNT,
   }
+  return linked && linked.ids.length > 0 ? { ...choice, mode: 'list', words: linked.ids } : choice
+}
+
+function linkNotice(linked: LinkedList | undefined): string {
+  if (!linked) return ''
+  if (linked.ids.length === 0) return 'None of the words in that link were found.'
+  const skipped =
+    linked.skipped > 0 ? ` ${plural(linked.skipped, 'word')} in the link ${linked.skipped === 1 ? "wasn't" : "weren't"} found.` : ''
+  return `Opened a shared list of ${plural(linked.ids.length, 'word')}.${skipped} Save it to keep it on this device.`
 }
 
 export function renderStart(
@@ -32,9 +53,18 @@ export function renderStart(
   vocab: Vocab,
   store: Store,
   onStart: (words: Word[]) => void,
+  linked?: LinkedList,
 ): void {
   const counts = countByCategory(vocab.words)
-  const initial = initialChoice(vocab, store)
+  const known = new Set(vocab.words.map((w) => w.id))
+  const initial = initialChoice(vocab, store, linked)
+  const initialWords = new Set(initial.words)
+
+  const radio = (name: string, value: string, label: string, checked: boolean) => `
+      <label class="pill">
+        <input type="radio" name="${name}" value="${value}"${checked ? ' checked' : ''} />
+        <span>${label}</span>
+      </label>`
 
   const categoryBoxes = vocab.categories
     .map((name, i) => {
@@ -48,18 +78,39 @@ export function renderStart(
     })
     .join('')
 
+  // Every word, grouped under its category; a checkbox's value is the word's index in vocab.words.
+  const wordGroups = vocab.categories
+    .map((category) => {
+      const rows = vocab.words
+        .map((w, i) => ({ w, i }))
+        .filter(({ w }) => w.category === category)
+        .map(({ w, i }) => {
+          const checked = initialWords.has(w.id) ? ' checked' : ''
+          return `
+          <label class="word">
+            <input type="checkbox" name="word" value="${i}"${checked} />
+            <span class="word-text">
+              <span class="word-greek" lang="el">${escapeHtml(w.greek)}</span>
+              <span class="word-english">${escapeHtml(w.answers.join(', '))}</span>
+            </span>
+          </label>`
+        })
+        .join('')
+      return `
+        <section class="word-group">
+          <h3>${escapeHtml(category)}</h3>
+          ${rows}
+        </section>`
+    })
+    .join('')
+
   const isPreset = PRESET_COUNTS.includes(initial.count)
-  const presetRadios = PRESET_COUNTS.map((n) => {
-    const checked = n === initial.count ? ' checked' : ''
-    return `
-      <label class="count">
-        <input type="radio" name="count" value="${n}"${checked} />
-        <span>${n === 'all' ? 'All' : n}</span>
-      </label>`
-  }).join('')
+  const presetRadios = PRESET_COUNTS.map((n) =>
+    radio('count', String(n), n === 'all' ? 'All' : String(n), n === initial.count),
+  ).join('')
   // Any other number: a fourth pill holding a small number box.
   const otherRadio = `
-      <label class="count count-other">
+      <label class="pill count-other">
         <input type="radio" name="count" value="other"${isPreset ? '' : ' checked'} />
         <input type="text" class="count-input" inputmode="numeric" pattern="[0-9]*" maxlength="4"
           autocomplete="off" placeholder="Other" aria-label="Other number of questions"
@@ -70,18 +121,47 @@ export function renderStart(
     <main class="start">
       <h1>Greek Listening Quiz</h1>
       <p class="lede">Hear a Greek word, type what it means in English.</p>
+      <p class="notice" role="status"${linked ? '' : ' hidden'}>${escapeHtml(linkNotice(linked))}</p>
       <form class="start-form">
-        <fieldset>
+        <div class="pills modes" role="radiogroup" aria-label="Choose words">
+          ${radio('mode', 'categories', 'By category', initial.mode === 'categories')}
+          ${radio('mode', 'list', 'Custom list', initial.mode === 'list')}
+        </div>
+        <fieldset class="by-categories">
           <legend>Categories</legend>
-          <div class="category-actions">
+          <div class="select-actions">
             <button type="button" data-select="all">Select all</button>
             <button type="button" data-select="none">Select none</button>
           </div>
           <div class="categories">${categoryBoxes}</div>
         </fieldset>
+        <fieldset class="by-list">
+          <legend>Words</legend>
+          <div class="list-row saved-lists">
+            <select class="list-select" aria-label="Saved lists"></select>
+            <button type="button" class="list-delete">Delete</button>
+          </div>
+          <div class="list-row">
+            <input type="text" class="list-name text-input" maxlength="${MAX_LIST_NAME}" autocomplete="off"
+              enterkeyhint="done" placeholder="Name this list" aria-label="List name" />
+            <button type="button" class="list-save">Save</button>
+            <button type="button" class="list-share">Get link</button>
+          </div>
+          <p class="list-status" aria-live="polite"></p>
+          <input type="text" class="list-link text-input" readonly aria-label="Link to this list" hidden />
+          <input type="search" class="word-search text-input" autocomplete="off" enterkeyhint="search"
+            placeholder="Search Greek or English" aria-label="Search words" />
+          <div class="select-actions">
+            <button type="button" class="tick-shown">Tick all</button>
+            <button type="button" class="untick-all">Untick all</button>
+            <label class="ticked-only"><input type="checkbox" /> Ticked only</label>
+          </div>
+          <div class="word-groups">${wordGroups}</div>
+          <p class="no-matches" hidden>No words match.</p>
+        </fieldset>
         <fieldset>
           <legend>Questions</legend>
-          <div class="counts">${presetRadios}${otherRadio}</div>
+          <div class="pills">${presetRadios}${otherRadio}</div>
         </fieldset>
         <div class="start-footer">
           <p class="summary" aria-live="polite"></p>
@@ -90,40 +170,199 @@ export function renderStart(
       </form>
     </main>`
 
-  const form = root.querySelector<HTMLFormElement>('.start-form')!
-  const boxes = [...form.querySelectorAll<HTMLInputElement>('input[name="category"]')]
-  const summary = form.querySelector<HTMLParagraphElement>('.summary')!
-  const startButton = form.querySelector<HTMLButtonElement>('.start-button')!
-  const otherButton = form.querySelector<HTMLInputElement>('input[name="count"][value="other"]')!
-  const otherInput = form.querySelector<HTMLInputElement>('.count-input')!
+  const $ = <T extends HTMLElement>(selector: string) => root.querySelector<T>(selector)!
+  const form = $<HTMLFormElement>('.start-form')
+  const categoryBoxesEl = [...form.querySelectorAll<HTMLInputElement>('input[name="category"]')]
+  const wordBoxes = [...form.querySelectorAll<HTMLInputElement>('input[name="word"]')]
+  const wordRows = wordBoxes.map((box) => box.closest<HTMLElement>('.word')!)
+  const searchKeys = vocab.words.map(searchKey)
+  const groups = [...form.querySelectorAll<HTMLElement>('.word-group')]
+  const summary = $<HTMLParagraphElement>('.summary')
+  const startButton = $<HTMLButtonElement>('.start-button')
+  const otherButton = $<HTMLInputElement>('input[name="count"][value="other"]')
+  const otherInput = $<HTMLInputElement>('.count-input')
+  const byCategories = $<HTMLFieldSetElement>('.by-categories')
+  const byList = $<HTMLFieldSetElement>('.by-list')
+  const savedListsRow = $('.saved-lists')
+  const listSelect = $<HTMLSelectElement>('.list-select')
+  const deleteButton = $<HTMLButtonElement>('.list-delete')
+  const nameInput = $<HTMLInputElement>('.list-name')
+  const saveButton = $<HTMLButtonElement>('.list-save')
+  const shareButton = $<HTMLButtonElement>('.list-share')
+  const listStatus = $<HTMLParagraphElement>('.list-status')
+  const linkInput = $<HTMLInputElement>('.list-link')
+  const search = $<HTMLInputElement>('.word-search')
+  const tickShown = $<HTMLButtonElement>('.tick-shown')
+  const tickedOnly = $<HTMLInputElement>('.ticked-only input')
+  const noMatches = $<HTMLParagraphElement>('.no-matches')
+
+  const mode = (): StartMode =>
+    form.querySelector<HTMLInputElement>('input[name="mode"]:checked')?.value === 'list' ? 'list' : 'categories'
+  const tickedIds = () => wordBoxes.filter((b) => b.checked).map((b) => vocab.words[Number(b.value)].id)
 
   /** The current choice; `count` is undefined when "Other" is picked but its box isn't a valid number. */
-  function currentChoice(): { categories: string[]; count: QuestionCount | undefined } {
-    const categories = boxes.filter((b) => b.checked).map((b) => vocab.categories[Number(b.value)])
+  function currentChoice(): Omit<StartChoice, 'count'> & { count: QuestionCount | undefined } {
+    const categories = categoryBoxesEl.filter((b) => b.checked).map((b) => vocab.categories[Number(b.value)])
     const raw = form.querySelector<HTMLInputElement>('input[name="count"]:checked')?.value
     const count: QuestionCount | undefined =
       raw === 'other' ? parseQuestionCount(otherInput.value) : raw === 'all' ? 'all' : Number(raw)
-    return { categories, count }
+    return { mode: mode(), categories, words: tickedIds(), count }
   }
 
   function update(): void {
-    const { categories, count } = currentChoice()
-    const available = categories.reduce((sum, c) => sum + (counts.get(c) ?? 0), 0)
+    const { mode, categories, words, count } = currentChoice()
+    byCategories.hidden = mode !== 'categories'
+    byList.hidden = mode !== 'list'
+
+    const ticked = words.length
+    saveButton.disabled = ticked === 0
+    shareButton.disabled = ticked === 0
+    deleteButton.disabled = listSelect.value === ''
+
+    const available =
+      mode === 'list' ? ticked : categories.reduce((sum, c) => sum + (counts.get(c) ?? 0), 0)
     if (available === 0 || count === undefined) {
       startButton.disabled = true
-      summary.textContent = available === 0 ? 'Choose at least one category.' : 'Type how many questions.'
+      summary.textContent =
+        available > 0 ? 'Type how many questions.' : mode === 'list' ? 'Tick at least one word.' : 'Choose at least one category.'
       return
     }
     const questions = count === 'all' ? available : Math.min(count, available)
     startButton.disabled = false
-    summary.textContent = `${questions} question${questions === 1 ? '' : 's'} from ${available} word${available === 1 ? '' : 's'}.`
+    summary.textContent = `${plural(questions, 'question')} from ${plural(available, 'word')}.`
   }
 
-  form.addEventListener('change', (e) => {
-    if (e.target === otherButton) otherInput.focus() // picked "Other": ready to type
+  // ---- Search and filters ----
+
+  function applyFilter(): void {
+    const query = search.value
+    const onlyTicked = tickedOnly.checked
+    let shown = 0
+    wordRows.forEach((row, i) => {
+      const visible = matchesSearch(searchKeys[i], query) && (!onlyTicked || wordBoxes[i].checked)
+      row.hidden = !visible
+      if (visible) shown++
+    })
+    for (const group of groups) group.hidden = !group.querySelector('.word:not([hidden])')
+    noMatches.hidden = shown > 0
+    noMatches.textContent = onlyTicked && query.trim() === '' ? 'No words ticked yet.' : 'No words match.'
+    tickShown.textContent = query.trim() === '' && !onlyTicked ? 'Tick all' : 'Tick shown'
+  }
+
+  // ---- Saved lists ----
+
+  /** The saved lists, keeping only ids still in the vocab. */
+  const savedLists = () => store.savedLists().map((l) => ({ ...l, ids: l.ids.filter((id) => known.has(id)) }))
+
+  function fillListSelect(selected: string): void {
+    const lists = savedLists()
+    listSelect.replaceChildren(
+      new Option('New list', ''),
+      ...lists.map((l) => new Option(`${l.name} (${l.ids.length})`, l.name)),
+    )
+    listSelect.value = lists.some((l) => l.name === selected) ? selected : ''
+    savedListsRow.hidden = lists.length === 0
+  }
+
+  function setTicks(ids: Iterable<string>): void {
+    const wanted = new Set(ids)
+    wordBoxes.forEach((box, i) => (box.checked = wanted.has(vocab.words[i].id)))
+    ticksChanged()
+  }
+
+  /** After ticks change: an old link no longer matches, and a loaded list may now differ from its saved copy. */
+  function ticksChanged(): void {
+    linkInput.hidden = true
+    const loaded = savedLists().find((l) => l.name === listSelect.value)
+    listStatus.textContent = loaded && !sameIds(loaded.ids, tickedIds()) ? `Changed since saved. Save to update “${loaded.name}”.` : ''
+    applyFilter()
+  }
+
+  listSelect.addEventListener('change', () => {
+    const list = savedLists().find((l) => l.name === listSelect.value)
+    if (list) {
+      nameInput.value = list.name
+      setTicks(list.ids)
+      listStatus.textContent = `Loaded “${list.name}”.`
+    } else {
+      nameInput.value = '' // "New list": keep the ticks, ready to save under a new name
+      listStatus.textContent = ''
+    }
     update()
   })
-  form.addEventListener('input', update) // the number box, as each digit is typed
+
+  function saveList(): void {
+    const name = cleanListName(nameInput.value)
+    const ids = tickedIds()
+    if (ids.length === 0) return
+    if (name === '') {
+      listStatus.textContent = 'Type a name for the list first.'
+      nameInput.focus()
+      return
+    }
+    const exists = savedLists().some((l) => l.name === name)
+    if (exists && name !== listSelect.value && !confirm(`Replace the saved list “${name}”?`)) return
+    store.saveList(name, ids)
+    fillListSelect(name)
+    nameInput.value = name
+    listStatus.textContent = `Saved “${name}” (${plural(ids.length, 'word')}).`
+    update()
+  }
+
+  saveButton.addEventListener('click', saveList)
+
+  deleteButton.addEventListener('click', () => {
+    const name = listSelect.value
+    if (name === '' || !confirm(`Delete the list “${name}”? The ticked words stay ticked.`)) return
+    store.deleteList(name)
+    fillListSelect('')
+    nameInput.value = ''
+    listStatus.textContent = `Deleted “${name}”.`
+    update()
+  })
+
+  shareButton.addEventListener('click', async () => {
+    const ids = tickedIds()
+    if (ids.length === 0) return
+    linkInput.value = listLink(ids, location.origin + location.pathname)
+    linkInput.hidden = false
+    linkInput.select()
+    try {
+      await navigator.clipboard.writeText(linkInput.value)
+      listStatus.textContent = 'Link copied. Open it on another device to get this list there.'
+    } catch {
+      listStatus.textContent = 'Copy this link to open the list on another device:'
+    }
+  })
+  linkInput.addEventListener('focus', () => linkInput.select())
+
+  // ---- Wiring ----
+
+  form.addEventListener('change', (e) => {
+    const target = e.target as HTMLInputElement
+    if (target === otherButton) otherInput.focus() // picked "Other": ready to type
+    if (target.name === 'word') ticksChanged()
+    if (target === tickedOnly) applyFilter()
+    update()
+  })
+  form.addEventListener('input', (e) => {
+    if (e.target === search) applyFilter()
+    update() // the number box, as each digit is typed
+  })
+
+  // Enter in the search or name box shouldn't start the quiz.
+  search.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      search.blur() // closes the phone keyboard
+    }
+  })
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      saveList()
+    }
+  })
 
   // Tapping or typing in the number box selects "Other".
   otherInput.addEventListener('focus', () => {
@@ -133,22 +372,40 @@ export function renderStart(
     }
   })
 
-  form.querySelector('.category-actions')!.addEventListener('click', (e) => {
+  byCategories.querySelector('.select-actions')!.addEventListener('click', (e) => {
     const which = (e.target as HTMLElement).closest<HTMLButtonElement>('button')?.dataset.select
     if (!which) return
-    for (const b of boxes) b.checked = which === 'all'
+    for (const b of categoryBoxesEl) b.checked = which === 'all'
+    update()
+  })
+
+  tickShown.addEventListener('click', () => {
+    wordBoxes.forEach((box, i) => {
+      if (!wordRows[i].hidden) box.checked = true
+    })
+    ticksChanged()
+    update()
+  })
+  $('.untick-all').addEventListener('click', () => {
+    setTicks([])
     update()
   })
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-    const { categories, count } = currentChoice()
+    const { mode, categories, words: ids, count } = currentChoice()
     if (count === undefined) return
-    const words = pickWords(vocab.words, categories, count)
+    const words =
+      mode === 'list' ? pickWordsById(vocab.words, ids, count) : pickWords(vocab.words, categories, count)
     if (words.length === 0) return
-    store.saveStartChoice({ categories, count })
+    store.saveStartChoice({ mode, categories, words: ids, count })
     onStart(words)
   })
 
+  // A saved list holding exactly the starting ticks shows as loaded.
+  const matching = initial.words.length > 0 ? savedLists().find((l) => sameIds(l.ids, initial.words)) : undefined
+  fillListSelect(matching?.name ?? '')
+  nameInput.value = matching?.name ?? ''
+  applyFilter()
   update()
 }

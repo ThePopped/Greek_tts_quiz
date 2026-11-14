@@ -60,14 +60,26 @@ describe('start screen choice', () => {
   it('is undefined until saved, then persists across page loads', () => {
     const storage = new FakeStorage()
     expect(createStore(() => storage).startChoice()).toBeUndefined()
-    createStore(() => storage).saveStartChoice({ categories: ['Family', 'Colours'], count: 20 })
-    expect(createStore(() => storage).startChoice()).toEqual({ categories: ['Family', 'Colours'], count: 20 })
+    const choice = { mode: 'list', categories: ['Family', 'Colours'], words: ['fam-01', 'col-02'], count: 20 } as const
+    createStore(() => storage).saveStartChoice({ ...choice, categories: [...choice.categories], words: [...choice.words] })
+    expect(createStore(() => storage).startChoice()).toEqual(choice)
   })
 
   it('keeps any whole-number count, not just the presets', () => {
     const storage = new FakeStorage()
-    createStore(() => storage).saveStartChoice({ categories: ['Family'], count: 15 })
-    expect(createStore(() => storage).startChoice()).toEqual({ categories: ['Family'], count: 15 })
+    createStore(() => storage).saveStartChoice({ mode: 'categories', categories: ['Family'], words: [], count: 15 })
+    expect(createStore(() => storage).startChoice()?.count).toBe(15)
+  })
+
+  it('reads a choice saved before custom lists existed as "categories" mode', () => {
+    const storage = new FakeStorage()
+    storage.setItem('greek-quiz:v1:start', '{"categories":["Family"],"count":10}')
+    expect(createStore(() => storage).startChoice()).toEqual({
+      mode: 'categories',
+      categories: ['Family'],
+      words: [],
+      count: 10,
+    })
   })
 
   it('ignores corrupt or malformed saved choices', () => {
@@ -81,6 +93,9 @@ describe('start screen choice', () => {
       '{"categories":["Family"],"count":2.5}',
       '{"categories":["Family"],"count":"15"}',
       '{"categories":["Family"]}',
+      '{"mode":"words","categories":["Family"],"count":10}',
+      '{"mode":"list","categories":["Family"],"words":"fam-01","count":10}',
+      '{"mode":"list","categories":["Family"],"words":[1,2],"count":10}',
     ]) {
       storage.setItem('greek-quiz:v1:start', raw)
       expect(createStore(() => storage).startChoice()).toBeUndefined()
@@ -89,8 +104,70 @@ describe('start screen choice', () => {
 
   it('is undefined (and saving is a no-op) when storage throws', () => {
     const store = createStore(() => broken)
-    store.saveStartChoice({ categories: ['Family'], count: 'all' })
+    store.saveStartChoice({ mode: 'categories', categories: ['Family'], words: [], count: 'all' })
     expect(store.startChoice()).toBeUndefined()
+  })
+})
+
+describe('saved lists', () => {
+  it('saves, replaces and deletes lists by name, and persists them', () => {
+    const storage = new FakeStorage()
+    const store = createStore(() => storage)
+    expect(store.savedLists()).toEqual([])
+    store.saveList('Food', ['food-01', 'food-02'])
+    store.saveList('animals', ['ani-01'])
+    store.saveList('Food', ['food-03']) // same name: replaces
+    expect(createStore(() => storage).savedLists()).toEqual([
+      { name: 'animals', ids: ['ani-01'] },
+      { name: 'Food', ids: ['food-03'] },
+    ])
+    store.deleteList('animals')
+    store.deleteList('nothing by this name')
+    expect(createStore(() => storage).savedLists()).toEqual([{ name: 'Food', ids: ['food-03'] }])
+  })
+
+  it('sorts by name, ignoring case and with numbers in order', () => {
+    const store = createStore(() => new FakeStorage())
+    for (const name of ['week 10', 'Week 2', 'apples', 'week 1']) store.saveList(name, ['x'])
+    expect(store.savedLists().map((l) => l.name)).toEqual(['apples', 'week 1', 'Week 2', 'week 10'])
+  })
+
+  it('takes any name, even ones that look like object keys', () => {
+    const storage = new FakeStorage()
+    createStore(() => storage).saveList('__proto__', ['a'])
+    createStore(() => storage).saveList('constructor', ['b'])
+    expect(createStore(() => storage).savedLists()).toEqual([
+      { name: '__proto__', ids: ['a'] },
+      { name: 'constructor', ids: ['b'] },
+    ])
+  })
+
+  it('returns copies, not its own state', () => {
+    const store = createStore(() => new FakeStorage())
+    const ids = ['a']
+    store.saveList('L', ids)
+    ids.push('changed')
+    store.savedLists()[0].ids.push('changed')
+    expect(store.savedLists()).toEqual([{ name: 'L', ids: ['a'] }])
+  })
+
+  it('skips malformed entries and survives corrupt JSON', () => {
+    const storage = new FakeStorage()
+    storage.setItem('greek-quiz:v1:lists', '{not json')
+    expect(createStore(() => storage).savedLists()).toEqual([])
+    storage.setItem(
+      'greek-quiz:v1:lists',
+      JSON.stringify([{ name: 'ok', ids: ['a'] }, { name: '', ids: [] }, { name: 'bad', ids: 'a' }, { ids: ['a'] }, null]),
+    )
+    expect(createStore(() => storage).savedLists()).toEqual([{ name: 'ok', ids: ['a'] }])
+    storage.setItem('greek-quiz:v1:lists', '{"ok":["a"]}')
+    expect(createStore(() => storage).savedLists()).toEqual([])
+  })
+
+  it('works for the session when storage throws', () => {
+    const store = createStore(() => broken)
+    store.saveList('L', ['a'])
+    expect(store.savedLists()).toEqual([{ name: 'L', ids: ['a'] }])
   })
 })
 

@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import realVocab from '../public/vocab.json'
-import { countByCategory, isQuestionCount, parseQuestionCount, parseVocab, pickWords, shuffle, type Word } from './vocab'
+import {
+  countByCategory,
+  isQuestionCount,
+  parseQuestionCount,
+  parseVocab,
+  pickWords,
+  pickWordsById,
+  shuffle,
+  type Word,
+} from './vocab'
 
 function word(id: string, category: string): Word {
   return { id, greek: id, answers: [id], category, pos: 'noun', notes: '', audio: `audio/${id}.mp3` }
@@ -83,6 +92,22 @@ describe('pickWords', () => {
     )
     expect(orders.size).toBeGreaterThan(1)
     expect(WORDS.map((w) => w.id)).toEqual(before)
+  })
+})
+
+describe('pickWordsById', () => {
+  it('takes exactly the listed words, ignoring unknown ids and repeats', () => {
+    const picked = pickWordsById(WORDS, ['c1', 'a2', 'nope', 'a2'], 'all')
+    expect(picked.map((w) => w.id).sort()).toEqual(['a2', 'c1'])
+  })
+
+  it('takes at most the requested number, shuffled', () => {
+    const ids = WORDS.map((w) => w.id)
+    expect(pickWordsById(WORDS, ids, 4)).toHaveLength(4)
+    expect(pickWordsById(WORDS, ids, 10)).toHaveLength(6)
+    expect(pickWordsById(WORDS, [], 10)).toEqual([])
+    const orders = new Set(Array.from({ length: 20 }, (_, i) => pickWordsById(WORDS, ids, 'all', seeded(i)).map((w) => w.id).join()))
+    expect(orders.size).toBeGreaterThan(1)
   })
 })
 

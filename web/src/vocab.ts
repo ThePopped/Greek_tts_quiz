@@ -94,9 +94,29 @@ export function pickWords(
   random: () => number = Math.random,
 ): Word[] {
   const chosen = new Set(categories)
-  const pool = shuffle(
+  return takeRandom(
     words.filter((w) => chosen.has(w.category)),
+    count,
     random,
   )
-  return count === 'all' ? pool : pool.slice(0, count)
+}
+
+/** Up to `count` of the words with the given ids, in random order. Unknown ids are ignored. */
+export function pickWordsById(
+  words: readonly Word[],
+  ids: Iterable<string>,
+  count: QuestionCount,
+  random: () => number = Math.random,
+): Word[] {
+  const chosen = new Set(ids)
+  return takeRandom(
+    words.filter((w) => chosen.has(w.id)),
+    count,
+    random,
+  )
+}
+
+function takeRandom(pool: readonly Word[], count: QuestionCount, random: () => number): Word[] {
+  const shuffled = shuffle(pool, random)
+  return count === 'all' ? shuffled : shuffled.slice(0, count)
 }
