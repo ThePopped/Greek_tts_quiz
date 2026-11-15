@@ -199,7 +199,7 @@ legend {
   align-items: center;
   gap: 0.65rem;
   min-height: 2.75rem;
-  padding: 0 0.5rem;
+  padding: 0.3rem 0.5rem;
   margin: 0 -0.5rem;
   border-radius: 0.4rem;
   cursor: pointer;
@@ -212,13 +212,66 @@ legend {
   }
 }
 
-.category-name {
+.category-text {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
-.category-count {
+.category-detail {
   color: var(--muted);
+  font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
+}
+
+/* ---- Progress badges: % right per category, "X of Y right" per word ---- */
+.stat {
+  flex: none;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--tone) 55%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tone) 16%, transparent);
+  color: var(--fg);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Never answered: no tint. */
+.stat.is-new {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Category badges line up in a column. */
+.category .stat {
+  min-width: 3.6rem;
+  text-align: center;
+}
+
+.stat-word {
+  margin-left: auto;
+  font-size: 0.8rem;
+}
+
+.stat-word.is-new {
+  border-color: transparent;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Rows of equal pills: 10 / 20 / All / Other, and By category / Custom list. */
@@ -394,12 +447,22 @@ legend {
 }
 
 .word-group h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin: 0.75rem 0 0.1rem;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+.stat-heading {
+  padding: 0 0.45rem;
+  font-size: 0.75rem;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .word {

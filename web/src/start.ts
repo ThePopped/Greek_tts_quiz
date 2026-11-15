@@ -2,6 +2,16 @@
 // and how many questions, then start a session.
 
 import { cleanListName, listLink, matchesSearch, MAX_LIST_NAME, sameIds, searchKey, type LinkedList } from './lists'
+import {
+  categoryTallies,
+  percentRight,
+  percentText,
+  rightText,
+  spokenText,
+  toneColor,
+  wordTally,
+  type Tally,
+} from './stats'
 import type { StartChoice, StartMode, Store } from './storage'
 import {
   countByCategory,
@@ -21,6 +31,22 @@ function escapeHtml(text: string): string {
 }
 
 const plural = (n: number, noun: string) => `${n} ${noun}${n === 1 ? '' : 's'}`
+
+/**
+ * A progress badge, tinted by percentage right (untinted when never answered).
+ * Screen readers hear `spoken` instead of the short visible label.
+ */
+function statBadge(t: Tally, visible: string, spoken: string, extraClass = ''): string {
+  const p = percentRight(t)
+  const tone = p === undefined ? '' : ` style="--tone: ${toneColor(p)}"`
+  return `<span class="stat${p === undefined ? ' is-new' : ''}${extraClass}"${tone}><span aria-hidden="true">${visible}</span><span class="sr-only">${spoken}</span></span>`
+}
+
+/** A category's badge: its percentage right; screen readers also hear the counts. */
+function categoryBadge(t: Tally, extraClass = ''): string {
+  const spoken = t.seen > 0 ? `${percentText(t)} right. ${spokenText(t)}.` : spokenText(t)
+  return statBadge(t, percentText(t), spoken, extraClass)
+}
 
 /**
  * The saved choice, with categories and words no longer in the vocab dropped
@@ -59,6 +85,9 @@ export function renderStart(
   const known = new Set(vocab.words.map((w) => w.id))
   const initial = initialChoice(vocab, store, linked)
   const initialWords = new Set(initial.words)
+  const stats = store.allStats()
+  const tallies = categoryTallies(vocab.words, stats)
+  const tallyOf = (category: string): Tally => tallies.get(category) ?? { seen: 0, correct: 0 }
 
   const radio = (name: string, value: string, label: string, checked: boolean) => `
       <label class="pill">
@@ -69,11 +98,16 @@ export function renderStart(
   const categoryBoxes = vocab.categories
     .map((name, i) => {
       const checked = initial.categories.includes(name) ? ' checked' : ''
+      const t = tallyOf(name)
+      const answered = t.seen > 0 ? ` · ${rightText(t)}` : ''
       return `
         <label class="category">
           <input type="checkbox" name="category" value="${i}"${checked} />
-          <span class="category-name">${escapeHtml(name)}</span>
-          <span class="category-count">${counts.get(name) ?? 0}</span>
+          <span class="category-text">
+            <span class="category-name">${escapeHtml(name)}</span>
+            <span class="category-detail">${plural(counts.get(name) ?? 0, 'word')}<span aria-hidden="true">${answered}</span></span>
+          </span>
+          ${categoryBadge(t)}
         </label>`
     })
     .join('')
@@ -86,6 +120,7 @@ export function renderStart(
         .filter(({ w }) => w.category === category)
         .map(({ w, i }) => {
           const checked = initialWords.has(w.id) ? ' checked' : ''
+          const t = wordTally(stats, w.id)
           return `
           <label class="word">
             <input type="checkbox" name="word" value="${i}"${checked} />
@@ -93,12 +128,13 @@ export function renderStart(
               <span class="word-greek" lang="el">${escapeHtml(w.greek)}</span>
               <span class="word-english">${escapeHtml(w.answers.join(', '))}</span>
             </span>
+            ${statBadge(t, rightText(t), spokenText(t), ' stat-word')}
           </label>`
         })
         .join('')
       return `
         <section class="word-group">
-          <h3>${escapeHtml(category)}</h3>
+          <h3><span>${escapeHtml(category)}</span>${categoryBadge(tallyOf(category), ' stat-heading')}</h3>
           ${rows}
         </section>`
     })
