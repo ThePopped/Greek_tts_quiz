@@ -1,8 +1,10 @@
 # Greek TTS Quiz
 
-A personal listening quiz for Greek vocabulary: the app plays a Greek word aloud and you type the English meaning.
+A personal listening quiz for my lil brother on Greek vocabulary: the app plays a Greek word aloud and you type the English meaning.
 
 All audio is generated ahead of time by a Python pipeline and served as static files, so the app has no backend.
+
+Live at https://thepopped.github.io/Greek_tts_quiz/
 
 ## Layout
 
