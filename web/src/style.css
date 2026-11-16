@@ -274,7 +274,7 @@ legend {
   border: 0;
 }
 
-/* Rows of equal pills: 10 / 20 / All / Other, and By category / Custom list. */
+/* Rows of equal pills: 10 / 20 / All / Other, and By category / Custom list / Learn. */
 .pills {
   display: flex;
   gap: 0.5rem;
@@ -334,7 +334,7 @@ legend {
   opacity: 1;
 }
 
-/* "By category" / "Custom list": a segmented switch above the two pickers. */
+/* "By category" / "Custom list" / "Learn": a segmented switch above the pickers. */
 .modes {
   margin: 0 0 1rem;
 }
@@ -504,6 +504,113 @@ legend {
 .no-matches {
   margin: 0.75rem 0 0.25rem;
   color: var(--muted);
+}
+
+/* ---- Learn tab ---- */
+.learn-intro,
+.learn-total {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--muted);
+}
+
+/* One tile per box: learning (amber), familiar (blue), mastered (green). */
+.learn-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.learn-box {
+  --tone: var(--warn);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.45rem 0.25rem;
+  border: 1px solid color-mix(in srgb, var(--tone) 55%, transparent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+}
+
+.learn-box[data-box='familiar'] {
+  --tone: var(--accent-text);
+}
+
+.learn-box[data-box='mastered'] {
+  --tone: var(--right);
+}
+
+.learn-count {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.learn-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.learn-status {
+  margin: 0.75rem 0 0.5rem;
+}
+
+.learn-words summary {
+  padding: 0.6rem 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Its own scroll box, as the set grows. */
+.learn-groups {
+  max-height: min(24rem, 50dvh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0 -0.75rem;
+  padding: 0 0.75rem 0.25rem;
+  border-block: 1px solid var(--border);
+}
+
+.learn-groups h3 {
+  margin: 0.75rem 0 0.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.learn-groups ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.learn-word {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.5rem;
+  padding: 0.25rem 0;
+}
+
+.learn-word + .learn-word {
+  border-top: 1px solid var(--border);
+}
+
+.learn-streak {
+  flex: none;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.learn-reset {
+  min-height: 2.5rem;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.95rem;
 }
 
 /* Start stays in reach at the bottom of the screen, however long the category list. */
@@ -767,6 +874,24 @@ legend {
   margin: 0 0 1rem;
   color: var(--right);
   font-weight: 600;
+}
+
+/* Learn mode: the set's progress after a session. */
+.learn-note {
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.learn-note p {
+  margin: 0;
+}
+
+.learn-note p + p {
+  margin-top: 0.25rem;
+  color: var(--muted);
 }
 
 /* Above the list, so Retry is in reach however many words were missed. */

@@ -16,6 +16,8 @@ export function renderSummary(
   root: HTMLElement,
   results: readonly WordResult[],
   handlers: SummaryHandlers,
+  /** Extra lines under the headline (learn mode: the set's progress). */
+  notes: readonly string[] = [],
 ): () => void {
   const misses = missed(results)
 
@@ -24,6 +26,7 @@ export function renderSummary(
       <h1>Session done</h1>
       <p class="headline"></p>
       <p class="all-right" hidden>Nothing missed. Well done!</p>
+      <div class="learn-note" hidden></div>
       <div class="summary-actions">
         <button type="button" class="retry primary" hidden></button>
         <button type="button" class="new-session">New session</button>
@@ -44,6 +47,15 @@ export function renderSummary(
   const { signal } = listeners
 
   $('.headline').textContent = summaryText(tally(results))
+  if (notes.length > 0) {
+    const box = $('.learn-note')
+    box.hidden = false
+    for (const text of notes) {
+      const p = document.createElement('p')
+      p.textContent = text
+      box.append(p)
+    }
+  }
 
   if (misses.length > 0) {
     $('.missed').hidden = false

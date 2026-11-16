@@ -1,8 +1,9 @@
 // What the quiz remembers between visits: per-word results, the start
-// screen's last choice, and saved custom word lists. Kept in localStorage, but
+// screen's last choice, saved custom word lists, and the learn-mode set. Kept in localStorage, but
 // every read and write is guarded, so a blocked or broken storage (private
 // windows, full quota, hand-edited JSON) only means nothing is remembered next time.
 
+import { emptyLearnState, RECENT_WINDOW, type LearnEntry, type LearnState } from './learn'
 import { isQuestionCount, type QuestionCount } from './vocab'
 
 export interface WordStats {
@@ -12,8 +13,9 @@ export interface WordStats {
   lastSeen: number
 }
 
-/** How the start screen chooses words: by category, or a hand-picked list. */
-export type StartMode = 'categories' | 'list'
+/** How the start screen chooses words: by category, a hand-picked list, or the learn set. */
+export type StartMode = 'categories' | 'list' | 'learn'
+const START_MODES: readonly unknown[] = ['categories', 'list', 'learn'] satisfies StartMode[]
 
 /** What was picked on the start screen last time. */
 export interface StartChoice {
@@ -35,6 +37,7 @@ type StorageLike = Pick<Storage, 'getItem' | 'setItem'>
 const STATS_KEY = 'greek-quiz:v1:stats'
 const START_KEY = 'greek-quiz:v1:start'
 const LISTS_KEY = 'greek-quiz:v1:lists'
+const LEARN_KEY = 'greek-quiz:v1:learn'
 
 const isStringArray = (value: unknown): value is string[] =>
   Array.isArray(value) && value.every((s) => typeof s === 'string')
@@ -51,13 +54,35 @@ function isStats(value: unknown): value is WordStats {
   return [seen, correct, lastSeen].every((n) => typeof n === 'number' && Number.isFinite(n))
 }
 
+const isCount = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n) && n >= 0
+
+function isLearnEntry(value: unknown): value is LearnEntry {
+  if (typeof value !== 'object' || value === null) return false
+  const { streak, added, lastSeen } = value as Record<string, unknown>
+  return [streak, added, lastSeen].every(isCount)
+}
+
+/** Parse the saved learn set, skipping malformed words (anything unreadable is an empty set). */
+function toLearnState(value: unknown): LearnState {
+  const state = emptyLearnState()
+  if (typeof value !== 'object' || value === null) return state
+  const { words, recent } = value as Record<string, unknown>
+  if (typeof words === 'object' && words !== null && !Array.isArray(words)) {
+    for (const [id, entry] of Object.entries(words)) {
+      if (isLearnEntry(entry)) state.words[id] = { streak: entry.streak, added: entry.added, lastSeen: entry.lastSeen }
+    }
+  }
+  if (Array.isArray(recent)) state.recent = recent.filter((r) => typeof r === 'boolean').slice(-RECENT_WINDOW)
+  return state
+}
+
 /** Parse a saved start choice. `mode` and `words` came later, so a choice without them is "categories" mode. */
 function toStartChoice(value: unknown): StartChoice | undefined {
   if (typeof value !== 'object' || value === null) return undefined
   const { mode = 'categories', categories, words = [], count } = value as Record<string, unknown>
-  if (mode !== 'categories' && mode !== 'list') return undefined
+  if (!START_MODES.includes(mode)) return undefined
   if (!isStringArray(categories) || !isStringArray(words) || !isQuestionCount(count)) return undefined
-  return { mode, categories: [...categories], words: [...words], count }
+  return { mode: mode as StartMode, categories: [...categories], words: [...words], count }
 }
 
 export function createStore(getStorage: () => StorageLike | undefined = () => globalThis.localStorage) {
@@ -110,6 +135,17 @@ export function createStore(getStorage: () => StorageLike | undefined = () => gl
   }
   const saveLists = () => save(LISTS_KEY, [...allLists()].map(([name, ids]) => ({ name, ids })))
 
+  let learn: LearnState | undefined
+  function learnState(): LearnState {
+    if (learn) return learn
+    try {
+      learn = toLearnState(JSON.parse(storage()?.getItem(LEARN_KEY) ?? 'null'))
+    } catch {
+      learn = emptyLearnState()
+    }
+    return learn
+  }
+
   return {
     /** Results for one word, or undefined if it has never been answered. */
     stats(id: string): WordStats | undefined {
@@ -161,6 +197,22 @@ export function createStore(getStorage: () => StorageLike | undefined = () => gl
 
     deleteList(name: string): void {
       if (allLists().delete(name)) saveLists()
+    },
+
+    /** The learn-mode set (empty if it hasn't been started). */
+    learnState(): LearnState {
+      return structuredClone(learnState())
+    },
+
+    saveLearnState(state: LearnState): void {
+      learn = structuredClone(state)
+      save(LEARN_KEY, learn)
+    },
+
+    /** Forget the learn set, to start a new one. The per-word stats are kept. */
+    resetLearn(): void {
+      learn = emptyLearnState()
+      save(LEARN_KEY, learn)
     },
   }
 }

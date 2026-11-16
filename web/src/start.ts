@@ -1,6 +1,16 @@
-// Start screen: choose the words (by category, or a hand-picked custom list)
-// and how many questions, then start a session.
+// Start screen: choose the words (by category, a hand-picked custom list, or
+// the learn set) and how many questions, then start a session.
 
+import {
+  boxOf,
+  BOXES,
+  learnProgress,
+  pickLearnSession,
+  prepareSession,
+  setWords,
+  unlockText,
+  type Box,
+} from './learn'
 import { cleanListName, listLink, matchesSearch, MAX_LIST_NAME, sameIds, searchKey, type LinkedList } from './lists'
 import {
   categoryTallies,
@@ -25,6 +35,8 @@ import {
 } from './vocab'
 
 const DEFAULT_COUNT: QuestionCount = 10
+
+const BOX_LABELS: Record<Box, string> = { learning: 'Learning', familiar: 'Familiar', mastered: 'Mastered' }
 
 function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
@@ -78,7 +90,7 @@ export function renderStart(
   root: HTMLElement,
   vocab: Vocab,
   store: Store,
-  onStart: (words: Word[]) => void,
+  onStart: (words: Word[], mode: StartMode) => void,
   linked?: LinkedList,
 ): void {
   const counts = countByCategory(vocab.words)
@@ -162,6 +174,7 @@ export function renderStart(
         <div class="pills modes" role="radiogroup" aria-label="Choose words">
           ${radio('mode', 'categories', 'By category', initial.mode === 'categories')}
           ${radio('mode', 'list', 'Custom list', initial.mode === 'list')}
+          ${radio('mode', 'learn', 'Learn', initial.mode === 'learn')}
         </div>
         <fieldset class="by-categories">
           <legend>Categories</legend>
@@ -194,6 +207,12 @@ export function renderStart(
           </div>
           <div class="word-groups">${wordGroups}</div>
           <p class="no-matches" hidden>No words match.</p>
+        </fieldset>
+        <fieldset class="by-learn">
+          <legend>Learn</legend>
+          <p class="learn-intro">Learn a small set of words well. New ones are added a few at a time, once you know the ones you have.</p>
+          <div class="learn-panel"></div>
+          <button type="button" class="learn-reset">Start over</button>
         </fieldset>
         <fieldset>
           <legend>Questions</legend>
@@ -231,9 +250,14 @@ export function renderStart(
   const tickShown = $<HTMLButtonElement>('.tick-shown')
   const tickedOnly = $<HTMLInputElement>('.ticked-only input')
   const noMatches = $<HTMLParagraphElement>('.no-matches')
+  const byLearn = $<HTMLFieldSetElement>('.by-learn')
+  const learnPanel = $('.learn-panel')
+  const learnReset = $<HTMLButtonElement>('.learn-reset')
 
-  const mode = (): StartMode =>
-    form.querySelector<HTMLInputElement>('input[name="mode"]:checked')?.value === 'list' ? 'list' : 'categories'
+  function mode(): StartMode {
+    const value = form.querySelector<HTMLInputElement>('input[name="mode"]:checked')?.value
+    return value === 'list' || value === 'learn' ? value : 'categories'
+  }
   const tickedIds = () => wordBoxes.filter((b) => b.checked).map((b) => vocab.words[Number(b.value)].id)
 
   /** The current choice; `count` is undefined when "Other" is picked but its box isn't a valid number. */
@@ -249,11 +273,26 @@ export function renderStart(
     const { mode, categories, words, count } = currentChoice()
     byCategories.hidden = mode !== 'categories'
     byList.hidden = mode !== 'list'
+    byLearn.hidden = mode !== 'learn'
 
     const ticked = words.length
     saveButton.disabled = ticked === 0
     shareButton.disabled = ticked === 0
     deleteButton.disabled = listSelect.value === ''
+
+    if (mode === 'learn') {
+      const { total, unlock } = learnProgress(store.learnState(), vocab.words)
+      const adds = unlock.kind === 'start' || unlock.kind === 'ready' ? unlock.adds : 0
+      const available = total + adds
+      startButton.disabled = count === undefined || available === 0
+      if (count === undefined) summary.textContent = 'Type how many questions.'
+      else {
+        const questions = count === 'all' ? available : Math.min(count, available)
+        const isNew = adds === 0 ? '' : adds === available ? ', all new' : `, ${adds} of them new`
+        summary.textContent = `${plural(questions, 'question')} from your set of ${plural(available, 'word')}${isNew}.`
+      }
+      return
+    }
 
     const available =
       mode === 'list' ? ticked : categories.reduce((sum, c) => sum + (counts.get(c) ?? 0), 0)
@@ -372,6 +411,62 @@ export function renderStart(
   })
   linkInput.addEventListener('focus', () => linkInput.select())
 
+  // ---- Learn set ----
+
+  /** The set's progress: a count per box, what unlocks new words, and the words themselves. */
+  function showLearn(): void {
+    const state = store.learnState()
+    const progress = learnProgress(state, vocab.words)
+    learnReset.hidden = progress.total === 0
+    $('.learn-intro').hidden = progress.total > 0
+    const status = `<p class="learn-status">${escapeHtml(unlockText(progress.unlock))}</p>`
+    if (progress.total === 0) {
+      learnPanel.innerHTML = status
+      return
+    }
+    const tiles = BOXES.map(
+      (box) => `
+        <div class="learn-box" data-box="${box}">
+          <span class="learn-count">${progress.counts[box]}</span>
+          <span class="learn-label">${BOX_LABELS[box]}</span>
+        </div>`,
+    ).join('')
+    const inSet = setWords(state, vocab.words)
+    const groups = BOXES.map((box) => {
+      const rows = inSet
+        .filter(({ entry }) => boxOf(entry) === box)
+        .sort((a, b) => b.entry.added - a.entry.added)
+        .map(
+          ({ word, entry }) => `
+          <li class="learn-word">
+            <span class="word-text">
+              <span class="word-greek" lang="el">${escapeHtml(word.greek)}</span>
+              <span class="word-english">${escapeHtml(word.answers.join(', '))}</span>
+            </span>
+            <span class="learn-streak">${entry.streak > 0 ? `${entry.streak} in a row` : entry.lastSeen === 0 ? 'new' : 'missed last time'}</span>
+          </li>`,
+        )
+        .join('')
+      return rows === '' ? '' : `<h3>${BOX_LABELS[box]} (${progress.counts[box]})</h3><ul>${rows}</ul>`
+    }).join('')
+    learnPanel.innerHTML = `
+      <p class="learn-total">${plural(progress.total, 'word')} in your set, ${progress.remaining} still to come.</p>
+      <div class="learn-boxes">${tiles}</div>
+      ${status}
+      <details class="learn-words">
+        <summary>Words in your set</summary>
+        <div class="learn-groups">${groups}</div>
+      </details>`
+  }
+
+  learnReset.addEventListener('click', () => {
+    const { total } = learnProgress(store.learnState(), vocab.words)
+    if (!confirm(`Start over? Your learn set of ${plural(total, 'word')} is cleared. Your answer stats are kept.`)) return
+    store.resetLearn()
+    showLearn()
+    update()
+  })
+
   // ---- Wiring ----
 
   form.addEventListener('change', (e) => {
@@ -431,17 +526,25 @@ export function renderStart(
     e.preventDefault()
     const { mode, categories, words: ids, count } = currentChoice()
     if (count === undefined) return
-    const words =
-      mode === 'list' ? pickWordsById(vocab.words, ids, count) : pickWords(vocab.words, categories, count)
+    let words: Word[]
+    if (mode === 'learn') {
+      // Start the set, or add new words if it's ready for them, then pick from it.
+      const { state } = prepareSession(store.learnState(), vocab.words, Date.now())
+      store.saveLearnState(state)
+      words = pickLearnSession(state, vocab.words, count)
+    } else {
+      words = mode === 'list' ? pickWordsById(vocab.words, ids, count) : pickWords(vocab.words, categories, count)
+    }
     if (words.length === 0) return
     store.saveStartChoice({ mode, categories, words: ids, count })
-    onStart(words)
+    onStart(words, mode)
   })
 
   // A saved list holding exactly the starting ticks shows as loaded.
   const matching = initial.words.length > 0 ? savedLists().find((l) => sameIds(l.ids, initial.words)) : undefined
   fillListSelect(matching?.name ?? '')
   nameInput.value = matching?.name ?? ''
+  showLearn()
   applyFilter()
   update()
 }

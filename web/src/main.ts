@@ -1,7 +1,8 @@
 import './style.css'
+import { learnProgress, progressText, recordLearnAnswer, unlockText } from './learn'
 import { parseListParam, type LinkedList } from './lists'
 import { renderQuiz } from './quiz'
-import type { WordResult } from './session'
+import { isRight, type WordResult } from './session'
 import { renderStart } from './start'
 import { store } from './storage'
 import { renderSummary } from './summary'
@@ -19,7 +20,7 @@ function show(render: () => (() => void) | void): void {
 
 /** `linked` is a `?list=` link's words, given only to the first start screen of a visit. */
 function showStart(vocab: Vocab, linked?: LinkedList): void {
-  show(() => renderStart(app, vocab, store, (words) => showQuiz(vocab, words), linked))
+  show(() => renderStart(app, vocab, store, (words, mode) => showQuiz(vocab, words, mode === 'learn'), linked))
 }
 
 /**
@@ -37,21 +38,32 @@ function takeLinkedList(vocab: Vocab): LinkedList | undefined {
   return linked
 }
 
-function showQuiz(vocab: Vocab, words: Word[]): void {
+/** `learn`: a learn-mode session (including its retries), whose answers also move words between boxes. */
+function showQuiz(vocab: Vocab, words: Word[], learn: boolean): void {
   show(() =>
     renderQuiz(app, words, store, {
-      onFinish: (results) => showDone(vocab, results),
+      onFinish: (results) => showDone(vocab, results, learn),
       onQuit: () => showStart(vocab),
+      onResult: learn
+        ? ({ word, outcome }) =>
+            store.saveLearnState(recordLearnAnswer(store.learnState(), word.id, isRight(outcome), Date.now()))
+        : undefined,
     }),
   )
 }
 
-function showDone(vocab: Vocab, results: WordResult[]): void {
+function showDone(vocab: Vocab, results: WordResult[], learn: boolean): void {
+  const progress = learn ? learnProgress(store.learnState(), vocab.words) : undefined
   show(() =>
-    renderSummary(app, results, {
-      onRetry: (words) => showQuiz(vocab, shuffle(words)),
-      onNewSession: () => showStart(vocab),
-    }),
+    renderSummary(
+      app,
+      results,
+      {
+        onRetry: (words) => showQuiz(vocab, shuffle(words), learn),
+        onNewSession: () => showStart(vocab),
+      },
+      progress ? [progressText(progress), unlockText(progress.unlock)] : [],
+    ),
   )
 }
 

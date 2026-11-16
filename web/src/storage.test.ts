@@ -171,6 +171,75 @@ describe('saved lists', () => {
   })
 })
 
+describe('learn set', () => {
+  const state = {
+    words: { 'home-01': { streak: 2, added: 100, lastSeen: 300 }, 'fam-02': { streak: 0, added: 200, lastSeen: 0 } },
+    recent: [true, false, true],
+  }
+
+  it('is empty until saved, then persists across page loads', () => {
+    const storage = new FakeStorage()
+    expect(createStore(() => storage).learnState()).toEqual({ words: {}, recent: [] })
+    createStore(() => storage).saveLearnState(state)
+    expect(createStore(() => storage).learnState()).toEqual(state)
+  })
+
+  it('returns copies, not its own state', () => {
+    const store = createStore(() => new FakeStorage())
+    const mine = structuredClone(state)
+    store.saveLearnState(mine)
+    mine.words['home-01'].streak = 99
+    store.learnState().recent.push(false)
+    expect(store.learnState()).toEqual(state)
+  })
+
+  it('starts over without touching the word stats', () => {
+    const storage = new FakeStorage()
+    const store = createStore(() => storage)
+    store.record('home-01', true, 1)
+    store.saveLearnState(state)
+    store.resetLearn()
+    expect(createStore(() => storage).learnState()).toEqual({ words: {}, recent: [] })
+    expect(createStore(() => storage).stats('home-01')).toEqual({ seen: 1, correct: 1, lastSeen: 1 })
+  })
+
+  it('skips malformed words and survives corrupt JSON', () => {
+    const storage = new FakeStorage()
+    storage.setItem('greek-quiz:v1:learn', '{not json')
+    expect(createStore(() => storage).learnState()).toEqual({ words: {}, recent: [] })
+    storage.setItem(
+      'greek-quiz:v1:learn',
+      JSON.stringify({
+        words: {
+          good: { streak: 1, added: 5, lastSeen: 6 },
+          negative: { streak: -1, added: 5, lastSeen: 6 },
+          partial: { streak: 1 },
+          text: { streak: '1', added: 5, lastSeen: 6 },
+        },
+        recent: [true, 'yes', false, null],
+      }),
+    )
+    expect(createStore(() => storage).learnState()).toEqual({
+      words: { good: { streak: 1, added: 5, lastSeen: 6 } },
+      recent: [true, false],
+    })
+    storage.setItem('greek-quiz:v1:learn', '{"words":[],"recent":{}}')
+    expect(createStore(() => storage).learnState()).toEqual({ words: {}, recent: [] })
+  })
+
+  it('works for the session when storage throws', () => {
+    const store = createStore(() => broken)
+    store.saveLearnState(state)
+    expect(store.learnState()).toEqual(state)
+  })
+
+  it('remembers "learn" as the start screen mode', () => {
+    const storage = new FakeStorage()
+    createStore(() => storage).saveStartChoice({ mode: 'learn', categories: [], words: [], count: 10 })
+    expect(createStore(() => storage).startChoice()?.mode).toBe('learn')
+  })
+})
+
 describe('when storage misbehaves', () => {
   it('works for the session if localStorage throws', () => {
     const store = createStore(() => broken)

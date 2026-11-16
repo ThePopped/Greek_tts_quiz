@@ -52,6 +52,8 @@ export interface QuizHandlers {
   onFinish(results: WordResult[]): void
   /** The user left the session early. */
   onQuit(): void
+  /** One word's result is final (called before the next word, or before onFinish). */
+  onResult?(result: WordResult): void
 }
 
 const ASKING_KEYS = 'Replay: tap ▶, Ctrl+Space or ↑ · Enter to check · Enter on an empty box if you don’t know'
@@ -190,6 +192,7 @@ export function renderQuiz(
   function next(): void {
     if (phase !== 'feedback' || !current) return
     store.record(current.word.id, isRight(current.outcome))
+    handlers.onResult?.(current)
     results.push(current)
     current = undefined
     showScore()
