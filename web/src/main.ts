@@ -1,5 +1,6 @@
 import './style.css'
-import { dueSummary, learnProgress, progressText, recordLearnAnswer, unlockText } from './learn'
+import { pickChoices, type Choices } from './choices'
+import { boxOf, dueSummary, learnProgress, progressText, recordLearnAnswer, unlockText } from './learn'
 import { parseListParam, type LinkedList } from './lists'
 import { renderQuiz } from './quiz'
 import { isRight, type WordResult } from './session'
@@ -38,7 +39,21 @@ function takeLinkedList(vocab: Vocab): LinkedList | undefined {
   return linked
 }
 
-/** `learn`: a learn-mode session (including its retries), whose answers also move words between boxes. */
+/**
+ * Learn mode asks words in the learning box as a choice (recognise it first),
+ * and familiar and mastered words as typed (then recall it).
+ */
+function learnChoices(vocab: Vocab, word: Word): Choices | undefined {
+  const entry = store.learnState().words[word.id]
+  if (!entry || boxOf(entry) !== 'learning') return undefined
+  const choices = pickChoices(word, vocab.words)
+  return choices.options.length > 1 ? choices : undefined
+}
+
+/**
+ * `learn`: a learn-mode session (including its retries), whose answers also
+ * move words between boxes, and whose learning words are asked as choices.
+ */
 function showQuiz(vocab: Vocab, words: Word[], learn: boolean): void {
   show(() =>
     renderQuiz(app, words, store, {
@@ -48,6 +63,7 @@ function showQuiz(vocab: Vocab, words: Word[], learn: boolean): void {
         ? ({ word, outcome }) =>
             store.saveLearnState(recordLearnAnswer(store.learnState(), word.id, isRight(outcome), Date.now()))
         : undefined,
+      choicesFor: learn ? (word) => learnChoices(vocab, word) : undefined,
     }),
   )
 }

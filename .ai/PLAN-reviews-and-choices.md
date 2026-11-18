@@ -58,13 +58,26 @@ Same convention as `PLAN.md`: one step at a time, update its status, commit each
     - Tests: always 4 distinct options with exactly one right one; no option overlaps the target's answers; same category is preferred; a tiny category falls back to other words.
     *Result:* `choices.ts` exports `CHOICE_COUNT` (4) and `pickChoices`, which returns `{ options, correct }` (`correct` is the index of the right option). Words are shuffled within each group (same category, then same `pos` in other categories, then the rest), so the wrong options change each time. With too few usable words it returns fewer than 4 options rather than failing. That can't happen with the real vocab: a test runs every one of the 374 words and checks it gets 4 distinct options with exactly one that matches its answers. Nothing on screen changes until step 30. Tests 157/157, and `tsc` and the build are clean.
 
-30. `[not started]` Choice questions in the quiz, used by learn mode.
+30. `[done]` Choice questions in the quiz, used by learn mode.
     - `QuizHandlers` gains an optional `askAs(word): 'type' | 'choice'` (default `'type'`), read when each word is shown. `main.ts` passes it for learn sessions and their retries: a word in the learning box → `'choice'`.
     - Choice layout: the answer box is hidden and the phone keyboard doesn't open. 4 large buttons in a 2×2 grid (at least 44px tall, long answers wrap). Keys 1–4 pick, and "Don't know" stays. After a pick, the right option goes green, a wrong pick goes red, and the same feedback panel appears (verdict, Greek, all answers, notes). A primary Next button gets focus, so Enter moves on. Replay (▶, Ctrl+Space, ↑) works as now.
     - Outcomes stay `correct` / `wrong` / `dont-know` (no typos with choices). `WordResult` gains `asked: 'type' | 'choice'`, and `typed` holds the option picked.
     - Stats: `quiz.ts` calls `store.record` only for typed answers. `onResult` still runs for both kinds, so learn boxes, streaks, due dates and recent accuracy all count choice answers. The in-session score counts both.
     - Summary: missed choice words say "You chose “goodbye”".
     - Check in the browser at 400×800, 400×440 and 1280×800, light and dark: a fresh learn set is all choices; a word right twice switches to typing; a typed miss goes back to choices; category sessions are unchanged; the % stats don't move for choice answers. No horizontal scroll, no console errors.
+    *Result:* One change from the plan: instead of `askAs(word)`, `QuizHandlers` gains `choicesFor(word)`, which returns the options (`Choices` from step 29), or `undefined` to type. The quiz would otherwise need the whole vocab to build options, and this way `quiz.ts` knows nothing about learn mode. `main.ts` passes it for learn sessions and their retries. It's read as each word is shown, so a retry asks a word by the box it's in at that moment. A word in the learning box gets `pickChoices` from all the vocab, and anything else is typed.
+    - **Layout:** while a choice is asked, the answer form is hidden and the focus leaves it, so the phone keyboard closes. After a pick, the form comes back with only a full-width Next button, which gets focus. The right option gets a green border and a wrong pick a red one (`data-mark`). The other options fade, and the usual feedback panel appears.
+    - **Keys:** 1–4 pick (`choiceIndex`, tested). Digits are ignored while typing, so number answers still type.
+    - **Results:** `WordResult` has `asked`, and `typed` holds the option picked. `feedbackDetail` and the summary say "You chose “…”" (`answeredText` in `session.ts`, tested). `store.record` runs only for typed answers. `onResult` and the in-session score count both kinds.
+
+    Checked in the browser at 400×800, 400×440 and 1280×800, light and dark:
+    - A fresh set was all choices.
+    - Words right twice in a row were typed the next session.
+    - A typed miss was a choice question again in "Retry missed".
+    - Category sessions stayed typed.
+    - The stats held only the typed answers.
+
+    No horizontal scroll and no console errors. Tests 161/161, and `tsc` and the build are clean.
 
 31. `[not started]` **Checkpoint:** the user's brother uses it for about a week. Then tune `INTERVAL_DAYS`, `LEARNING_SHARE`, `FAMILIAR_AT` (when typing starts) and `BATCH_SIZE` from how it felt: too many reviews per day, or new words coming too slowly or too fast.
 

@@ -1,7 +1,7 @@
 // End-of-session summary: the score, the words missed, and "retry missed".
 
 import { audioUrl } from './quiz'
-import { missed, summaryText, tally, type WordResult } from './session'
+import { answeredText, missed, summaryText, tally, type WordResult } from './session'
 import type { Word } from './vocab'
 
 export interface SummaryHandlers {
@@ -60,7 +60,8 @@ export function renderSummary(
   if (misses.length > 0) {
     $('.missed').hidden = false
     $('.missed-title').textContent = `Missed (${misses.length})`
-    for (const { word, typed, outcome } of misses) {
+    for (const result of misses) {
+      const { word } = result
       const item = document.createElement('li')
       item.innerHTML = `
         <button type="button" class="say" aria-label="Play">▶</button>
@@ -81,8 +82,7 @@ export function renderSummary(
       )
       item.querySelector('.missed-greek')!.textContent = word.greek
       item.querySelector('.missed-answers')!.textContent = word.answers.join(', ')
-      item.querySelector('.missed-typed')!.textContent =
-        outcome === 'dont-know' ? 'You didn’t know' : `You typed “${typed}”`
+      item.querySelector('.missed-typed')!.textContent = answeredText(result)
       list.append(item)
     }
     retry.hidden = false

@@ -777,6 +777,45 @@ legend {
   min-width: 5.5rem;
 }
 
+/* Choice questions: four big options in a 2×2 grid; long answers wrap. */
+.choices {
+  align-self: stretch;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.choice {
+  min-height: 3.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  border-color: var(--border-strong);
+}
+
+.choice:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.choice[data-mark] {
+  --tone: var(--right);
+  opacity: 1;
+  border: 2px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 14%, var(--surface));
+  font-weight: 600;
+}
+
+.choice[data-mark='wrong'] {
+  --tone: var(--wrong);
+}
+
+/* After a choice, Next stands alone: full width, easy to reach. */
+.quiz[data-asked='choice'] .check {
+  flex: 1;
+}
+
 .dont-know {
   min-height: 2.75rem;
   border: none;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { check, isRight, missed, scoreText, summaryText, tally, type Outcome, type WordResult } from './session'
+import { answeredText, check, isRight, missed, scoreText, summaryText, tally, type Outcome, type WordResult } from './session'
 import type { Word } from './vocab'
 
 const HOUSE = ['house', 'home']
@@ -51,7 +51,7 @@ describe('missed', () => {
     notes: '',
     audio: `audio/${id}.mp3`,
   })
-  const result = (id: string, outcome: Outcome): WordResult => ({ word: word(id), typed: '', outcome })
+  const result = (id: string, outcome: Outcome): WordResult => ({ word: word(id), typed: '', outcome, asked: 'type' })
 
   it('keeps wrong and given-up words, in the order asked', () => {
     const results = [
@@ -70,5 +70,14 @@ describe('summaryText', () => {
     expect(summaryText({ right: 7, wrong: 3 })).toBe('7 of 10 right (70%)')
     expect(summaryText({ right: 2, wrong: 1 })).toBe('2 of 3 right (67%)')
     expect(summaryText({ right: 0, wrong: 0 })).toBe('No words answered.')
+  })
+})
+
+describe('answeredText', () => {
+  it('says what was typed or chosen, or that it wasn’t known', () => {
+    expect(answeredText({ typed: 'car', outcome: 'wrong', asked: 'type' })).toBe('You typed “car”')
+    expect(answeredText({ typed: 'goodbye', outcome: 'wrong', asked: 'choice' })).toBe('You chose “goodbye”')
+    expect(answeredText({ typed: '', outcome: 'dont-know', asked: 'type' })).toBe('You didn’t know')
+    expect(answeredText({ typed: '', outcome: 'dont-know', asked: 'choice' })).toBe('You didn’t know')
   })
 })

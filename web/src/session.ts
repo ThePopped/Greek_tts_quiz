@@ -12,10 +12,15 @@ export interface Checked {
   answer?: string
 }
 
+/** How a word was asked: typed into the box, or picked from a few choices. */
+export type AskedAs = 'type' | 'choice'
+
 export interface WordResult {
   word: Word
+  /** What was typed, or the option picked ('' for "Don't know"). */
   typed: string
   outcome: Outcome
+  asked: AskedAs
 }
 
 export interface Score {
@@ -47,6 +52,12 @@ export function scoreText({ right, wrong }: Score): string {
 /** The words answered wrong or given up on, in the order they were asked. */
 export function missed(results: readonly WordResult[]): WordResult[] {
   return results.filter((r) => !isRight(r.outcome))
+}
+
+/** What the answer was, for a missed word: "You typed “car”", "You chose “car”" or "You didn’t know". */
+export function answeredText({ typed, outcome, asked }: Pick<WordResult, 'typed' | 'outcome' | 'asked'>): string {
+  if (outcome === 'dont-know') return 'You didn’t know'
+  return `${asked === 'choice' ? 'You chose' : 'You typed'} “${typed}”`
 }
 
 /** The end-of-session headline, e.g. "7 of 10 right (70%)". */

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { audioUrl, feedbackDetail, isReplayKey } from './quiz'
+import { audioUrl, choiceIndex, feedbackDetail, isReplayKey } from './quiz'
 
 const key = (key: string, code: string, mods: Partial<Record<'ctrlKey' | 'metaKey' | 'altKey' | 'shiftKey', boolean>> = {}) => ({
   key,
@@ -41,8 +41,32 @@ describe('feedbackDetail', () => {
     expect(feedbackDetail('wrong', 'car')).toBe('You typed “car”.')
   })
 
+  it('says what was chosen for a choice question', () => {
+    expect(feedbackDetail('wrong', 'goodbye', undefined, 'choice')).toBe('You chose “goodbye”.')
+    expect(feedbackDetail('correct', 'hello', undefined, 'choice')).toBe('')
+    expect(feedbackDetail('dont-know', '', undefined, 'choice')).toBe('')
+  })
+
   it('says nothing more when right or when nothing was typed', () => {
     expect(feedbackDetail('correct', 'house', 'house')).toBe('')
     expect(feedbackDetail('dont-know', '')).toBe('')
+  })
+})
+
+describe('choiceIndex', () => {
+  it('maps keys 1 to 4 to the options', () => {
+    expect(choiceIndex(key('1', 'Digit1'), 4)).toBe(0)
+    expect(choiceIndex(key('4', 'Digit4'), 4)).toBe(3)
+    expect(choiceIndex(key('2', 'Numpad2'), 4)).toBe(1)
+  })
+
+  it('ignores keys past the last option, other keys and modifiers', () => {
+    expect(choiceIndex(key('5', 'Digit5'), 4)).toBeUndefined()
+    expect(choiceIndex(key('3', 'Digit3'), 2)).toBeUndefined()
+    expect(choiceIndex(key('0', 'Digit0'), 4)).toBeUndefined()
+    expect(choiceIndex(key('a', 'KeyA'), 4)).toBeUndefined()
+    expect(choiceIndex(key('Enter', 'Enter'), 4)).toBeUndefined()
+    expect(choiceIndex(key('1', 'Digit1', { ctrlKey: true }), 4)).toBeUndefined()
+    expect(choiceIndex(key('!', 'Digit1', { shiftKey: true }), 4)).toBeUndefined()
   })
 })
