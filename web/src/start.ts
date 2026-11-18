@@ -4,9 +4,14 @@
 import {
   boxOf,
   BOXES,
+  dueHeadline,
+  dueText,
   learnProgress,
+  mixText,
   pickLearnSession,
+  planLearnSession,
   prepareSession,
+  sessionMix,
   setWords,
   unlockText,
   type Box,
@@ -281,16 +286,13 @@ export function renderStart(
     deleteButton.disabled = listSelect.value === ''
 
     if (mode === 'learn') {
-      const { total, unlock } = learnProgress(store.learnState(), vocab.words, Date.now())
-      const adds = unlock.kind === 'start' || unlock.kind === 'ready' ? unlock.adds : 0
-      const available = total + adds
+      // The set as the session will see it (new words added if it's ready for them).
+      const now = Date.now()
+      const { state, added } = prepareSession(store.learnState(), vocab.words, now)
+      const available = Object.keys(state.words).length
       startButton.disabled = count === undefined || available === 0
       if (count === undefined) summary.textContent = 'Type how many questions.'
-      else {
-        const questions = count === 'all' ? available : Math.min(count, available)
-        const isNew = adds === 0 ? '' : adds === available ? ', all new' : `, ${adds} of them new`
-        summary.textContent = `${plural(questions, 'question')} from your set of ${plural(available, 'word')}${isNew}.`
-      }
+      else summary.textContent = mixText(sessionMix(planLearnSession(state, vocab.words, count, now)), added.length)
       return
     }
 
@@ -416,7 +418,8 @@ export function renderStart(
   /** The set's progress: a count per box, what unlocks new words, and the words themselves. */
   function showLearn(): void {
     const state = store.learnState()
-    const progress = learnProgress(state, vocab.words, Date.now())
+    const now = Date.now()
+    const progress = learnProgress(state, vocab.words, now)
     learnReset.hidden = progress.total === 0
     $('.learn-intro').hidden = progress.total > 0
     const status = `<p class="learn-status">${escapeHtml(unlockText(progress.unlock))}</p>`
@@ -443,13 +446,18 @@ export function renderStart(
               <span class="word-greek" lang="el">${escapeHtml(word.greek)}</span>
               <span class="word-english">${escapeHtml(word.answers.join(', '))}</span>
             </span>
-            <span class="learn-streak">${entry.streak > 0 ? `${entry.streak} in a row` : entry.lastSeen === 0 ? 'new' : 'missed last time'}</span>
+            <span class="learn-streak">
+              <span>${entry.streak > 0 ? `${entry.streak} in a row` : entry.lastSeen === 0 ? 'new' : 'missed last time'}</span>
+              ${box === 'learning' ? '' : `<span class="learn-due">${dueText(entry, now)}</span>`}
+            </span>
           </li>`,
         )
         .join('')
       return rows === '' ? '' : `<h3>${BOX_LABELS[box]} (${progress.counts[box]})</h3><ul>${rows}</ul>`
     }).join('')
+    const headline = dueHeadline(progress, now)
     learnPanel.innerHTML = `
+      ${headline ? `<p class="learn-headline">${escapeHtml(headline)}</p>` : ''}
       <p class="learn-total">${plural(progress.total, 'word')} in your set, ${progress.remaining} still to come.</p>
       <div class="learn-boxes">${tiles}</div>
       ${status}

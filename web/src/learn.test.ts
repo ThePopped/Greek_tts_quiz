@@ -4,6 +4,9 @@ import {
   BATCH_SIZE,
   boxOf,
   dueAfter,
+  dueHeadline,
+  dueSummary,
+  dueText,
   emptyLearnState,
   FAMILIAR_AT,
   INTERVAL_DAYS,
@@ -11,15 +14,19 @@ import {
   learnProgress,
   MASTERED_AT,
   migratedDue,
+  mixText,
   pickLearnSession,
+  planLearnSession,
   prepareSession,
   progressText,
   recentPercent,
   recordLearnAnswer,
   RECENT_WINDOW,
+  sessionMix,
   START_SIZE,
   startOfDay,
   unlockText,
+  whenText,
   type LearnEntry,
   type LearnState,
 } from './learn'
@@ -308,6 +315,15 @@ describe('pickLearnSession', () => {
   it('is empty when there is no set', () => {
     expect(pickLearnSession(emptyLearnState(), vocab, 10, NOW)).toEqual([])
   })
+
+  it('says why each word is in the session', () => {
+    expect(sessionMix(planLearnSession(full, vocab, 10, NOW))).toEqual({ learning: 5, review: 5, extra: 0 })
+    expect(sessionMix(planLearnSession(full, vocab, 'all', NOW))).toEqual({ learning: 10, review: 10, extra: 10 })
+    const plan = planLearnSession(full, vocab, 30, NOW)
+    expect(plan.filter((x) => x.kind === 'extra').map((x) => x.word.id)).toEqual(
+      ['w29', 'w28', 'w27', 'w26', 'w25', 'w24', 'w23', 'w22', 'w21', 'w20'], // soonest due first
+    )
+  })
 })
 
 describe('text', () => {
@@ -331,5 +347,63 @@ describe('text', () => {
     expect(unlockText({ kind: 'accuracy', percent: 80 })).toBe(
       'New words unlock at 85% right over your last 20 answers (now 80%).',
     )
+  })
+})
+
+describe('schedule text', () => {
+  it('says how far away a day is, by calendar day', () => {
+    expect(whenText(day(10), NOW)).toBe('today')
+    expect(whenText(day(9), NOW)).toBe('today')
+    expect(whenText(day(11), NOW)).toBe('tomorrow')
+    expect(whenText(day(13), NOW)).toBe('in 3 days')
+    // just before midnight, tomorrow is still one day away
+    expect(whenText(day(11), day(11) - 1)).toBe('tomorrow')
+    // across the spring DST change (29 March 2026 in Europe) and the autumn one (25 October)
+    expect(whenText(new Date(2026, 2, 31).getTime(), new Date(2026, 2, 28, 23).getTime())).toBe('in 3 days')
+    expect(whenText(new Date(2026, 9, 27).getTime(), new Date(2026, 9, 24, 1).getTime())).toBe('in 3 days')
+  })
+
+  it('says when a word is due', () => {
+    expect(dueText({ due: day(9) }, NOW)).toBe('due today') // overdue
+    expect(dueText({ due: day(10) }, NOW)).toBe('due today')
+    expect(dueText({ due: day(11) }, NOW)).toBe('due tomorrow')
+    expect(dueText({ due: day(26) }, NOW)).toBe('due in 16 days')
+  })
+
+  it('headlines what’s due today, or when the next reviews are', () => {
+    const progress = (words: Record<string, LearnEntry>) => learnProgress(stateOf(words), vocab, NOW)
+    expect(dueHeadline(progress({}), NOW)).toBeUndefined()
+    expect(dueHeadline(progress({ w00: entry(3, 1, 1, day(9)), w01: entry(5, 1, 1, day(10)), w02: notDue(3) }), NOW)).toBe(
+      '2 words due today',
+    )
+    expect(dueHeadline(progress({ w00: entry(2, 1, 1, day(9)) }), NOW)).toBe('1 word due today')
+    expect(dueHeadline(progress({ w00: entry(3, 1, 1, day(11)), w01: entry(3, 1, 1, day(11)), w02: notDue(5) }), NOW)).toBe(
+      'All caught up. Next: 2 words tomorrow.',
+    )
+    expect(dueHeadline(progress({ w00: entry(3, 1, 1, day(13)) }), NOW)).toBe('All caught up. Next: 1 word in 3 days.')
+    // learning words are always due, so they aren't "caught up"
+    expect(dueHeadline(progress({ w00: entry(0), w01: entry(3, 1, 1, day(13)) }), NOW)).toBe(
+      'No reviews due today. Next: 1 word in 3 days.',
+    )
+    expect(dueHeadline(progress({ w00: entry(0), w01: entry(1) }), NOW)).toBeUndefined()
+  })
+
+  it('describes the session about to start', () => {
+    expect(mixText({ learning: 3, review: 7, extra: 0 })).toBe('10 questions: 3 learning, 7 reviews.')
+    expect(mixText({ learning: 0, review: 1, extra: 0 })).toBe('1 question: 1 review.')
+    expect(mixText({ learning: 2, review: 0, extra: 8 })).toBe('10 questions: 2 learning, 8 extra practice.')
+    expect(mixText({ learning: 0, review: 0, extra: 10 })).toBe('Nothing due: 10 questions of extra practice.')
+    expect(mixText({ learning: 3, review: 0, extra: 7 }, 3)).toBe('10 questions: 3 learning (3 new), 7 extra practice.')
+    expect(mixText({ learning: 8, review: 0, extra: 0 }, 8)).toBe('8 questions, all new words.')
+  })
+
+  it('sums up what’s left for today after a session', () => {
+    const summary = (words: Record<string, LearnEntry>) => dueSummary(learnProgress(stateOf(words), vocab, NOW))
+    expect(summary({})).toBeUndefined()
+    expect(summary({ w00: entry(3, 1, 1, day(9)), w01: entry(3, 1, 1, day(10)), w02: notDue(4) })).toBe(
+      '2 words still due today.',
+    )
+    expect(summary({ w00: notDue(3) })).toBe('All caught up for today.')
+    expect(summary({ w00: entry(1), w01: notDue(3) })).toBe('No reviews left for today.')
   })
 })

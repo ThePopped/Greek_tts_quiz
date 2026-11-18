@@ -1,5 +1,5 @@
 import './style.css'
-import { learnProgress, progressText, recordLearnAnswer, unlockText } from './learn'
+import { dueSummary, learnProgress, progressText, recordLearnAnswer, unlockText } from './learn'
 import { parseListParam, type LinkedList } from './lists'
 import { renderQuiz } from './quiz'
 import { isRight, type WordResult } from './session'
@@ -62,7 +62,7 @@ function showDone(vocab: Vocab, results: WordResult[], learn: boolean): void {
         onRetry: (words) => showQuiz(vocab, shuffle(words), learn),
         onNewSession: () => showStart(vocab),
       },
-      progress ? [progressText(progress), unlockText(progress.unlock)] : [],
+      progress ? [progressText(progress), dueSummary(progress), unlockText(progress.unlock)].filter((t) => t !== undefined) : [],
     ),
   )
 }

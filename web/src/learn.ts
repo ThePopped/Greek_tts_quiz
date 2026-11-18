@@ -184,21 +184,23 @@ export function prepareSession(
   return { state: next, added }
 }
 
+/** Why a word is in a session: still learning, a review that's due, or extra practice. */
+export type SessionKind = 'learning' | 'review' | 'extra'
+
 /**
- * The words for one learn session, in random order: up to `count` words from
+ * The words for one learn session, before shuffling: up to `count` words from
  * the set, each at most once. In order of priority:
  *   1. learning words (shortest streak, then newest, first), up to LEARNING_SHARE of the session;
  *   2. due reviews, most overdue first (then the ones not asked for longest);
  *   3. any learning words left over;
  *   4. extra practice: reviews not due yet, the soonest due first.
  */
-export function pickLearnSession(
+export function planLearnSession(
   state: LearnState,
   words: readonly Word[],
   count: QuestionCount,
   now: number,
-  random: () => number = Math.random,
-): Word[] {
+): { word: Word; kind: SessionKind }[] {
   const inSet = setWords(state, words)
   const size = count === 'all' ? inSet.length : Math.min(count, inSet.length)
 
@@ -211,14 +213,35 @@ export function pickLearnSession(
   const due = reviews.filter(({ entry }) => isDue(entry, now))
   const extra = reviews.filter(({ entry }) => !isDue(entry, now))
 
-  const chosen: Word[] = []
-  const take = (queue: Item[], limit: number) =>
-    chosen.push(...queue.splice(0, Math.max(0, limit - chosen.length)).map((x) => x.word))
-  take(learning, Math.ceil(size * LEARNING_SHARE))
-  take(due, size)
-  take(learning, size)
-  take(extra, size)
-  return shuffle(chosen, random)
+  const chosen: { word: Word; kind: SessionKind }[] = []
+  const take = (queue: Item[], kind: SessionKind, limit: number) =>
+    chosen.push(...queue.splice(0, Math.max(0, limit - chosen.length)).map(({ word }) => ({ word, kind })))
+  take(learning, 'learning', Math.ceil(size * LEARNING_SHARE))
+  take(due, 'review', size)
+  take(learning, 'learning', size)
+  take(extra, 'extra', size)
+  return chosen
+}
+
+/** The words for one learn session (see planLearnSession), in random order. */
+export function pickLearnSession(
+  state: LearnState,
+  words: readonly Word[],
+  count: QuestionCount,
+  now: number,
+  random: () => number = Math.random,
+): Word[] {
+  return shuffle(
+    planLearnSession(state, words, count, now).map(({ word }) => word),
+    random,
+  )
+}
+
+/** How many of a session's words are of each kind. */
+export function sessionMix(plan: readonly { kind: SessionKind }[]): Record<SessionKind, number> {
+  const mix: Record<SessionKind, number> = { learning: 0, review: 0, extra: 0 }
+  for (const { kind } of plan) mix[kind]++
+  return mix
 }
 
 /**
@@ -253,6 +276,58 @@ export function migratedDue(entry: Pick<LearnEntry, 'streak' | 'lastSeen'>): num
 }
 
 const plural = (n: number, noun: string) => `${n} ${noun}${n === 1 ? '' : 's'}`
+
+const DAY_MS = 86_400_000
+
+/** "tomorrow" or "in 3 days" for the local day starting at `day`; "today" if it's today or earlier. */
+export function whenText(day: number, now: number): string {
+  // Rounded, since a day with a DST change is 23 or 25 hours long.
+  const days = Math.round((startOfDay(day) - startOfDay(now)) / DAY_MS)
+  if (days <= 0) return 'today'
+  return days === 1 ? 'tomorrow' : `in ${days} days`
+}
+
+/** When a familiar or mastered word is next due: "due today", "due tomorrow", "due in 3 days". */
+export function dueText(entry: Pick<LearnEntry, 'due'>, now: number): string {
+  return `due ${isDue(entry, now) ? 'today' : whenText(entry.due, now)}`
+}
+
+/**
+ * The learn panel's headline: "12 words due today", or "All caught up. Next: 4
+ * words tomorrow". Undefined when there's nothing to say (no set yet, or only
+ * learning words, which are always due).
+ */
+export function dueHeadline({ total, counts, due, nextDue }: LearnProgress, now: number): string | undefined {
+  if (total === 0) return undefined
+  if (due > 0) return `${plural(due, 'word')} due today`
+  const next = nextDue ? ` Next: ${plural(nextDue.count, 'word')} ${whenText(nextDue.day, now)}.` : ''
+  if (counts.learning === 0) return `All caught up.${next}`
+  return next === '' ? undefined : `No reviews due today.${next}`
+}
+
+/**
+ * The start button's line for a learn session: "10 questions: 3 learning, 7
+ * reviews", or "Nothing due: 10 questions of extra practice." `added` is how
+ * many new words the session adds to the set (they're its newest learning words).
+ */
+export function mixText(mix: Record<SessionKind, number>, added = 0): string {
+  const total = mix.learning + mix.review + mix.extra
+  if (total > 0 && mix.learning === 0 && mix.review === 0) return `Nothing due: ${plural(total, 'question')} of extra practice.`
+  const fresh = Math.min(added, mix.learning)
+  if (fresh > 0 && fresh === total) return `${plural(total, 'question')}, all new words.`
+  const parts: string[] = []
+  if (mix.learning > 0) parts.push(`${mix.learning} learning${fresh > 0 ? ` (${fresh} new)` : ''}`)
+  if (mix.review > 0) parts.push(plural(mix.review, 'review'))
+  if (mix.extra > 0) parts.push(`${mix.extra} extra practice`)
+  return `${plural(total, 'question')}: ${parts.join(', ')}.`
+}
+
+/** After a learn session: "5 words still due today", or "All caught up for today". */
+export function dueSummary({ total, counts, due }: LearnProgress): string | undefined {
+  if (total === 0) return undefined
+  if (due > 0) return `${plural(due, 'word')} still due today.`
+  return counts.learning === 0 ? 'All caught up for today.' : 'No reviews left for today.'
+}
 
 /** One line on the set's size: "Your set: 23 words · 18 mastered · 3 familiar · 2 learning". */
 export function progressText({ total, counts }: LearnProgress): string {

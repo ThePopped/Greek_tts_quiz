@@ -27,13 +27,28 @@ Same convention as `PLAN.md`: one step at a time, update its status, commit each
     - Tests: the gap sequence, wrong resets, a not-due right answer doesn't advance, the session order (learning, then overdue, then extra), the `due` unlock state, migration of old entries, a day boundary at local midnight (pass `now` in).
     *Result:* `learn.ts` gains `INTERVAL_DAYS`, `LEARNING_SHARE`, `startOfDay`, `addDays`, `intervalDays`, `dueAfter`, `isDue` and `migratedDue`; `MIX` is gone. `learnProgress` and `pickLearnSession` now take `now` (callers in `start.ts` and `main.ts` pass `Date.now()`; the start screen reads the same time for `prepareSession` and the pick). `learnProgress` also returns `due` and `nextDue` (only set when nothing is due), ready for step 28. `unlockText` already has the `due` wording ("New words unlock once today’s 5 reviews are done."), because the switch must cover every kind, so the start screen shows it now. Everything else on screen is unchanged until step 28. Saved entries without `due` get one from `migratedDue`; a saved `due` that isn't a number ≥ 0 makes the entry malformed, so it's skipped. One thing to know about migration: streaks earned under the old rules (several right answers in one day) keep their length, so a word already at 5 in a row is first due 16 days after it was last answered. Checked in the browser with a set saved in the old format: it loaded, words last seen 2 days ago with streak 2 were due (overdue since yesterday), streak-3 words last seen today were due in 3 days, and a wrong answer reset its word to streak 0, due now. No console errors. Tests 144/144, `tsc` and the build are clean.
 
-28. `[not started]` Show the schedule on the start screen and summary.
+28. `[done]` Show the schedule on the start screen and summary.
     - Learn panel headline: "12 words due today", or "All caught up. Next: 4 words tomorrow" / "… in 3 days". The box tiles stay.
     - The word list's per-word line adds when it's due ("due today", "in 3 days") next to the streak.
     - Footer: "10 questions: 3 learning, 7 reviews". When nothing is due: "Nothing due: 10 questions of extra practice."
     - `unlockText` for `due`: "New words unlock once today's 5 reviews are done."
     - The learn session's summary adds "5 still due today" or "All caught up for today".
     - Check in the browser at 400px, light and dark, with a seeded set (some overdue, some due later). Use a fake clock (`Date.now` override in Playwright) to step forward a day and see words fall due.
+    *Result:* `learn.ts` gains `whenText`, `dueText`, `dueHeadline`, `mixText` and `dueSummary` (all tested). `pickLearnSession` is now split: `planLearnSession` returns the unshuffled words, each tagged `learning`, `review` or `extra`, and `sessionMix` counts them. So the footer uses the same picking logic as the session itself. To get the footer right, `start.ts` runs `prepareSession` (it's pure) as the screen updates, so words about to be added are counted, as in "10 questions: 3 learning (3 new), 7 extra practice." A first session says "8 questions, all new words." Learning words are always due, so the wording changes when there are some:
+    - With learning words and no reviews due, the headline says "No reviews due today. Next: …".
+    - With only learning words, there is no headline.
+    - The summary says "No reviews left for today." instead of "All caught up".
+
+    Familiar and mastered words show "due today" / "due tomorrow" / "due in 3 days" under their streak. Learning words keep the streak line alone.
+
+    Checked in the browser at 400px, light and dark, with a fake clock (`page.clock`). The seeded set had 5 words due or overdue and 5 due later:
+    - The start screen showed "5 words due today" and "10 questions: 5 reviews, 5 extra practice."
+    - A 5-question session answered right was all reviews, and its summary said "All caught up for today."
+    - Back on the start screen it said "All caught up. Next: 3 words tomorrow."
+    - With accuracy below 85% the footer said "Nothing due: 5 questions of extra practice."
+    - One day later it said "3 words due today."
+
+    No horizontal scroll and no console errors. Tests 150/150, and `tsc` and the build are clean.
 
 ## Phase 11: Tap-to-answer for new words
 
