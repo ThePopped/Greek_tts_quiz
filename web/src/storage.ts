@@ -3,7 +3,7 @@
 // every read and write is guarded, so a blocked or broken storage (private
 // windows, full quota, hand-edited JSON) only means nothing is remembered next time.
 
-import { emptyLearnState, RECENT_WINDOW, type LearnEntry, type LearnState } from './learn'
+import { emptyLearnState, migratedDue, RECENT_WINDOW, type LearnEntry, type LearnState } from './learn'
 import { isQuestionCount, type QuestionCount } from './vocab'
 
 export interface WordStats {
@@ -56,10 +56,11 @@ function isStats(value: unknown): value is WordStats {
 
 const isCount = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n) && n >= 0
 
-function isLearnEntry(value: unknown): value is LearnEntry {
+/** A saved learn-set word. `due` came later, so an entry without it is still valid. */
+function isLearnEntry(value: unknown): value is Omit<LearnEntry, 'due'> & { due?: number } {
   if (typeof value !== 'object' || value === null) return false
-  const { streak, added, lastSeen } = value as Record<string, unknown>
-  return [streak, added, lastSeen].every(isCount)
+  const { streak, added, lastSeen, due } = value as Record<string, unknown>
+  return [streak, added, lastSeen].every(isCount) && (due === undefined || isCount(due))
 }
 
 /** Parse the saved learn set, skipping malformed words (anything unreadable is an empty set). */
@@ -69,7 +70,9 @@ function toLearnState(value: unknown): LearnState {
   const { words, recent } = value as Record<string, unknown>
   if (typeof words === 'object' && words !== null && !Array.isArray(words)) {
     for (const [id, entry] of Object.entries(words)) {
-      if (isLearnEntry(entry)) state.words[id] = { streak: entry.streak, added: entry.added, lastSeen: entry.lastSeen }
+      if (!isLearnEntry(entry)) continue
+      const { streak, added, lastSeen } = entry
+      state.words[id] = { streak, added, lastSeen, due: entry.due ?? migratedDue(entry) }
     }
   }
   if (Array.isArray(recent)) state.recent = recent.filter((r) => typeof r === 'boolean').slice(-RECENT_WINDOW)

@@ -53,7 +53,7 @@ function showQuiz(vocab: Vocab, words: Word[], learn: boolean): void {
 }
 
 function showDone(vocab: Vocab, results: WordResult[], learn: boolean): void {
-  const progress = learn ? learnProgress(store.learnState(), vocab.words) : undefined
+  const progress = learn ? learnProgress(store.learnState(), vocab.words, Date.now()) : undefined
   show(() =>
     renderSummary(
       app,

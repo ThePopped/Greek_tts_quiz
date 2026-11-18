@@ -2,11 +2,15 @@
 //
 // Each word in the set has a streak of right answers in a row, and that streak
 // decides its box: learning, familiar, or mastered. A wrong answer (or "Don't
-// know") resets the streak, so the word goes back to learning. Sessions mix the
-// boxes, most weight on learning and familiar, with mastered words spot-checked.
-// New words are added a few at a time, picked at random from the rest of the
-// vocab, but only once nothing is left in learning and recent answers are
-// mostly right. Spacing is by number of answers, not by day.
+// know") resets the streak, so the word goes back to learning.
+//
+// Each word also has a due date. Learning words are always due. A right answer
+// to a due word adds to its streak and moves its next review further out
+// (INTERVAL_DAYS), so familiar and mastered words come back on the day they're
+// due. Sessions take learning words and due reviews first, then fill up with
+// extra practice. New words are added a few at a time, picked at random from
+// the rest of the vocab, but only once nothing is learning, nothing is due, and
+// recent answers are mostly right.
 
 import { shuffle, type QuestionCount, type Word } from './vocab'
 
@@ -22,8 +26,13 @@ export const MASTERED_AT = 5
 export const RECENT_WINDOW = 20
 /** Share of recent answers that must be right before new words are added. */
 export const UNLOCK_ACCURACY = 0.85
-/** Share of a session's questions given to learning and familiar words; the rest are mastered spot-checks. */
-export const MIX = { learning: 0.4, familiar: 0.4 } as const
+/**
+ * Days until the next review, by the streak after a right answer (the last
+ * one is the cap). 0 means always due: learning words come up every session.
+ */
+export const INTERVAL_DAYS: readonly number[] = [0, 0, 1, 3, 7, 16, 35, 70, 120]
+/** Most of a session that learning words take before due reviews get a place. */
+export const LEARNING_SHARE = 0.5
 
 export type Box = 'learning' | 'familiar' | 'mastered'
 export const BOXES: readonly Box[] = ['learning', 'familiar', 'mastered']
@@ -36,6 +45,8 @@ export interface LearnEntry {
   added: number
   /** When it was last answered in learn mode (0 if never). */
   lastSeen: number
+  /** Local midnight of the day it's next due, in ms since the epoch (0: due now). */
+  due: number
 }
 
 export interface LearnState {
@@ -51,6 +62,35 @@ export function boxOf(entry: Pick<LearnEntry, 'streak'>): Box {
   if (entry.streak >= MASTERED_AT) return 'mastered'
   if (entry.streak >= FAMILIAR_AT) return 'familiar'
   return 'learning'
+}
+
+/** Local midnight at the start of the day `ms` falls in. */
+export function startOfDay(ms: number): number {
+  const d = new Date(ms)
+  d.setHours(0, 0, 0, 0)
+  return d.getTime()
+}
+
+/** `days` calendar days after `ms`, at the same local time (so a DST change doesn't shift it). */
+export function addDays(ms: number, days: number): number {
+  const d = new Date(ms)
+  d.setDate(d.getDate() + days)
+  return d.getTime()
+}
+
+/** Days until the next review for a word with this streak. */
+export function intervalDays(streak: number): number {
+  return INTERVAL_DAYS[Math.min(streak, INTERVAL_DAYS.length - 1)]
+}
+
+/** When a word with this streak, answered at `now`, is next due (0 if always due). */
+export function dueAfter(streak: number, now: number): number {
+  const days = intervalDays(streak)
+  return days === 0 ? 0 : addDays(startOfDay(now), days)
+}
+
+export function isDue(entry: Pick<LearnEntry, 'due'>, now: number): boolean {
+  return entry.due <= now
 }
 
 /** The set's words that are still in the vocab, with their entries. */
@@ -69,6 +109,7 @@ export type Unlock =
   | { kind: 'start'; adds: number } // no set yet: the first session starts it
   | { kind: 'ready'; adds: number } // the next session adds new words
   | { kind: 'learning'; left: number } // words still in learning
+  | { kind: 'due'; count: number } // reviews due today
   | { kind: 'accuracy'; percent: number } // too many recent misses
   | { kind: 'complete' } // every word is already in the set
 
@@ -77,21 +118,39 @@ export interface LearnProgress {
   counts: Record<Box, number>
   /** Vocab words not in the set yet. */
   remaining: number
+  /** Familiar and mastered words due now (learning words are always due, and aren't counted). */
+  due: number
+  /** The next day a review falls due (local midnight), and how many words, if nothing is due now. */
+  nextDue?: { day: number; count: number }
   unlock: Unlock
 }
 
-export function learnProgress(state: LearnState, words: readonly Word[]): LearnProgress {
+export function learnProgress(state: LearnState, words: readonly Word[], now: number): LearnProgress {
   const inSet = setWords(state, words)
   const counts: Record<Box, number> = { learning: 0, familiar: 0, mastered: 0 }
   for (const { entry } of inSet) counts[boxOf(entry)]++
-  const remaining = words.length - inSet.length
-  return { total: inSet.length, counts, remaining, unlock: unlockStatus(inSet.length, counts.learning, remaining, state) }
+  const reviews = inSet.filter(({ entry }) => boxOf(entry) !== 'learning').map(({ entry }) => entry)
+  const due = reviews.filter((e) => isDue(e, now)).length
+  const later = reviews.filter((e) => !isDue(e, now)).map((e) => startOfDay(e.due))
+  const progress: LearnProgress = {
+    total: inSet.length,
+    counts,
+    remaining: words.length - inSet.length,
+    due,
+    unlock: unlockStatus(inSet.length, counts.learning, due, words.length - inSet.length, state),
+  }
+  if (due === 0 && later.length > 0) {
+    const day = Math.min(...later)
+    progress.nextDue = { day, count: later.filter((d) => d === day).length }
+  }
+  return progress
 }
 
-function unlockStatus(total: number, learning: number, remaining: number, state: LearnState): Unlock {
+function unlockStatus(total: number, learning: number, due: number, remaining: number, state: LearnState): Unlock {
   if (total === 0) return { kind: 'start', adds: Math.min(START_SIZE, remaining) }
   if (remaining === 0) return { kind: 'complete' }
   if (learning > 0) return { kind: 'learning', left: learning }
+  if (due > 0) return { kind: 'due', count: due }
   const percent = recentPercent(state)
   if (percent !== undefined && percent < UNLOCK_ACCURACY * 100) return { kind: 'accuracy', percent }
   return { kind: 'ready', adds: Math.min(BATCH_SIZE, remaining) }
@@ -112,7 +171,7 @@ export function prepareSession(
   for (const { word, entry } of setWords(state, words)) kept[word.id] = { ...entry }
   const next: LearnState = { words: kept, recent: [...state.recent] }
 
-  const { unlock } = learnProgress(next, words)
+  const { unlock } = learnProgress(next, words, now)
   if (unlock.kind !== 'start' && unlock.kind !== 'ready') return { state: next, added: [] }
 
   const added = shuffle(
@@ -121,58 +180,76 @@ export function prepareSession(
   )
     .slice(0, unlock.adds)
     .map((w) => w.id)
-  for (const id of added) kept[id] = { streak: 0, added: now, lastSeen: 0 }
+  for (const id of added) kept[id] = { streak: 0, added: now, lastSeen: 0, due: 0 }
   return { state: next, added }
 }
 
 /**
  * The words for one learn session, in random order: up to `count` words from
- * the set (each at most once), about 40% learning, 40% familiar and 20%
- * mastered. A box without enough words leaves its places to the others.
- *
- * Within a box: learning words with the shortest streak, then the newest, come
- * first; familiar and mastered words that haven't been asked for longest come first.
+ * the set, each at most once. In order of priority:
+ *   1. learning words (shortest streak, then newest, first), up to LEARNING_SHARE of the session;
+ *   2. due reviews, most overdue first (then the ones not asked for longest);
+ *   3. any learning words left over;
+ *   4. extra practice: reviews not due yet, the soonest due first.
  */
 export function pickLearnSession(
   state: LearnState,
   words: readonly Word[],
   count: QuestionCount,
+  now: number,
   random: () => number = Math.random,
 ): Word[] {
   const inSet = setWords(state, words)
   const size = count === 'all' ? inSet.length : Math.min(count, inSet.length)
 
-  const byBox = (box: Box) => inSet.filter(({ entry }) => boxOf(entry) === box)
-  const learning = byBox('learning').sort((a, b) => a.entry.streak - b.entry.streak || b.entry.added - a.entry.added)
-  const oldestFirst = (a: { entry: LearnEntry }, b: { entry: LearnEntry }) => a.entry.lastSeen - b.entry.lastSeen
-  const queues: Record<Box, { word: Word }[]> = {
-    learning,
-    familiar: byBox('familiar').sort(oldestFirst),
-    mastered: byBox('mastered').sort(oldestFirst),
-  }
-
-  const quota: Record<Box, number> = {
-    learning: Math.ceil(size * MIX.learning),
-    familiar: Math.round(size * MIX.familiar),
-    mastered: 0,
-  }
-  quota.mastered = Math.max(0, size - quota.learning - quota.familiar)
+  type Item = { word: Word; entry: LearnEntry }
+  const byDue = (a: Item, b: Item) => a.entry.due - b.entry.due || a.entry.lastSeen - b.entry.lastSeen
+  const learning = inSet
+    .filter(({ entry }) => boxOf(entry) === 'learning')
+    .sort((a, b) => a.entry.streak - b.entry.streak || b.entry.added - a.entry.added)
+  const reviews = inSet.filter(({ entry }) => boxOf(entry) !== 'learning').sort(byDue)
+  const due = reviews.filter(({ entry }) => isDue(entry, now))
+  const extra = reviews.filter(({ entry }) => !isDue(entry, now))
 
   const chosen: Word[] = []
-  for (const box of BOXES) chosen.push(...queues[box].splice(0, quota[box]).map((x) => x.word))
-  // Fill places a box couldn't use, learning words first.
-  for (const box of BOXES) chosen.push(...queues[box].splice(0, size - chosen.length).map((x) => x.word))
+  const take = (queue: Item[], limit: number) =>
+    chosen.push(...queue.splice(0, Math.max(0, limit - chosen.length)).map((x) => x.word))
+  take(learning, Math.ceil(size * LEARNING_SHARE))
+  take(due, size)
+  take(learning, size)
+  take(extra, size)
   return shuffle(chosen, random)
 }
 
-/** Count one learn-mode answer. Words not in the set are ignored. */
+/**
+ * Count one learn-mode answer. Words not in the set are ignored.
+ *
+ * Right, and the word was due: one more in the streak, and the next review moves out.
+ * Right, but not due yet (extra practice): only `lastSeen` changes, so cramming doesn't stretch the gaps.
+ * Wrong: the streak goes back to 0 and the word is due again straight away.
+ */
 export function recordLearnAnswer(state: LearnState, id: string, right: boolean, now: number): LearnState {
   const entry = state.words[id]
   if (!entry) return state
+  let next: LearnEntry
+  if (!right) next = { ...entry, streak: 0, lastSeen: now, due: 0 }
+  else if (!isDue(entry, now)) next = { ...entry, lastSeen: now }
+  else {
+    const streak = entry.streak + 1
+    next = { ...entry, streak, lastSeen: now, due: dueAfter(streak, now) }
+  }
   return {
-    words: { ...state.words, [id]: { ...entry, streak: right ? entry.streak + 1 : 0, lastSeen: now } },
+    words: { ...state.words, [id]: next },
     recent: [...state.recent, right].slice(-RECENT_WINDOW),
   }
+}
+
+/**
+ * The due date for a word saved before due dates existed: its interval counted
+ * from the day it was last answered (due now if it never was).
+ */
+export function migratedDue(entry: Pick<LearnEntry, 'streak' | 'lastSeen'>): number {
+  return entry.lastSeen === 0 ? 0 : dueAfter(entry.streak, entry.lastSeen)
 }
 
 const plural = (n: number, noun: string) => `${n} ${noun}${n === 1 ? '' : 's'}`
@@ -195,6 +272,8 @@ export function unlockText(unlock: Unlock): string {
       return unlock.left === 1
         ? `New words unlock when you get the 1 learning word right ${FAMILIAR_AT} times in a row.`
         : `New words unlock when you get each of the ${unlock.left} learning words right ${FAMILIAR_AT} times in a row.`
+    case 'due':
+      return `New words unlock once today’s ${plural(unlock.count, 'review')} ${unlock.count === 1 ? 'is' : 'are'} done.`
     case 'accuracy':
       return `New words unlock at ${UNLOCK_ACCURACY * 100}% right over your last ${RECENT_WINDOW} answers (now ${unlock.percent}%).`
     case 'complete':

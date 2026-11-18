@@ -281,7 +281,7 @@ export function renderStart(
     deleteButton.disabled = listSelect.value === ''
 
     if (mode === 'learn') {
-      const { total, unlock } = learnProgress(store.learnState(), vocab.words)
+      const { total, unlock } = learnProgress(store.learnState(), vocab.words, Date.now())
       const adds = unlock.kind === 'start' || unlock.kind === 'ready' ? unlock.adds : 0
       const available = total + adds
       startButton.disabled = count === undefined || available === 0
@@ -416,7 +416,7 @@ export function renderStart(
   /** The set's progress: a count per box, what unlocks new words, and the words themselves. */
   function showLearn(): void {
     const state = store.learnState()
-    const progress = learnProgress(state, vocab.words)
+    const progress = learnProgress(state, vocab.words, Date.now())
     learnReset.hidden = progress.total === 0
     $('.learn-intro').hidden = progress.total > 0
     const status = `<p class="learn-status">${escapeHtml(unlockText(progress.unlock))}</p>`
@@ -460,7 +460,7 @@ export function renderStart(
   }
 
   learnReset.addEventListener('click', () => {
-    const { total } = learnProgress(store.learnState(), vocab.words)
+    const { total } = learnProgress(store.learnState(), vocab.words, Date.now())
     if (!confirm(`Start over? Your learn set of ${plural(total, 'word')} is cleared. Your answer stats are kept.`)) return
     store.resetLearn()
     showLearn()
@@ -529,9 +529,10 @@ export function renderStart(
     let words: Word[]
     if (mode === 'learn') {
       // Start the set, or add new words if it's ready for them, then pick from it.
-      const { state } = prepareSession(store.learnState(), vocab.words, Date.now())
+      const now = Date.now()
+      const { state } = prepareSession(store.learnState(), vocab.words, now)
       store.saveLearnState(state)
-      words = pickLearnSession(state, vocab.words, count)
+      words = pickLearnSession(state, vocab.words, count, now)
     } else {
       words = mode === 'list' ? pickWordsById(vocab.words, ids, count) : pickWords(vocab.words, categories, count)
     }

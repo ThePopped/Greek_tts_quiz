@@ -173,7 +173,10 @@ describe('saved lists', () => {
 
 describe('learn set', () => {
   const state = {
-    words: { 'home-01': { streak: 2, added: 100, lastSeen: 300 }, 'fam-02': { streak: 0, added: 200, lastSeen: 0 } },
+    words: {
+      'home-01': { streak: 2, added: 100, lastSeen: 300, due: 400 },
+      'fam-02': { streak: 0, added: 200, lastSeen: 0, due: 0 },
+    },
     recent: [true, false, true],
   }
 
@@ -211,20 +214,43 @@ describe('learn set', () => {
       'greek-quiz:v1:learn',
       JSON.stringify({
         words: {
-          good: { streak: 1, added: 5, lastSeen: 6 },
-          negative: { streak: -1, added: 5, lastSeen: 6 },
+          good: { streak: 1, added: 5, lastSeen: 6, due: 7 },
+          negative: { streak: -1, added: 5, lastSeen: 6, due: 7 },
           partial: { streak: 1 },
-          text: { streak: '1', added: 5, lastSeen: 6 },
+          text: { streak: '1', added: 5, lastSeen: 6, due: 7 },
+          badDue: { streak: 1, added: 5, lastSeen: 6, due: 'tomorrow' },
+          negativeDue: { streak: 1, added: 5, lastSeen: 6, due: -1 },
         },
         recent: [true, 'yes', false, null],
       }),
     )
     expect(createStore(() => storage).learnState()).toEqual({
-      words: { good: { streak: 1, added: 5, lastSeen: 6 } },
+      words: { good: { streak: 1, added: 5, lastSeen: 6, due: 7 } },
       recent: [true, false],
     })
     storage.setItem('greek-quiz:v1:learn', '{"words":[],"recent":{}}')
     expect(createStore(() => storage).learnState()).toEqual({ words: {}, recent: [] })
+  })
+
+  it('gives words saved before due dates one, from when they were last answered', () => {
+    const storage = new FakeStorage()
+    const lastSeen = new Date(2026, 10, 15, 18, 30).getTime()
+    storage.setItem(
+      'greek-quiz:v1:learn',
+      JSON.stringify({
+        words: {
+          familiar: { streak: 3, added: 5, lastSeen },
+          learning: { streak: 1, added: 5, lastSeen },
+          never: { streak: 0, added: 5, lastSeen: 0 },
+        },
+        recent: [],
+      }),
+    )
+    expect(createStore(() => storage).learnState().words).toEqual({
+      familiar: { streak: 3, added: 5, lastSeen, due: new Date(2026, 10, 18).getTime() }, // 3 days after
+      learning: { streak: 1, added: 5, lastSeen, due: 0 },
+      never: { streak: 0, added: 5, lastSeen: 0, due: 0 },
+    })
   })
 
   it('works for the session when storage throws', () => {
