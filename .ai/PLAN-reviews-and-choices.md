@@ -52,10 +52,11 @@ Same convention as `PLAN.md`: one step at a time, update its status, commit each
 
 ## Phase 11: Tap-to-answer for new words
 
-29. `[not started]` Choice options: new `choices.ts` (pure, tested).
+29. `[done]` Choice options: new `choices.ts` (pure, tested).
     - `pickChoices(word, words, random)` → 4 options in random order, plus which one is right. The right option is `word.answers[0]`. The other three are other words' `answers[0]`: same category first, then same `pos`, then any.
     - Skip any word whose answers overlap the target's after `clean()` from `grading.ts` (e.g. γεια σου / γεια σας both mean "hello"). Remove duplicate options after `clean()` too.
     - Tests: always 4 distinct options with exactly one right one; no option overlaps the target's answers; same category is preferred; a tiny category falls back to other words.
+    *Result:* `choices.ts` exports `CHOICE_COUNT` (4) and `pickChoices`, which returns `{ options, correct }` (`correct` is the index of the right option). Words are shuffled within each group (same category, then same `pos` in other categories, then the rest), so the wrong options change each time. With too few usable words it returns fewer than 4 options rather than failing. That can't happen with the real vocab: a test runs every one of the 374 words and checks it gets 4 distinct options with exactly one that matches its answers. Nothing on screen changes until step 30. Tests 157/157, and `tsc` and the build are clean.
 
 30. `[not started]` Choice questions in the quiz, used by learn mode.
     - `QuizHandlers` gains an optional `askAs(word): 'type' | 'choice'` (default `'type'`), read when each word is shown. `main.ts` passes it for learn sessions and their retries: a word in the learning box → `'choice'`.
